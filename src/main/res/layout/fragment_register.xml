@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_edit"
+                android:inputType="textEmailAddress"
                 android:hint="email@email.com"
                 android:padding="14dp" />
 
@@ -75,7 +76,8 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_edit"
                 android:hint="********"
-                android:padding="14dp" />
+                android:padding="14dp"
+                android:inputType="textPassword"/>
 
             <Button
                 android:id="@+id/btnRegister"
