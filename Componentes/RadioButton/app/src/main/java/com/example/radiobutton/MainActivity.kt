@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.rbOpcao2 -> {
-                    Toast.makeText(applicationContext, "Opção 2", Toast.LENGTH_SHORT).show() 
+                    Toast.makeText(applicationContext, "Opção 2", Toast.LENGTH_SHORT).show()
                 }
 
                 else -> {
