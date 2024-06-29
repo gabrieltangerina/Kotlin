@@ -2,6 +2,7 @@ package com.example.togglebutton
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.view.isVisible
 import com.example.togglebutton.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -23,8 +24,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setStatus(){
         binding.textView.text = if (binding.toggleButton.isChecked){
+            binding.progressBar.isVisible = true
             "O botão está ligado"
         }else{
+            binding.progressBar.isVisible = false
             "O botão está desligado"
         }
     }
