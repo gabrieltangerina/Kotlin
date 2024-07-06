@@ -24,7 +24,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nova Tarefa"
+                    android:text="@string/text_title_toolbar_from_task_fragment"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     android:textColor="@color/white"
@@ -43,8 +43,8 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:text="Descrição"
+                android:layout_gravity="start"
+                android:text="@string/text_description_form_task_fragment"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 style="@style/EditTextTheme"
                 android:layout_marginTop="8dp"
-                android:hint="Ex. Passear com o cachorro"
+                android:hint="@string/hint_edit_description"
                 android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Status"
+                android:text="@string/text_status_form_task"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editDescription" />
@@ -87,7 +87,7 @@
                     android:layout_weight="1"
                     android:buttonTint="@color/white"
                     android:checked="true"
-                    android:text="A fazer"
+                    android:text="@string/status_task_todo"
                     android:textColor="@color/white" />
 
                 <RadioButton
@@ -96,7 +96,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/white"
-                    android:text="Fazendo"
+                    android:text="@string/status_task_doing"
                     android:textColor="@color/white" />
 
                 <RadioButton
@@ -105,7 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:buttonTint="@color/white"
-                    android:text="Feitas"
+                    android:text="@string/status_task_done"
                     android:textColor="@color/white" />
 
             </RadioGroup>
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 style="@style/ButtonTheme"
                 android:layout_marginTop="16dp"
-                android:text="Salvar"
+                android:text="@string/text_button_form_task_fragment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rgStatus" />
