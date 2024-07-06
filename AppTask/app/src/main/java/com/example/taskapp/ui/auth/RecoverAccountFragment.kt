@@ -42,7 +42,7 @@ class RecoverAccountFragment : Fragment() {
         if(email.isNotEmpty()){
             Toast.makeText(requireContext(), "Dados validados", Toast.LENGTH_SHORT).show()
         }else{
-            showBottomSheet(message = R.string.email_empty_warning_login)
+            showBottomSheet(message = getString(R.string.email_empty_warning_login))
         }
     }
 

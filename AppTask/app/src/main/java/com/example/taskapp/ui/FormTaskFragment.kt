@@ -43,7 +43,7 @@ class FormTaskFragment : Fragment() {
         if(description.isNotEmpty()){
             Toast.makeText(requireContext(), "Dados validados", Toast.LENGTH_SHORT).show()
         }else{
-            showBottomSheet(message = R.string.description_empty_warning_form)
+            showBottomSheet(message = getString(R.string.description_empty_warning_form))
         }
     }
 

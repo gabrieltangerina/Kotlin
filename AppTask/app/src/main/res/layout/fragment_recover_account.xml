@@ -62,19 +62,16 @@
                 android:id="@+id/editEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/EditTextTheme"
                 android:inputType="textEmailAddress"
-                android:hint="Digite seu e-mail"
-                android:background="@drawable/bg_edit_text"
-                android:padding="16dp"/>
+                android:hint="Digite seu e-mail" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRecover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="@style/ButtonTheme"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/bg_btn"
-                app:backgroundTint="@null"
-                android:textColor="@color/color_default"
                 android:text="Enviar e-mail"/>
 
             <ProgressBar
