@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.taskapp.R
 import com.example.taskapp.databinding.FragmentFormTaskBinding
 import com.example.taskapp.util.initToolbar
+import com.example.taskapp.util.showBottomSheet
 
 class FormTaskFragment : Fragment() {
 
@@ -42,7 +43,7 @@ class FormTaskFragment : Fragment() {
         if(description.isNotEmpty()){
             Toast.makeText(requireContext(), "Dados validados", Toast.LENGTH_SHORT).show()
         }else{
-            Toast.makeText(requireContext(), "Preencha uma descrição", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = R.string.description_empty_warning_form)
         }
     }
 

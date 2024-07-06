@@ -9,6 +9,7 @@ import android.widget.Toast
 import com.example.taskapp.R
 import com.example.taskapp.databinding.FragmentRegisterBinding
 import com.example.taskapp.util.initToolbar
+import com.example.taskapp.util.showBottomSheet
 
 class RegisterFragment : Fragment() {
 
@@ -44,10 +45,10 @@ class RegisterFragment : Fragment() {
             if(password.isNotEmpty()){
                 Toast.makeText(requireContext(), "Dados validados", Toast.LENGTH_SHORT).show()
             }else{
-                Toast.makeText(requireContext(), "Preencha uma senha", Toast.LENGTH_SHORT).show()
+                showBottomSheet(message = R.string.password_empty_warning_register)
             }
         }else{
-            Toast.makeText(requireContext(), "Preencha um e-mail válido", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = R.string.email_empty_warning_register)
         }
     }
 
