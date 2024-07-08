@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:gravity="start"
+            android:gravity="end"
             android:text="@string/text_button_recover_login_fragment"/>
 
     </LinearLayout>
