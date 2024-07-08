@@ -34,9 +34,9 @@
                 tools:text="Criar layout da tela de login" />
 
             <ImageButton
-                android:id="@+id/btnNext"
+                android:id="@+id/btnBack"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_back_task"
                 app:layout_constraintBottom_toBottomOf="@+id/btnEdit"
@@ -94,9 +94,9 @@
                 app:layout_constraintTop_toTopOf="@+id/btnEdit" />
 
             <ImageButton
-                android:id="@+id/btnBack"
+                android:id="@+id/btnNext"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_next_task"
                 app:layout_constraintBottom_toBottomOf="@+id/btnEdit"
