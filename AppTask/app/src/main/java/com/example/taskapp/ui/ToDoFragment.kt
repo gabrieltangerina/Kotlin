@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taskapp.R
 import com.example.taskapp.data.model.Status
 import com.example.taskapp.data.model.Task
 import com.example.taskapp.databinding.FragmentToDoBinding
 import com.example.taskapp.ui.adapter.TaskAdapter
+import com.example.taskapp.ui.adapter.TaskTopAdapter
 
 
 class ToDoFragment : Fragment() {
@@ -21,6 +23,7 @@ class ToDoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var taskAdapter: TaskAdapter
+    private lateinit var taskTopAdapter: TaskTopAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,14 +48,20 @@ class ToDoFragment : Fragment() {
     }
 
     private fun initRecyclerTask(){
+        taskTopAdapter = TaskTopAdapter {task, option ->
+            optionSelected(task, option)
+        }
+
         taskAdapter = TaskAdapter(requireContext()) {task, option ->
             optionSelected(task, option)
         }
 
+        val concatAdapter = ConcatAdapter(taskTopAdapter, taskAdapter)
+
         with(binding.rvTasks){
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            adapter = taskAdapter
+            adapter = concatAdapter
         }
     }
 
@@ -74,6 +83,10 @@ class ToDoFragment : Fragment() {
     }
 
     private fun getTasks() {
+        val taskTopList = listOf(
+            Task("2", "Estudar sobre Kotlin", Status.TODO)
+        )
+
         val taskList = listOf(
             Task("0", "Passear com o cachorro", Status.TODO),
             Task("1", "Ir ao mercado", Status.TODO),
@@ -82,6 +95,7 @@ class ToDoFragment : Fragment() {
         )
 
         taskAdapter.submitList(taskList)
+        taskTopAdapter.submitList(taskTopList)
     }
 
     override fun onDestroyView() {
