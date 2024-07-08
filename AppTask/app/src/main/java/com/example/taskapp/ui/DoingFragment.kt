@@ -32,17 +32,20 @@ class DoingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initRecyclerTask(getTasks())
+        initRecyclerTask()
+        getTasks()
     }
 
-    private fun initRecyclerTask(taskList: List<Task>){
-        taskAdapter = TaskAdapter(requireContext(), taskList){ task, option ->
+    private fun initRecyclerTask(){
+        taskAdapter = TaskAdapter(requireContext()) {task, option ->
             optionSelected(task, option)
         }
 
-        binding.rvTasks.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvTasks.setHasFixedSize(true)
-        binding.rvTasks.adapter = taskAdapter
+        with(binding.rvTasks){
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = taskAdapter
+        }
     }
 
     private fun optionSelected(task: Task, option: Int){
@@ -65,11 +68,15 @@ class DoingFragment : Fragment() {
         }
     }
 
-    private fun getTasks() = listOf(
-        Task("0", "Validar informações da tela de login", Status.DOING),
-        Task("1", "Criar adapter de contatos", Status.DOING),
-        Task("2", "Refatorar código da classe de tarefas", Status.DOING),
-    )
+    private fun getTasks() {
+        val taskList = listOf(
+            Task("0", "Validar informações da tela de login", Status.DOING),
+            Task("1", "Criar adapter de contatos", Status.DOING),
+            Task("2", "Refatorar código da classe de tarefas", Status.DOING)
+        )
+
+        taskAdapter.submitList(taskList)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
