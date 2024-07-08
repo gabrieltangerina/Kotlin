@@ -12,7 +12,19 @@ import com.example.taskapp.data.model.Task
 import com.example.taskapp.databinding.ItemTaskBinding
 import kotlin.coroutines.coroutineContext
 
-class TaskAdapter( private val context:Context , private val taskList: List<Task> ) : RecyclerView.Adapter<TaskAdapter.MyViewHolder>(){
+class TaskAdapter(
+    private val context:Context ,
+    private val taskList: List<Task>,
+    private val taskSelected: (Task, Int) -> Unit
+) : RecyclerView.Adapter<TaskAdapter.MyViewHolder>(){
+
+    companion object{
+        val SELECT_BACK: Int = 1
+        val SELECT_REMOVE: Int = 2
+        val SELECT_EDIT: Int = 3
+        val SELECT_DETAILS: Int = 4
+        val SELECT_NEXT: Int = 5
+    }
 
     inner class MyViewHolder(val binding: ItemTaskBinding)
         : RecyclerView.ViewHolder(binding.root)
@@ -30,22 +42,35 @@ class TaskAdapter( private val context:Context , private val taskList: List<Task
 
         holder.binding.textDescription.text = task.description
         setIndicators(task, holder)
+
+        holder.binding.btnDelete.setOnClickListener { taskSelected(task, SELECT_REMOVE) }
+        holder.binding.btnEdit.setOnClickListener { taskSelected(task, SELECT_EDIT) }
+        holder.binding.btnDetails.setOnClickListener { taskSelected(task, SELECT_DETAILS) }
     }
 
     private fun setIndicators(task: Task, holder: MyViewHolder){
         when(task.status){
             Status.TODO -> {
                 holder.binding.btnBack.isVisible = false
+
+                holder.binding.btnNext.setOnClickListener { taskSelected(task, SELECT_NEXT) }
             }
             Status.DOING -> {
                 holder.binding.btnBack.setColorFilter(
                     ContextCompat.getColor(context, R.color.color_status_todo)
                 )
 
-                holder.binding.btnNext.setColorFilter(ContextCompat.getColor(context, R.color.color_status_done))
+                holder.binding.btnNext.setColorFilter(
+                    ContextCompat.getColor(context, R.color.color_status_done)
+                )
+
+                holder.binding.btnNext.setOnClickListener { taskSelected(task, SELECT_NEXT) }
+                holder.binding.btnBack.setOnClickListener { taskSelected(task, SELECT_BACK) }
             }
             Status.DONE -> {
                 holder.binding.btnNext.isVisible = false
+
+                holder.binding.btnBack.setOnClickListener { taskSelected(task, SELECT_BACK) }
             }
         }
     }
