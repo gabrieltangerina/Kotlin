@@ -14,13 +14,9 @@ import com.example.taskapp.R
 import com.example.taskapp.data.model.Status
 import com.example.taskapp.data.model.Task
 import com.example.taskapp.databinding.FragmentFormTaskBinding
+import com.example.taskapp.util.FirebaseHelper
 import com.example.taskapp.util.initToolbar
 import com.example.taskapp.util.showBottomSheet
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 
 class FormTaskFragment : Fragment() {
 
@@ -30,9 +26,6 @@ class FormTaskFragment : Fragment() {
     private lateinit var task: Task
     private var status: Status = Status.TODO
     private var newTask: Boolean = true
-
-    private lateinit var reference: DatabaseReference
-    private lateinit var auth: FirebaseAuth
 
     private val args: FormTaskFragmentArgs by navArgs()
 
@@ -53,9 +46,6 @@ class FormTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        reference = Firebase.database.reference
-        auth = Firebase.auth
 
         initToolbar(binding.toolbar)
         getArgs()
@@ -109,10 +99,7 @@ class FormTaskFragment : Fragment() {
         if (description.isNotEmpty()) {
             binding.progressBar.isVisible = true
 
-            if(newTask) {
-                task = Task()
-                task.id = reference.database.reference.push().key ?: ""
-            }
+            if(newTask) task = Task()
             task.description = description
             task.status = status
 
@@ -123,9 +110,9 @@ class FormTaskFragment : Fragment() {
     }
 
     private fun saveTask() {
-        reference
+        FirebaseHelper.getDatabase()
             .child("tasks")
-            .child(auth.currentUser?.uid ?: "")
+            .child(FirebaseHelper.getIdUser())
             .child(task.id)
             .setValue(task).addOnCompleteListener { result ->
                 if(result.isSuccessful){
