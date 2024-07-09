@@ -40,5 +40,10 @@
     <string name="hint_edit_description">Ex. Passear com o cachorro</string>
     <string name="text_button_form_task_fragment">Salvar</string>
 
+    <!-- Home Fragment   -->
+    <string name="text_title_dialog_confirm_logout">Deseja sair da sua conta?</string>
+    <string name="text_button_dialog_confirm_logout">Sair</string>
+    <string name="text_message_dialog_confirm_logout">Você precisará fazer login novamente para acessar sua conta</string>
+
 
 </resources>
