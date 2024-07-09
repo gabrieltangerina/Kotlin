@@ -103,10 +103,10 @@ class ToDoFragment : Fragment() {
         reference
             .child("tasks")
             .child(auth.currentUser?.uid ?: "")
-            .addValueEventListener(object  : ValueEventListener{
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val taskList = mutableListOf<Task>()
-                    for(ds in snapshot.children){
+                    for (ds in snapshot.children) {
                         val task = ds.getValue(Task::class.java) as Task
                         taskList.add(task)
                     }
@@ -114,7 +114,8 @@ class ToDoFragment : Fragment() {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
     }
