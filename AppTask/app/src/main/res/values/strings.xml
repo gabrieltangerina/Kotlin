@@ -13,7 +13,9 @@
     <string name="password_text">Senha</string>
     <string name="hint_edit_email">Digite seu e-mail</string>
     <string name="hint_edit_password">Digite sua senha</string>
-    <string name="error_generic">Ocorreu um erro! Por favor tente novamente mais tarde</string>
+    <string name="error_generic">Ocorreu um erro! Por favor tente novamente mais tarde.</string>
+    <string name="text_list_task_empty">Nenhuma tarefa cadastrada.</string>
+    <string name="text_load_task">Carregando tarefas...</string>
 
     <!-- Login Fragment  -->
     <string name="email_empty_warning_login">Preencha seu e-mail</string>
