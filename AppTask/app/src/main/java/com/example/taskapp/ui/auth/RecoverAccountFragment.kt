@@ -6,15 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import com.example.taskapp.R
 import com.example.taskapp.databinding.FragmentRecoverAccountBinding
 import com.example.taskapp.util.initToolbar
 import com.example.taskapp.util.showBottomSheet
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class RecoverAccountFragment : Fragment() {
 
     private var _binding: FragmentRecoverAccountBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,6 +32,9 @@ class RecoverAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        auth = Firebase.auth
+
         initToolbar(binding.toolbar)
         initListener()
     }
@@ -40,9 +49,23 @@ class RecoverAccountFragment : Fragment() {
         val email = binding.editEmail.text.toString().trim()
 
         if(email.isNotEmpty()){
-            Toast.makeText(requireContext(), "Dados validados", Toast.LENGTH_SHORT).show()
+            binding.toolbar.isVisible = true
+            recoverAccountUser(email)
         }else{
             showBottomSheet(message = getString(R.string.email_empty_warning_login))
+        }
+    }
+
+    private fun recoverAccountUser(email: String){
+        auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            binding.progressBar.isVisible = false
+            if(task.isSuccessful){
+                showBottomSheet(
+                    message = getString(R.string.text_message_recover_account_fragment)
+                )
+            }else{
+                Toast.makeText(requireContext(), task.exception?.message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
