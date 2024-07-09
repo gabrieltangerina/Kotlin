@@ -16,6 +16,10 @@
     <string name="error_generic">Ocorreu um erro! Por favor tente novamente mais tarde.</string>
     <string name="text_list_task_empty">Nenhuma tarefa cadastrada.</string>
     <string name="text_load_task">Carregando tarefas...</string>
+    <string name="text_delete_success_task">Tarefa removida com sucesso!</string>
+    <string name="text_title_dialog_confirm_delete_task">Excluir tarefa</string>
+    <string name="text_message_dialog_confirm_delete_task">Tem certeza que deseja excluir a tarefa permanentemente?</string>
+    <string name="text_button_dialog_confirm_delete_task">Excluir</string>
 
     <!-- Login Fragment  -->
     <string name="email_empty_warning_login">Preencha seu e-mail</string>
