@@ -18,7 +18,7 @@ import com.example.taskapp.util.FirebaseHelper
 import com.example.taskapp.util.initToolbar
 import com.example.taskapp.util.showBottomSheet
 
-class FormTaskFragment : Fragment() {
+class FormTaskFragment :BaseFragment() {
 
     private var _binding: FragmentFormTaskBinding? = null
     private val binding get() = _binding!!
@@ -97,6 +97,7 @@ class FormTaskFragment : Fragment() {
         val description = binding.editDescription.text.toString().trim()
 
         if (description.isNotEmpty()) {
+            hideKeyboard()
             binding.progressBar.isVisible = true
 
             if(newTask) task = Task()
