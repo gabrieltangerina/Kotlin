@@ -34,7 +34,7 @@ class ToDoFragment : Fragment() {
     * independente se o fragment outros fragments que tem acesso ao viewModel estão
     * abertos ou não
     */
-    private val viewModel:TaskViewModel by activityViewModels()
+    private val viewModel: TaskViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,9 +63,9 @@ class ToDoFragment : Fragment() {
         observeViewModel()
     }
 
-    private fun observeViewModel(){
-        viewModel.taskUpdate.observe(viewLifecycleOwner){ updateTask ->
-            if(updateTask.status == Status.TODO){
+    private fun observeViewModel() {
+        viewModel.taskUpdate.observe(viewLifecycleOwner) { updateTask ->
+            if (updateTask.status == Status.TODO) {
 
                 // Armazena a lista atual do adapter
                 val oldList = taskAdapter.currentList
@@ -98,6 +98,10 @@ class ToDoFragment : Fragment() {
             setHasFixedSize(true)
             adapter = taskAdapter
         }
+
+        binding.rvTasks.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvTasks.setHasFixedSize(true)
+        binding.rvTasks.adapter = taskAdapter
     }
 
     private fun optionSelected(task: Task, option: Int) {
@@ -126,8 +130,8 @@ class ToDoFragment : Fragment() {
             }
 
             TaskAdapter.SELECT_NEXT -> {
-                Toast.makeText(requireContext(), "Próximo ${task.description}", Toast.LENGTH_SHORT)
-                    .show()
+                task.status = Status.DOING
+                updateTask(task)
             }
         }
     }
@@ -161,15 +165,34 @@ class ToDoFragment : Fragment() {
             })
     }
 
-    private fun deleteTask(task: Task){
+    private fun deleteTask(task: Task) {
         FirebaseHelper.getDatabase()
             .child("tasks")
             .child(FirebaseHelper.getIdUser())
             .child(task.id)
             .removeValue().addOnCompleteListener { result ->
-                if(result.isSuccessful){
-                    Toast.makeText(requireContext(), R.string.text_delete_success_task, Toast.LENGTH_SHORT).show()
-                }else{
+                if (result.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.text_delete_success_task,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+    }
+
+    private fun updateTask(task: Task) {
+        FirebaseHelper.getDatabase()
+            .child("tasks")
+            .child(FirebaseHelper.getIdUser())
+            .child(task.id)
+            .setValue(task).addOnCompleteListener { result ->
+                if (result.isSuccessful) {
+                    Toast.makeText(requireContext(), R.string.text_save_success_form_task_fragment, Toast.LENGTH_SHORT).show()
+                } else {
                     Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT).show()
                 }
             }
