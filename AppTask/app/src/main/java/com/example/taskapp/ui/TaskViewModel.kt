@@ -27,10 +27,6 @@ class TaskViewModel : ViewModel() {
     private val _taskUpdate = MutableLiveData<Task>()
     val taskUpdate : LiveData<Task> = _taskUpdate
 
-    fun setUpdateTask(task: Task){
-        _taskUpdate.postValue(task)
-    }
-
     fun getTasks(status: Status) {
         FirebaseHelper.getDatabase()
             .child("tasks")
@@ -71,4 +67,21 @@ class TaskViewModel : ViewModel() {
             }
     }
 
+    fun updateTask(task: Task){
+        val map = mapOf(
+            "description" to task.description,
+            "status" to task.status
+        )
+
+        FirebaseHelper.getDatabase()
+            .child("tasks")
+            .child(FirebaseHelper.getIdUser())
+            .child(task.id)
+            .updateChildren(map).addOnCompleteListener { result ->
+                if(result.isSuccessful){
+                    _taskUpdate.postValue(task)
+                }
+            }
+
+    }
 }

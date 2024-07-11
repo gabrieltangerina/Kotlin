@@ -90,26 +90,26 @@ class ToDoFragment : Fragment() {
         }
 
         viewModel.taskUpdate.observe(viewLifecycleOwner) { updateTask ->
-            if (updateTask.status == Status.TODO) {
+            // Armazena a lista atual do adapter
+            val oldList = taskAdapter.currentList
 
-                // Armazena a lista atual do adapter
-                val oldList = taskAdapter.currentList
-
-                // Gera uma nova lista a partir da lista antiga já com a tarefa atualizada
-                val newList = oldList.toMutableList().apply {
+            // Gera uma nova lista a partir da lista antiga já com a tarefa atualizada ou removida (se o usuario passou ela para DOING)
+            val newList = oldList.toMutableList().apply {
+                if(updateTask.status == Status.TODO){
                     find { it.id == updateTask.id }?.description = updateTask.description
+                }else{
+                    remove(updateTask)
                 }
-
-                // Armazena a posição da tarefa a ser atualizada na lista
-                val position = newList.indexOfFirst { it.id == updateTask.id }
-
-                // Envia a lista atualizada para o adapter
-                taskAdapter.submitList(newList)
-
-                // Atualiza a tarefa pela posição do adapter
-                taskAdapter.notifyItemChanged(position)
-
             }
+
+            // Armazena a posição da tarefa a ser atualizada na lista
+            val position = newList.indexOfFirst { it.id == updateTask.id }
+
+            // Envia a lista atualizada para o adapter
+            taskAdapter.submitList(newList)
+
+            // Atualiza a tarefa pela posição do adapter
+            taskAdapter.notifyItemChanged(position)
         }
     }
 
@@ -152,7 +152,7 @@ class ToDoFragment : Fragment() {
 
             TaskAdapter.SELECT_NEXT -> {
                 task.status = Status.DOING
-                updateTask(task)
+                viewModel.updateTask(task)
             }
         }
     }
@@ -177,25 +177,6 @@ class ToDoFragment : Fragment() {
                     Toast.makeText(
                         requireContext(),
                         R.string.text_delete_success_task,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-    }
-
-    private fun updateTask(task: Task) {
-        FirebaseHelper.getDatabase()
-            .child("tasks")
-            .child(FirebaseHelper.getIdUser())
-            .child(task.id)
-            .setValue(task).addOnCompleteListener { result ->
-                if (result.isSuccessful) {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.text_save_success_form_task_fragment,
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
