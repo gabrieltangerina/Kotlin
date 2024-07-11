@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.R
 import com.example.taskapp.data.model.Status
 import com.example.taskapp.data.model.Task
@@ -65,6 +66,24 @@ class ToDoFragment : Fragment() {
     }
 
     private fun observeViewModel() {
+        viewModel.taskInsert.observe(viewLifecycleOwner) { task ->
+            if (task.status === Status.TODO) {
+                // Armazena a lista atual do adapter
+                val oldList = taskAdapter.currentList
+
+                // Gera uma nova lista a partir da lista antiga já com a tarefa atualizada
+                val newList = oldList.toMutableList().apply {
+                    add(0, task)
+                }
+
+                // Envia a lista atualizada para o adapter
+                taskAdapter.submitList(newList)
+
+                // Para que o recyclerView vá para o inicio ao criar uma nova tarefa
+                setPositionRecyclerView()
+            }
+        }
+
         viewModel.taskUpdate.observe(viewLifecycleOwner) { updateTask ->
             if (updateTask.status == Status.TODO) {
 
@@ -99,10 +118,6 @@ class ToDoFragment : Fragment() {
             setHasFixedSize(true)
             adapter = taskAdapter
         }
-
-        binding.rvTasks.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvTasks.setHasFixedSize(true)
-        binding.rvTasks.adapter = taskAdapter
     }
 
     private fun optionSelected(task: Task, option: Int) {
@@ -141,7 +156,7 @@ class ToDoFragment : Fragment() {
         FirebaseHelper.getDatabase()
             .child("tasks")
             .child(FirebaseHelper.getIdUser())
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
 
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val taskList = mutableListOf<Task>()
@@ -163,6 +178,16 @@ class ToDoFragment : Fragment() {
                     Log.i("INFOTESTE", "onCancelled: ")
                 }
             })
+    }
+
+    private fun setPositionRecyclerView() {
+        taskAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                binding.rvTasks.scrollToPosition(0)
+            }
+
+        })
     }
 
     private fun deleteTask(task: Task) {
@@ -191,9 +216,14 @@ class ToDoFragment : Fragment() {
             .child(task.id)
             .setValue(task).addOnCompleteListener { result ->
                 if (result.isSuccessful) {
-                    Toast.makeText(requireContext(), R.string.text_save_success_form_task_fragment, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.text_save_success_form_task_fragment,
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
-                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), R.string.error_generic, Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
     }
