@@ -53,7 +53,7 @@ class ToDoFragment : Fragment() {
         initListeners()
         initRecyclerTask()
         observeViewModel()
-        viewModel.getTasks(Status.TODO)
+        viewModel.getTasks()
     }
 
     private fun initListeners() {
@@ -73,9 +73,11 @@ class ToDoFragment : Fragment() {
                 }
 
                 is StateView.OnSuccess -> {
+                    val taskList = stateView.data?.filter { it.status == Status.TODO }
+
                     binding.progressBar.isVisible = false
-                    listEmpty(stateView.data ?: emptyList())
-                    taskAdapter.submitList(stateView.data)
+                    listEmpty(taskList ?: emptyList())
+                    taskAdapter.submitList(taskList)
                 }
 
                 is StateView.OnError -> {
@@ -132,6 +134,11 @@ class ToDoFragment : Fragment() {
 
                     // Gera uma nova lista a partir da lista antiga já com a tarefa atualizada ou removida (se o usuario passou ela para DOING)
                     val newList = oldList.toMutableList().apply {
+                        if(!oldList.contains(stateView.data) && stateView.data?.status == Status.TODO){
+                            add(0, stateView.data)
+                            setPositionRecyclerView()
+                        }
+
                         if(stateView.data?.status == Status.TODO){
                             find { it.id == stateView.data?.id }?.description = stateView.data.description
                         }else{

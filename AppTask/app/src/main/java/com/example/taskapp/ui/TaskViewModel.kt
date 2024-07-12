@@ -26,7 +26,7 @@ class TaskViewModel : ViewModel() {
     private val _taskDelete = MutableLiveData<StateView<Task>>()
     val taskDelete : LiveData<StateView<Task>> = _taskDelete
 
-    fun getTasks(status: Status) {
+    fun getTasks() {
         try{
             _taskList.postValue(StateView.OnLoading())
 
@@ -40,11 +40,7 @@ class TaskViewModel : ViewModel() {
 
                         for (ds in snapshot.children) {
                             val task = ds.getValue(Task::class.java) as Task
-
-                            if (task.status == status) {
-                                taskList.add(task)
-                            }
-
+                            taskList.add(task)
                         }
 
                         taskList.reverse()
