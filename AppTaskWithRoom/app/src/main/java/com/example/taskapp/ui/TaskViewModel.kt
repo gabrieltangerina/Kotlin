@@ -3,32 +3,42 @@ package com.example.taskapp.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.taskapp.data.db.repository.TaskRepository
+import com.example.taskapp.data.model.Status
 import com.example.taskapp.data.model.Task
 import com.example.taskapp.util.StateView
 
-class TaskViewModel : ViewModel() {
+class TaskViewModel(private val repository: TaskRepository) : ViewModel() {
 
-    private val _taskList = MutableLiveData<StateView<List<Task>>>()
-    val taskList : LiveData<StateView<List<Task>>> = _taskList
+    // Eventos de dados (inserir, atualizar, listar, deletar)
+    private val _taskStateData = MutableLiveData<StateTask>()
+    val taskStateData : LiveData<StateTask> = _taskStateData
 
-    private val _taskInsert = MutableLiveData<StateView<Task>>()
-    val taskInsert : LiveData<StateView<Task>> = _taskInsert
+    // Eventos de mensagens (mensagens de erro, sucesso)
+    private val _taskStateMessage = MutableLiveData<Int>()
+    val taskStateMessage : LiveData<Int> = _taskStateMessage
 
-    private val _taskUpdate = MutableLiveData<StateView<Task>>()
-    val taskUpdate : LiveData<StateView<Task>> = _taskUpdate
-
-    private val _taskDelete = MutableLiveData<StateView<Task>>()
-    val taskDelete : LiveData<StateView<Task>> = _taskDelete
+    fun insertOrUpdateTask(
+        id: Long = 0,
+        description: String,
+        status: Status
+    ){
+        if(id == 0L){
+            insertTask(Task(description = description, status = status))
+        }else{
+            updateTask(Task(id, description, status))
+        }
+    }
 
     fun getTasks() {
 
     }
 
-    fun insertTask(task: Task) {
+    private fun insertTask(task: Task) {
 
     }
 
-    fun updateTask(task: Task){
+    private fun updateTask(task: Task){
 
     }
 
@@ -36,4 +46,11 @@ class TaskViewModel : ViewModel() {
 
     }
 
+}
+
+sealed class StateTask{
+    object Insert: StateTask()
+    object Update: StateTask()
+    object Delete: StateTask()
+    object List: StateTask()
 }
