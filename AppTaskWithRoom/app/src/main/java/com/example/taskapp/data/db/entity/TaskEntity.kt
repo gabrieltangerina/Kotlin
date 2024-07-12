@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.example.taskapp.data.model.Status
 
 @Entity(tableName = "task_table")
-class Task (
+class TaskEntity (
     @PrimaryKey(true)
     val id: Long,
 
