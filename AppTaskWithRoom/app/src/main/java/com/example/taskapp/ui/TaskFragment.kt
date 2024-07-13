@@ -32,21 +32,16 @@ class TaskFragment : Fragment() {
 
     private lateinit var taskAdapter: TaskAdapter
 
-    /*
-    * activityViewModels() centraliza os dados no contexto da activity, podendo acessa-los
-    * independente se o fragment outros fragments que tem acesso ao viewModel estão
-    * abertos ou não
-    */
-    private val viewModel:TaskViewModel by viewModels {
-        object :  ViewModelProvider.Factory {
+    private val viewModel: TaskListViewModel by viewModels {
+        object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
 
                 val database = AppDatabase.getDatabase(requireContext())
                 val repository = TaskRepository(database.taskDao())
 
-                if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
+                if (modelClass.isAssignableFrom(TaskListViewModel::class.java)) {
                     @Suppress("UNCHECKED_CAST")
-                    return TaskViewModel(repository) as T
+                    return TaskListViewModel(repository) as T
                 }
                 throw IllegalArgumentException("Unknown ViewModel class")
             }
@@ -67,7 +62,11 @@ class TaskFragment : Fragment() {
         initListeners()
         initRecyclerTask()
         observeViewModel()
-        viewModel.getTasks()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getAllTasks()
     }
 
     private fun initListeners() {
@@ -80,11 +79,14 @@ class TaskFragment : Fragment() {
     }
 
     private fun observeViewModel() {
-
+        viewModel.taskList.observe(viewLifecycleOwner){taskList ->
+            taskAdapter.submitList(taskList)
+            listEmpty(taskList)
+        }
     }
 
     private fun initRecyclerTask() {
-        taskAdapter = TaskAdapter{ task, option ->
+        taskAdapter = TaskAdapter { task, option ->
             optionSelected(task, option)
         }
 
@@ -96,40 +98,30 @@ class TaskFragment : Fragment() {
     }
 
     private fun optionSelected(task: Task, option: Int) {
-        when (option) {
-            TaskAdapter.SELECT_REMOVE -> {
-                showBottomSheet(
-                    titleDialog = R.string.text_title_dialog_confirm_delete_task,
-                    message = getString(R.string.text_message_dialog_confirm_delete_task),
-                    titleButton = R.string.text_button_dialog_confirm_delete_task,
-                    onClick = {
-                        viewModel.deleteTask(task)
-                    }
-                )
-            }
-
-            TaskAdapter.SELECT_EDIT -> {
-                val action = TaskFragmentDirections
-                    .actionTaskFragmentToFormTaskFragment(task)
-
-                findNavController().navigate(action)
-            }
-
-            TaskAdapter.SELECT_DETAILS -> {
-                Toast.makeText(requireContext(), "Detalhes ${task.description}", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-    }
-
-    private fun setPositionRecyclerView() {
-        taskAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                binding.rvTasks.scrollToPosition(0)
-            }
-
-        })
+//        when (option) {
+//            TaskAdapter.SELECT_REMOVE -> {
+//                showBottomSheet(
+//                    titleDialog = R.string.text_title_dialog_confirm_delete_task,
+//                    message = getString(R.string.text_message_dialog_confirm_delete_task),
+//                    titleButton = R.string.text_button_dialog_confirm_delete_task,
+//                    onClick = {
+//                        viewModel.deleteTask(task)
+//                    }
+//                )
+//            }
+//
+//            TaskAdapter.SELECT_EDIT -> {
+//                val action = TaskFragmentDirections
+//                    .actionTaskFragmentToFormTaskFragment(task)
+//
+//                findNavController().navigate(action)
+//            }
+//
+//            TaskAdapter.SELECT_DETAILS -> {
+//                Toast.makeText(requireContext(), "Detalhes ${task.description}", Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//        }
     }
 
     private fun listEmpty(taskList: List<Task>) {
@@ -138,6 +130,7 @@ class TaskFragment : Fragment() {
         } else {
             ""
         }
+        binding.progressBar.isVisible = false
     }
 
     override fun onDestroyView() {
