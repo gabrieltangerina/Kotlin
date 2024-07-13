@@ -52,7 +52,10 @@
     <string name="text_save_error_form_task_fragment">Erro ao salvar a tarefa</string>
 
     <string name="text_update_success_form_task_fragment">Tarefa atualizada com sucesso</string>
-    <string name="text_update_error_form_task_fragment">Erro ao atualizar tarefa</string>
+    <string name="text_update_error_form_task_fragment">Erro ao atualizar a tarefa</string>
+
+    <string name="text_delete_success_form_task_fragment">Tarefa removida com sucesso</string>
+    <string name="text_delete_error_form_task_fragment">Erro ao remover a tarefa</string>
 
     <string name="text_toolbar_update">Editando tarefa</string>
 
