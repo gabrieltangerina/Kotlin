@@ -9,6 +9,9 @@ class ServiceProvider {
 
     private val baseUrl = ""
 
+    /*
+    * Configurando serviço RetroFit e cliente OKHttp
+    */
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(30, TimeUnit.SECONDS)
