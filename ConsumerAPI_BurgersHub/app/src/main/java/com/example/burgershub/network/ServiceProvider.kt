@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 class ServiceProvider {
 
-    private val baseUrl = ""
+    private val baseUrl = "https://burgers-hub.p.rapidapi.com/"
 
     /*
     * Configurando serviço RetroFit e cliente OKHttp
