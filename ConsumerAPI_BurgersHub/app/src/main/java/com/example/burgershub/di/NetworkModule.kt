@@ -1,9 +1,11 @@
 package com.example.burgershub.di
 
+import android.content.Context
 import com.example.burgershub.network.ServiceProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -11,6 +13,6 @@ import dagger.hilt.components.SingletonComponent
 class NetworkModule {
 
     @Provides
-    fun providesServiceProvider() = ServiceProvider()
+    fun providesServiceProvider(@ApplicationContext context: Context) = ServiceProvider(context)
 
 }

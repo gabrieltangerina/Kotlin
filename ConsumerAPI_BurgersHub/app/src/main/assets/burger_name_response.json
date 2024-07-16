@@ -1,0 +1,47 @@
+{
+   "id": 2,
+   "name": "Egg McMuffin",
+   "images": [
+      {
+         "sm": "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Egg-McMuffin-1:1-4-product-tile-desktop"
+      },
+      {
+         "lg": "https://s7d1.scene7.com/is/image/mcdonalds/t-mcdonalds-Egg-McMuffin-1:product-header-mobile?wid=768&hei=443&dpr=off"
+      }
+   ],
+   "desc": "Our Egg McMuffin® breakfast sandwich is an excellent source of protein and oh so delicious. We place a freshly cracked Grade A egg on a toasted English Muffin topped with real butter and add lean Canadian bacon and melty American cheese. There are 310 calories in an Egg McMuffin®.",
+   "ingredients": [
+      {
+         "id": 1,
+         "name": "English Muffin",
+         "img": "https://s7d1.scene7.com/is/image/mcdonalds/english_muffin"
+      },
+      {
+         "id": 2,
+         "name": "Egg",
+         "img": "https://s7d1.scene7.com/is/image/mcdonalds/round_egg"
+      },
+      {
+         "id": 3,
+         "name": "Canadian Bacon",
+         "img": "https://s7d1.scene7.com/is/image/mcdonalds/canadian_bacon"
+      },
+      {
+         "id": 4,
+         "name": "Pasteurized Process American Cheese",
+         "img": "https://s7d1.scene7.com/is/image/mcdonalds/ingredient_american_cheese_180x180"
+      },
+      {
+         "id": 5,
+         "name": "Salted Butter",
+         "img": "https://s7d1.scene7.com/is/image/mcdonalds/butter_salted"
+      },
+      {
+         "id": 6,
+         "name": "Clarified Butter",
+         "img": "https://s7d1.scene7.com/is/image/mcdonalds/clarified_butter"
+      }
+   ],
+   "price": 5,
+   "veg": false
+}

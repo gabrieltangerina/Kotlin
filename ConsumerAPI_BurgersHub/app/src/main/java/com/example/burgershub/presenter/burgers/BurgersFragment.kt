@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.burgershub.databinding.FragmentBurgersBinding
 import com.example.burgershub.domain.model.Burger
@@ -66,7 +67,10 @@ class BurgersFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = BurgersAdapter(burgers) { burgerId ->
+                val action = BurgersFragmentDirections
+                    .actionBurgersFragmentToDetailsFragment(burgerId)
 
+                findNavController().navigate(action)
             }
         }
     }
