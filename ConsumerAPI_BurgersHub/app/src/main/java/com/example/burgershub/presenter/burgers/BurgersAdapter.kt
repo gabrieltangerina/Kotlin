@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso
 
 class BurgersAdapter(
     private val burgers: List<Burger>,
-    private val burgerClick: (Int) -> View
+    private val burgerClick: (Int) -> Unit
 ) : RecyclerView.Adapter<BurgersAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
