@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.burgershub.databinding.FragmentDetailsBinding
 import com.example.burgershub.domain.model.Burger
+import com.example.burgershub.domain.model.Ingredient
 import com.example.burgershub.util.StateView
 import com.example.burgershub.util.formattedValue
 import com.squareup.picasso.Picasso
@@ -41,6 +43,10 @@ class DetailsFragment : Fragment() {
         initListeners()
     }
 
+    private fun initListeners(){
+        binding.btnBack.setOnClickListener { findNavController().popBackStack() }
+    }
+
     private fun getBurgerById() {
         viewModel.getBurgerById(args.burgerId).observe(viewLifecycleOwner){ stateView ->
             when(stateView){
@@ -60,10 +66,6 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun initListeners(){
-        binding.btnBack.setOnClickListener { findNavController().popBackStack() }
-    }
-
     private fun configData(burger: Burger){
 
         Picasso
@@ -75,6 +77,15 @@ class DetailsFragment : Fragment() {
         binding.textDescription.text = burger.desc
         binding.textPrice.text = burger.price?.formattedValue()
 
+        initRecycler(burger.ingredient ?: emptyList())
+    }
+
+    private fun initRecycler(ingredients: List<Ingredient?>){
+        with(binding.rvIngredients){
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = IngredientsAdapter(ingredients)
+        }
     }
 
     override fun onDestroyView() {

@@ -18,7 +18,6 @@ interface ServiceAPI {
         @Path("burger_id") burgerId: Int
     ): BurgerResponse
 
-
     @MOCK(asset = "burger_name_response.json", runDelay = true)
     @GET("find-burger/?search={}")
     suspend fun getBurgersByName(
