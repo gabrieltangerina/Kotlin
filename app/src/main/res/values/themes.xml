@@ -1,9 +1,18 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.MovieApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Theme.MovieApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/color_default</item>
+        <item name="colorPrimaryVariant">@color/color_default</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color_default</item>
+        <item name="colorSecondaryVariant">@color/color_default</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
-    <style name="Theme.MovieApp" parent="Base.Theme.MovieApp" />
 </resources>
