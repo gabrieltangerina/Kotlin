@@ -7,6 +7,7 @@
     <color name="error">#F75555</color>
     <color name="disabled">#D8D8D8</color>
     <color name="disabled_button">#C1232F</color>
+    <color name="color_border">#EEEEEE</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
