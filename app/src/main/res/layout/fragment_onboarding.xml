@@ -29,7 +29,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:style="@style/ThemeButton"
+        style="@style/ThemeButton"
         android:text="Iniciar"
         android:layout_marginHorizontal="24dp"
         android:layout_marginBottom="32dp"
