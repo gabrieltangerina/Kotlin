@@ -4,17 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presenter.burgers.BurgersFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_burgers"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        tools:listitem="@layout/burger_item"
         android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_edit_search"
+            app:queryHint="Pesquisar..."
+            android:drawableStart="@drawable/ic_search_line"
+            android:drawableTint="#5A5A5B"
+            android:theme="@style/SearchViewTheme"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/transparent"
+            android:layout_height="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_burgers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/burger_item" />
+
+    </LinearLayout>
+
 
     <ProgressBar
         android:id="@+id/progress_bar"
