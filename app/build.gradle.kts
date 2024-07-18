@@ -54,6 +54,10 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-storage")
 
+    // Dagger Hilt
+    implementation("com.google.dagger:hilt-android:2.44")
+    implementation("com.google.dagger:hilt-android-compiler:2.44")
+
     // Test
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
