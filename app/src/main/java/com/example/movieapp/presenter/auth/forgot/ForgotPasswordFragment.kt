@@ -14,6 +14,8 @@ import com.example.movieapp.databinding.FragmentForgotPasswordBinding
 import com.example.movieapp.databinding.FragmentLoginBinding
 import com.example.movieapp.presenter.auth.login.LoginViewModel
 import com.example.movieapp.util.StateView
+import com.example.movieapp.util.hideKeyboard
+import com.example.movieapp.util.isEmailValid
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +41,7 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun initListeners() {
+        binding.btnForgot.setOnClickListener { validateData() }
 
         Glide
             .with(requireContext())
@@ -49,26 +52,30 @@ class ForgotPasswordFragment : Fragment() {
     private fun validateData() {
         val email = binding.editEmail.text.toString().trim()
 
-        if (email.isEmpty()) Toast.makeText(
+        if (email.isEmailValid()) Toast.makeText(
             requireContext(),
             "Email inválido",
             Toast.LENGTH_SHORT
         ).show()
 
-
+        hideKeyboard()
         sendMessageForgotPassword(email)
     }
 
     private fun sendMessageForgotPassword(email: String) {
-        viewModel.forgotPassword(email).observe(viewLifecycleOwner){stateView ->
-            when(stateView){
+        viewModel.forgotPassword(email).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.progressLoading.isVisible = true
                 }
 
                 is StateView.Success -> {
                     binding.progressLoading.isVisible = false
-                    Toast.makeText(requireContext(), "Mensagem enviada para seu email", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Mensagem enviada para seu email",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 is StateView.Error -> {
