@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentLoginBinding
@@ -46,6 +47,10 @@ class LoginFragment : Fragment() {
             .with(requireContext())
             .load(R.drawable.loading)
             .into(binding.progressLoading);
+
+        binding.btnForgot.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
     }
 
     private fun validateData() {
@@ -69,14 +74,18 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginUser(email: String, password: String) {
-        viewModel.login(email, password).observe(viewLifecycleOwner){stateView ->
-            when(stateView){
+        viewModel.login(email, password).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.progressLoading.isVisible = true
                 }
 
                 is StateView.Success -> {
-                    Toast.makeText(requireContext(), "Login realizado com sucesso", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Login realizado com sucesso",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 is StateView.Error -> {
