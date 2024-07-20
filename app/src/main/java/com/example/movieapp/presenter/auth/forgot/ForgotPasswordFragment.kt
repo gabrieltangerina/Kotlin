@@ -15,6 +15,7 @@ import com.example.movieapp.databinding.FragmentLoginBinding
 import com.example.movieapp.presenter.auth.login.LoginViewModel
 import com.example.movieapp.util.StateView
 import com.example.movieapp.util.hideKeyboard
+import com.example.movieapp.util.initToolbar
 import com.example.movieapp.util.isEmailValid
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,6 +38,7 @@ class ForgotPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initToolbar(binding.toolbar)
         initListeners()
     }
 
