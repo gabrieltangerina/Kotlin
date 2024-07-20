@@ -46,10 +46,19 @@
     <string name="text_send_email_success_forgot_fragment">E-mail enviado com sucesso. Por favor, verifique sua caixa de mensagens</string>
 
     <!--    Erros Firebase Authentication-->
-    <string name="account_not_registered_register_fragment">Nenhuma conta encontrada com este e-mail.</string>
+    <string name="account_not_registered_register_fragment">E-mail ou senha inválidos.</string>
     <string name="invalid_email_register_fragment">Insira um e-mail válido.</string>
     <string name="invalid_password_register_fragment">Senha inválida, tente novamente.</string>
     <string name="email_in_use_register_fragment">Este e-mail já está em uso.</string>
     <string name="strong_password_register_fragment">Insira uma senha mais forte.</string>
+
+    <!--    BottomBar-->
+    <string name="title_menu_home">Início</string>
+    <string name="title_menu_search">Pesquisar</string>
+    <string name="title_menu_favorite">Favorite</string>
+    <string name="title_menu_download">Baixar</string>
+    <string name="title_menu_profile">Perfil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

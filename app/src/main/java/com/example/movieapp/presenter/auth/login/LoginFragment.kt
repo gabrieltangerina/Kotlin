@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentLoginBinding
-import com.example.movieapp.presenter.MainActivity
+import com.example.movieapp.presenter.main.activity.MainActivity
 import com.example.movieapp.util.FirebaseHelper
 import com.example.movieapp.util.StateView
 import com.example.movieapp.util.hideKeyboard
