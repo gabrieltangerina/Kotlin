@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">MovieApp</string>
 
+    <!--  Generic -->
+    <string name="text_name_empty">Digite seu nome</string>
+    <string name="text_email_empty">Digite seu e-mail</string>
+    <string name="text_email_invalid">E-mail inválido</string>
+    <string name="text_phone_empty">Digite seu telefone</string>
+    <string name="text_phone_invalid">Digite um telefone válido</string>
+    <string name="text_password_empty">Digite sua senha</string>
+    <string name="error_generic">Ocorreu um erro, por favor tente novamente mais tarde.</string>
+    <string name="text_formated_value">R$ %1$s</string>
+
     <!--  HomeAuthFragment  -->
     <string name="title_home_auth_fragment">Entrar com</string>
     <string name="button_continue_with_facebook_home_auth_fragment">Continuar com o Facebook</string>
@@ -15,14 +25,15 @@
 
     <!--  RegisterAuthFragment  -->
     <string name="title_register_fragment">Crie sua conta</string>
-    <string name="text_hint_edit_mail_register_fragment">Email</string>
+    <string name="text_hint_edit_mail_register_fragment">E-mail</string>
     <string name="text_hint_edit_password_register_fragment">Senha</string>
     <string name="text_button_sign_up_register_fragment">Inscrever-se</string>
     <string name="text_continue_social_network_register_fragment">ou continuar com</string>
+    <string name="text_password_empty_register_fragment">Digite uma senha</string>
 
     <!--    LoginFragment-->
     <string name="title_login_fragment">Faça login na sua conta</string>
-    <string name="text_hint_edit_email_login_fragment">Email</string>
+    <string name="text_hint_edit_email_login_fragment">E-mail</string>
     <string name="text_hint_edit_password_login_fragment">Senha</string>
     <string name="text_button_sign_in_login_fragment">Entrar</string>
     <string name="text_forgot_password_login_fragment">Esqueceu a senha?</string>
@@ -30,8 +41,15 @@
 
     <!-- ForgotPasswordFragment   -->
     <string name="title_forgot_fragment">Criar nova senha</string>
-    <string name="text_hint_edit_email_forgot_fragment">Email</string>
+    <string name="text_hint_edit_email_forgot_fragment">E-mail</string>
     <string name="text_button_forgot_fragment">Recuperar conta</string>
+    <string name="text_send_email_success_forgot_fragment">E-mail enviado com sucesso. Por favor, verifique sua caixa de mensagens</string>
 
+    <!--    Erros Firebase Authentication-->
+    <string name="account_not_registered_register_fragment">Nenhuma conta encontrada com este e-mail.</string>
+    <string name="invalid_email_register_fragment">Insira um e-mail válido.</string>
+    <string name="invalid_password_register_fragment">Senha inválida, tente novamente.</string>
+    <string name="email_in_use_register_fragment">Este e-mail já está em uso.</string>
+    <string name="strong_password_register_fragment">Insira uma senha mais forte.</string>
 
 </resources>

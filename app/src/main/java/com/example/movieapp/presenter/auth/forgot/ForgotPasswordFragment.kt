@@ -13,10 +13,12 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentForgotPasswordBinding
 import com.example.movieapp.databinding.FragmentLoginBinding
 import com.example.movieapp.presenter.auth.login.LoginViewModel
+import com.example.movieapp.util.FirebaseHelper
 import com.example.movieapp.util.StateView
 import com.example.movieapp.util.hideKeyboard
 import com.example.movieapp.util.initToolbar
 import com.example.movieapp.util.isEmailValid
+import com.example.movieapp.util.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,11 +56,10 @@ class ForgotPasswordFragment : Fragment() {
     private fun validateData() {
         val email = binding.editEmail.text.toString().trim()
 
-        if (email.isEmailValid()) Toast.makeText(
-            requireContext(),
-            "Email inválido",
-            Toast.LENGTH_SHORT
-        ).show()
+        if (!email.isEmailValid()){
+            showSnackBar(message = R.string.text_email_invalid)
+            return
+        }
 
         hideKeyboard()
         sendMessageForgotPassword(email)
@@ -73,16 +74,12 @@ class ForgotPasswordFragment : Fragment() {
 
                 is StateView.Success -> {
                     binding.progressLoading.isVisible = false
-                    Toast.makeText(
-                        requireContext(),
-                        "Mensagem enviada para seu email",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showSnackBar(message = R.string.text_send_email_success_forgot_fragment)
                 }
 
                 is StateView.Error -> {
                     binding.progressLoading.isVisible = false
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                    showSnackBar(message = FirebaseHelper.validError(stateView.message ?: ""))
                 }
             }
         }
