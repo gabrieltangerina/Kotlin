@@ -14,7 +14,7 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getGenres(apiKey: String, language: String?): GenresResponse {
         return serviceAPI.getGenres(
             apiKey = apiKey,
-            language = Constants.Movie.language
+            language =language
         )
     }
 
@@ -25,7 +25,7 @@ class MovieRepositoryImpl @Inject constructor(
     ): List<MovieResponse> {
         return serviceAPI.getMoviesByGenre(
             apiKey = apiKey,
-            language = Constants.Movie.language,
+            language = language,
             genreId = genreId
         ).results ?: emptyList()
     }
