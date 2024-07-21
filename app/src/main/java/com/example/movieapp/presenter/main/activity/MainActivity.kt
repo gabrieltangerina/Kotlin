@@ -1,8 +1,7 @@
 package com.example.movieapp.presenter.main.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
