@@ -81,7 +81,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-
     }
 
     private fun initRecycler() {
