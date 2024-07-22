@@ -39,4 +39,25 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun getMoviesByGenre(genreId: Int?) = liveData(Dispatchers.IO) {
+        try {
+            emit(StateView.Loading())
+
+            val movies = getMoviesByGenreUseCase.invoke(
+                BuildConfig.API_KEY,
+                Constants.Movie.LANGUAGE,
+                genreId = genreId
+            )
+
+            emit(StateView.Success(movies))
+
+        }catch (ex: HttpException){
+            ex.printStackTrace()
+            emit(StateView.Error(ex.message))
+        }catch (ex: Exception){
+            ex.printStackTrace()
+            emit(StateView.Error(ex.message))
+        }
+    }
+
 }

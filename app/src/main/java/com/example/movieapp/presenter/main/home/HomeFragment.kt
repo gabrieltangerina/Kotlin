@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.databinding.FragmentHomeBinding
 import com.example.movieapp.presenter.main.home.adapter.GenreMovieAdapter
+import com.example.movieapp.presenter.model.GenrePresentation
 import com.example.movieapp.util.StateView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -42,19 +46,48 @@ class HomeFragment : Fragment() {
             when (stateView) {
                 is StateView.Loading -> {
                 }
+
                 is StateView.Success -> {
-                    genreMovieAdapter.submitList(stateView.data)
+                    val genres = stateView.data
+                    genreMovieAdapter.submitList(genres)
+                    getMoviesByGenre(genres ?: emptyList())
                 }
+
                 is StateView.Error -> {
                 }
             }
         }
     }
 
-    private fun initRecycler(){
+    private fun getMoviesByGenre(genres: List<GenrePresentation>) {
+        val genreMutableList = genres.toMutableList()
+
+        genreMutableList.forEachIndexed{index, genre ->
+            viewModel.getMoviesByGenre(genre.id).observe(viewLifecycleOwner){ stateView ->
+                when(stateView){
+                    is StateView.Loading -> {
+
+                    }
+                    is StateView.Success -> {
+                        genreMutableList[index] = genre.copy(movies = stateView.data)
+                        lifecycleScope.launch {
+                            delay(1000)
+                            genreMovieAdapter.submitList(genreMutableList)
+                        }
+                    }
+                    is StateView.Error -> {
+
+                    }
+                }
+            }
+        }
+
+    }
+
+    private fun initRecycler() {
         genreMovieAdapter = GenreMovieAdapter()
 
-        with(binding.recyclerGenres){
+        with(binding.recyclerGenres) {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = genreMovieAdapter
