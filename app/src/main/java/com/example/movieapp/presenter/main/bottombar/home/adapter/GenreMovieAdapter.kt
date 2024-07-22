@@ -1,4 +1,4 @@
-package com.example.movieapp.presenter.main.home.adapter
+package com.example.movieapp.presenter.main.bottombar.home.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.databinding.GenreItemBinding
 import com.example.movieapp.presenter.model.GenrePresentation
 
-class GenreMovieAdapter :
+class GenreMovieAdapter(
+    private val showAllListener: (Int) -> Unit
+) :
     ListAdapter<GenrePresentation, GenreMovieAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -47,6 +49,10 @@ class GenreMovieAdapter :
         val genre = getItem(position)
 
         holder.binding.genreName.text = genre.name
+
+        holder.binding.textShowAll.setOnClickListener {
+            genre.id?.let { showAllListener(it) }
+        }
 
         val movieAdapter = MovieAdapter(holder.binding.root.context)
         val layoutManager = LinearLayoutManager(
