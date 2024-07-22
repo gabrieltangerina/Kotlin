@@ -7,7 +7,8 @@ import com.example.movieapp.domain.model.Movie
 
 fun GenreResponse.toDomain(): Genre {
     return Genre(
-        id, name
+        id = id,
+        name = name
     )
 }
 

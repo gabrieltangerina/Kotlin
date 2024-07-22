@@ -9,12 +9,12 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val serviceAPI: ServiceAPI
-): MovieRepository {
+) : MovieRepository {
 
     override suspend fun getGenres(apiKey: String, language: String?): GenresResponse {
         return serviceAPI.getGenres(
             apiKey = apiKey,
-            language =language
+            language = language
         )
     }
 
