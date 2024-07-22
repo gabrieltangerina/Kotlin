@@ -1,5 +1,6 @@
 package com.example.movieapp.presenter.main.home.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -41,6 +42,7 @@ class GenreMovieAdapter :
         )
     }
 
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val genre = getItem(position)
 
@@ -57,8 +59,8 @@ class GenreMovieAdapter :
         holder.binding.recyclerMovies.setHasFixedSize(true)
         holder.binding.recyclerMovies.adapter = movieAdapter
         movieAdapter.submitList(genre.movies)
-
     }
+
 
     inner class MyViewHolder(val binding: GenreItemBinding) :
         RecyclerView.ViewHolder(binding.root)
