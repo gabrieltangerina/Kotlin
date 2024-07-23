@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movieapp.R
 import com.example.movieapp.databinding.GenreItemBinding
 import com.example.movieapp.presenter.model.GenrePresentation
 
@@ -54,7 +55,11 @@ class GenreMovieAdapter(
             genre.id?.let { showAllListener(it) }
         }
 
-        val movieAdapter = MovieAdapter(holder.binding.root.context)
+        val movieAdapter = MovieAdapter(
+            context = holder.binding.root.context,
+            layoutInflater = R.layout.movie_item
+        )
+
         val layoutManager = LinearLayoutManager(
             holder.binding.root.context,
             LinearLayoutManager.HORIZONTAL,

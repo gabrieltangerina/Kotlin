@@ -54,7 +54,10 @@ class MovieGenreFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        movieAdapter = MovieAdapter(requireContext())
+        movieAdapter = MovieAdapter(
+            context = requireContext(),
+            layoutInflater = R.layout.movie_genre_item
+        )
 
         with(binding.recyclerMovies) {
             layoutManager = GridLayoutManager(requireContext(), 2)
