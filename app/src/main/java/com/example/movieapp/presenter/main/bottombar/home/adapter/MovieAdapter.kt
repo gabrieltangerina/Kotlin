@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
-import com.example.movieapp.databinding.MovieItemBinding
 import com.example.movieapp.domain.model.Movie
 
 class MovieAdapter(
     private val context: Context,
-    private val layoutInflater: Int
+    private val layoutInflater: Int,
+    private val movieClickListener: (Int?) -> Unit
 ) : ListAdapter<Movie, MovieAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -38,6 +38,8 @@ class MovieAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val movie = getItem(position)
+
+        holder.itemView.setOnClickListener { movieClickListener(movie.id) }
 
         Glide
             .with(context)

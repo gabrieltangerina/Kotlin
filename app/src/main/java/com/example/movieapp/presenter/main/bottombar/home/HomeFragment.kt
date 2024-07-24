@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.movieapp.MainGraphDirections
 import com.example.movieapp.databinding.FragmentHomeBinding
 import com.example.movieapp.presenter.main.bottombar.home.adapter.GenreMovieAdapter
 import com.example.movieapp.presenter.model.GenrePresentation
@@ -63,12 +64,13 @@ class HomeFragment : Fragment() {
     private fun getMoviesByGenre(genres: List<GenrePresentation>) {
         val genreMutableList = genres.toMutableList()
 
-        genreMutableList.forEachIndexed{index, genre ->
-            viewModel.getMoviesByGenre(genre.id).observe(viewLifecycleOwner){ stateView ->
-                when(stateView){
+        genreMutableList.forEachIndexed { index, genre ->
+            viewModel.getMoviesByGenre(genre.id).observe(viewLifecycleOwner) { stateView ->
+                when (stateView) {
                     is StateView.Loading -> {
 
                     }
+
                     is StateView.Success -> {
                         genreMutableList[index] = genre.copy(movies = stateView.data?.take(5))
                         lifecycleScope.launch {
@@ -76,6 +78,7 @@ class HomeFragment : Fragment() {
                             genreMovieAdapter.submitList(genreMutableList)
                         }
                     }
+
                     is StateView.Error -> {
 
                     }
@@ -85,12 +88,20 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        genreMovieAdapter = GenreMovieAdapter{genreId, genreName ->
-            val action = HomeFragmentDirections
-                .actionMenuHomeToMovieGenreFragment(genreId, genreName)
+        genreMovieAdapter = GenreMovieAdapter(
+            showAllListener = { genreId, genreName ->
+                val action = HomeFragmentDirections
+                    .actionMenuHomeToMovieGenreFragment(genreId, genreName)
 
-            findNavController().navigate(action)
-        }
+                findNavController().navigate(action)
+            },
+            movieClickListener = { movieId ->
+                movieId?.let {
+                    val action = MainGraphDirections.actionGlobalMovieDetailsFragment(it)
+                    findNavController().navigate(action)
+                }
+            }
+        )
 
         with(binding.recyclerGenres) {
             layoutManager = LinearLayoutManager(requireContext())
