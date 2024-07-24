@@ -87,11 +87,32 @@ class MovieGenreFragment : Fragment() {
         }
     }
 
+    private fun searchMovies(query: String) {
+        viewModel.searchMovies(query).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+                    binding.recyclerMovies.isVisible = false
+                    binding.progressBar.isVisible = true
+                }
+
+                is StateView.Success -> {
+                    binding.progressBar.isVisible = false
+                    movieAdapter.submitList(stateView.data)
+                    binding.recyclerMovies.isVisible = true
+                }
+
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                }
+            }
+        }
+    }
+
     private fun initSearchView(){
         binding.simpleSearchView.setOnQueryTextListener(object : SimpleSearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                Log.d("SimpleSearchView", "Submit:$query")
+                if(query.isNotEmpty()) searchMovies(query)
                 return false
             }
 
