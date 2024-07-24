@@ -72,12 +72,14 @@ class MovieGenreFragment : Fragment() {
         viewModel.getMoviesByGenre(args.genreId).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {
+                    binding.recyclerMovies.isVisible = false
                     binding.progressBar.isVisible = true
                 }
 
                 is StateView.Success -> {
-                    movieAdapter.submitList(stateView.data)
                     binding.progressBar.isVisible = false
+                    movieAdapter.submitList(stateView.data)
+                    binding.recyclerMovies.isVisible = true
                 }
 
                 is StateView.Error -> {
@@ -108,22 +110,41 @@ class MovieGenreFragment : Fragment() {
         }
     }
 
-    private fun initSearchView(){
-        binding.simpleSearchView.setOnQueryTextListener(object : SimpleSearchView.OnQueryTextListener {
+    private fun initSearchView() {
+        binding.simpleSearchView.setOnQueryTextListener(object :
+            SimpleSearchView.OnQueryTextListener {
 
             override fun onQueryTextSubmit(query: String): Boolean {
-                if(query.isNotEmpty()) searchMovies(query)
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                Log.d("SimpleSearchView", "Text changed:$newText")
+                if (newText.isNotEmpty()) searchMovies(newText)
                 return false
             }
 
             override fun onQueryTextCleared(): Boolean {
-                Log.d("SimpleSearchView", "Text cleared")
+                getMoviesByGenre()
                 return false
+            }
+        })
+
+        binding.simpleSearchView.setOnSearchViewListener(object :
+            SimpleSearchView.SearchViewListener {
+            override fun onSearchViewShown() {
+                Log.d("SimpleSearchView", "onSearchViewShown")
+            }
+
+            override fun onSearchViewClosed() {
+                getMoviesByGenre()
+            }
+
+            override fun onSearchViewShownAnimation() {
+                Log.d("SimpleSearchView", "onSearchViewShownAnimation")
+            }
+
+            override fun onSearchViewClosedAnimation() {
+                Log.d("SimpleSearchView", "onSearchViewClosedAnimation")
             }
         })
     }
