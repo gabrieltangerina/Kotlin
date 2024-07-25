@@ -1,18 +1,15 @@
 package com.example.movieapp.presenter.auth.forgot
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentForgotPasswordBinding
-import com.example.movieapp.databinding.FragmentLoginBinding
-import com.example.movieapp.presenter.auth.login.LoginViewModel
 import com.example.movieapp.util.FirebaseHelper
 import com.example.movieapp.util.StateView
 import com.example.movieapp.util.hideKeyboard

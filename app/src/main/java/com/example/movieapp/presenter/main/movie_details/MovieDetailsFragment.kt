@@ -15,6 +15,7 @@ import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.presenter.main.moviegenre.MovieGenreFragmentArgs
 import com.example.movieapp.util.StateView
+import com.example.movieapp.util.getYearFromDate
 import com.example.movieapp.util.initToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,6 +69,9 @@ class MovieDetailsFragment : Fragment() {
             .into(binding.imageMovie)
 
         binding.textMovie.text = movie?.title
+        binding.textVoteAverage.text = String.format("%.1f", movie?.voteAverage)
+        binding.textProductionCountry.text = movie?.productionCountries?.get(0)?.name ?: ""
+        binding.textReleaseDate.text = movie?.releaseDate?.getYearFromDate()
     }
 
     override fun onDestroyView() {

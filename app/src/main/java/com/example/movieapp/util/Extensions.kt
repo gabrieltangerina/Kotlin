@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.movieapp.R
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
 
 fun Fragment.hideKeyboard() {
     val view = activity?.currentFocus
@@ -20,6 +21,13 @@ fun Fragment.hideKeyboard() {
 fun String.isEmailValid(): Boolean {
     val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+")
     return emailPattern.matches(this)
+}
+
+fun String.getYearFromDate(): String{
+    val originalFormat = SimpleDateFormat("yyyy-MM-dd")
+    val date = originalFormat.parse(this)
+    val year = SimpleDateFormat("yyyy")
+    return year.format(date)
 }
 
 fun Fragment.initToolbar(

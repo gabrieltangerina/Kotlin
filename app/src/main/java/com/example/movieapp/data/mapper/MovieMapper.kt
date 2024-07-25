@@ -1,7 +1,9 @@
 package com.example.movieapp.data.mapper
 
+import com.example.movieapp.data.model.CountryResponse
 import com.example.movieapp.data.model.GenreResponse
 import com.example.movieapp.data.model.MovieResponse
+import com.example.movieapp.domain.model.Country
 import com.example.movieapp.domain.model.Genre
 import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.presenter.model.GenrePresentation
@@ -28,7 +30,14 @@ fun MovieResponse.toDomain(): Movie {
         title = title,
         video = video,
         voteAverage = voteAverage,
-        voteCount = voteCount
+        voteCount = voteCount,
+        productionCountries = productionCountries?.map { it.toDomain() }
+    )
+}
+
+fun CountryResponse.toDomain(): Country{
+    return Country(
+        name = name
     )
 }
 
@@ -39,3 +48,4 @@ fun Genre.toPresentation() : GenrePresentation{
         movies = emptyList()
     )
 }
+
