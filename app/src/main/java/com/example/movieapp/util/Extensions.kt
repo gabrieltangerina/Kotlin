@@ -22,12 +22,19 @@ fun String.isEmailValid(): Boolean {
     return emailPattern.matches(this)
 }
 
-fun Fragment.initToolbar(toolbar: Toolbar, showIconNavigation: Boolean = true) {
+fun Fragment.initToolbar(
+    toolbar: Toolbar,
+    showIconNavigation: Boolean = true,
+    lightIcon: Boolean = false
+) {
+
+    val iconBack = if (lightIcon) R.drawable.ic_back_white else R.drawable.ic_back
+
     (activity as AppCompatActivity).setSupportActionBar(toolbar)
     (activity as AppCompatActivity).title = ""
 
-    if(showIconNavigation){
-        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+    if (showIconNavigation) {
+        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(iconBack)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
@@ -40,6 +47,6 @@ fun Fragment.initToolbar(toolbar: Toolbar, showIconNavigation: Boolean = true) {
 fun Fragment.showSnackBar(
     message: Int,
     duration: Int = Snackbar.LENGTH_SHORT
-){
+) {
     view?.let { Snackbar.make(it, message, duration).show() }
 }
