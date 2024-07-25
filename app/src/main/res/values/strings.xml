@@ -65,6 +65,10 @@
     <!--  SimpleSearchView  -->
     <string name="text_search_hint_movie_genre_fragment">Pesquisar...</string>
 
+    <!--  MovieDetailsFragment  -->
+    <string name="text_all_genres_movie_details_fragment">Gênero: %1$s</string>
+    <string name="text_button_play_movie_details_fragment">Play</string>
+    <string name="text_button_download_movie_details_fragment">Download</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

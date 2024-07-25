@@ -72,6 +72,8 @@ class MovieDetailsFragment : Fragment() {
         binding.textVoteAverage.text = String.format("%.1f", movie?.voteAverage)
         binding.textProductionCountry.text = movie?.productionCountries?.get(0)?.name ?: ""
         binding.textReleaseDate.text = movie?.releaseDate?.getYearFromDate()
+        val genres = movie?.genres?.map { it.name }?.joinToString(", ")
+        binding.textGenres.text = getString(R.string.text_all_genres_movie_details_fragment, genres)
     }
 
     override fun onDestroyView() {
