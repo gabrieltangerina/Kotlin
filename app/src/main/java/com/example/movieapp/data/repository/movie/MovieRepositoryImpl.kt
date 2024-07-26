@@ -4,14 +4,13 @@ import com.example.movieapp.data.api.ServiceAPI
 import com.example.movieapp.data.model.GenresResponse
 import com.example.movieapp.data.model.MovieResponse
 import com.example.movieapp.domain.repository.movie.MovieRepository
-import com.example.movieapp.util.Constants
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val serviceAPI: ServiceAPI
 ) : MovieRepository {
 
-    override suspend fun getGenres(apiKey: String, language: String?): GenresResponse {
+    override suspend fun getGenres(apiKey: String?, language: String?): GenresResponse {
         return serviceAPI.getGenres(
             apiKey = apiKey,
             language = language
@@ -19,7 +18,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getMoviesByGenre(
-        apiKey: String,
+        apiKey: String?,
         language: String?,
         genreId: Int?
     ): List<MovieResponse> {
@@ -31,7 +30,7 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     override suspend fun searchMovies(
-        apiKey: String,
+        apiKey: String?,
         language: String?,
         query: String?
     ): List<MovieResponse> {
@@ -40,18 +39,6 @@ class MovieRepositoryImpl @Inject constructor(
             language = language,
             query = query
         ).results ?: emptyList()
-    }
-
-    override suspend fun getMovieDetails(
-        apiKey: String,
-        language: String?,
-        movieId: Int?
-    ): MovieResponse {
-       return serviceAPI.getMovieDetails(
-           apiKey = apiKey,
-           language = language,
-           movieId = movieId
-       )
     }
 
 }
