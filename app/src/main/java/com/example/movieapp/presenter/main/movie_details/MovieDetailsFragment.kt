@@ -5,19 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
-import com.example.movieapp.databinding.FragmentHomeBinding
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.presenter.main.movie_details.adapter.CastAdapter
 import com.example.movieapp.presenter.main.movie_details.adapter.ViewPagerAdapter
-import com.example.movieapp.presenter.main.moviegenre.MovieGenreFragmentArgs
 import com.example.movieapp.util.StateView
 import com.example.movieapp.util.getYearFromDate
 import com.example.movieapp.util.initToolbar
@@ -30,7 +27,7 @@ class MovieDetailsFragment : Fragment() {
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MovieDetailsViewModel by viewModels()
+    private val viewModel: MovieDetailsViewModel by activityViewModels()
     private val args: MovieDetailsFragmentArgs by navArgs()
 
     private lateinit var castAdapter: CastAdapter
@@ -53,11 +50,13 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun configTabLayout(){
+        viewModel.setMovieId(movieId = args.movieId)
+
         val adapter = ViewPagerAdapter(requireActivity())
         binding.viewPager.adapter = adapter
 
         adapter.addFragment(TrailersFragment(), R.string.title_trailers_tab_layout)
-        adapter.addFragment(SimilarFragment(), R.string.title_similar_tab_layout)
+        adapter.addFragment(SimilarMoviesFragment(), R.string.title_similar_tab_layout)
         adapter.addFragment(CommentsFragment(), R.string.title_comments_tab_layout)
 
         binding.viewPager.offscreenPageLimit = adapter.itemCount
