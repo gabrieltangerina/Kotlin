@@ -1,4 +1,4 @@
-package com.example.movieapp.presenter.main.moviedetails.comments
+package com.example.movieapp.presenter.main.moviedetails.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.movieapp.databinding.CastItemBinding
 import com.example.movieapp.databinding.ItemCommentBinding
 import com.example.movieapp.domain.model.MovieReview
 import com.example.movieapp.util.formatCommentDate

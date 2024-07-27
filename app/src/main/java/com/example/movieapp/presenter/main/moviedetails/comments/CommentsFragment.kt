@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.databinding.FragmentCommentsBinding
 import com.example.movieapp.domain.model.AuthorDetails
 import com.example.movieapp.domain.model.MovieReview
-import com.example.movieapp.util.formatCommentDate
+import com.example.movieapp.presenter.main.moviedetails.adapter.CommentsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

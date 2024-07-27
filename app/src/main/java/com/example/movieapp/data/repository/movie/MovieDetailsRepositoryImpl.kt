@@ -3,6 +3,7 @@ package com.example.movieapp.data.repository.movie
 import com.example.movieapp.data.api.ServiceAPI
 import com.example.movieapp.data.model.CreditResponse
 import com.example.movieapp.data.model.MovieResponse
+import com.example.movieapp.data.model.MovieReviewResponse
 import com.example.movieapp.domain.repository.movie.MovieDetailsRepository
 import javax.inject.Inject
 
@@ -40,6 +41,18 @@ class MovieDetailsRepositoryImpl @Inject constructor(
         movieId: Int?
     ): List<MovieResponse> {
         return serviceAPI.getSimilarMovies(
+            apiKey = apiKey,
+            language = language,
+            movieId = movieId
+        ).results ?: emptyList()
+    }
+
+    override suspend fun getMovieReviews(
+        apiKey: String?,
+        language: String?,
+        movieId: Int?
+    ): List<MovieReviewResponse> {
+        return serviceAPI.getMovieReviews(
             apiKey = apiKey,
             language = language,
             movieId = movieId
