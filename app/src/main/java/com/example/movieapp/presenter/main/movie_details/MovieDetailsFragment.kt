@@ -16,10 +16,12 @@ import com.example.movieapp.databinding.FragmentHomeBinding
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.presenter.main.movie_details.adapter.CastAdapter
+import com.example.movieapp.presenter.main.movie_details.adapter.ViewPagerAdapter
 import com.example.movieapp.presenter.main.moviegenre.MovieGenreFragmentArgs
 import com.example.movieapp.util.StateView
 import com.example.movieapp.util.getYearFromDate
 import com.example.movieapp.util.initToolbar
+import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,6 +49,22 @@ class MovieDetailsFragment : Fragment() {
         initToolbar(toolbar = binding.toolbar, lightIcon = true)
         initRecyclerCredits()
         getMovieDetails()
+        configTabLayout()
+    }
+
+    private fun configTabLayout(){
+        val adapter = ViewPagerAdapter(requireActivity())
+        binding.viewPager.adapter = adapter
+
+        adapter.addFragment(TrailersFragment(), R.string.title_trailers_tab_layout)
+        adapter.addFragment(SimilarFragment(), R.string.title_similar_tab_layout)
+        adapter.addFragment(CommentsFragment(), R.string.title_comments_tab_layout)
+
+        binding.viewPager.offscreenPageLimit = adapter.itemCount
+
+        TabLayoutMediator(binding.tabs, binding.viewPager){tab, position ->
+            tab.text = getString(adapter.getTitle(position))
+        }.attach()
     }
 
     private fun getMovieDetails() {
