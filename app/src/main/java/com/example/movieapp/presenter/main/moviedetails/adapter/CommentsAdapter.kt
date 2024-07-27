@@ -1,11 +1,13 @@
 package com.example.movieapp.presenter.main.moviedetails.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.movieapp.R
 import com.example.movieapp.databinding.ItemCommentBinding
 import com.example.movieapp.domain.model.MovieReview
 import com.example.movieapp.util.formatCommentDate
@@ -38,10 +40,17 @@ class CommentsAdapter : ListAdapter<MovieReview, CommentsAdapter.MyViewHolder>(D
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val comment = getItem(position)
 
-        Glide
-            .with(holder.binding.root.context)
-            .load(comment.authorDetails?.avatarPath)
-            .into(holder.binding.imageUser)
+        if(comment.authorDetails?.avatarPath?.contains("null") == false){
+            Glide
+                .with(holder.binding.root.context)
+                .load(comment.authorDetails.avatarPath)
+                .into(holder.binding.imageUser)
+        }else{
+            Glide
+                .with(holder.binding.root.context)
+                .load(R.drawable.no_user_picture)
+                .into(holder.binding.imageUser)
+        }
 
         holder.binding.textUsername.text = comment.authorDetails?.username
         holder.binding.textComment.text = comment.content

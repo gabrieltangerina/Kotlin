@@ -6,11 +6,12 @@ import com.example.movieapp.BuildConfig
 import com.example.movieapp.domain.usecase.movie.GetMovieReviewsUseCase
 import com.example.movieapp.util.Constants
 import com.example.movieapp.util.StateView
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import retrofit2.HttpException
 import javax.inject.Inject
 
-
+@HiltViewModel
 class CommentsViewModel @Inject constructor(
     private val getMovieReviewsUseCase: GetMovieReviewsUseCase
 ) : ViewModel() {
@@ -21,7 +22,7 @@ class CommentsViewModel @Inject constructor(
 
             val movies = getMovieReviewsUseCase.invoke(
                 BuildConfig.API_KEY,
-                Constants.Movie.LANGUAGE,
+                Constants.Movie.LANGUAGE_ENGLISH,
                 movieId = movieId
             )
 
