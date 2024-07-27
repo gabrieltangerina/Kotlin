@@ -1,14 +1,18 @@
 package com.example.movieapp.data.mapper
 
+import com.example.movieapp.data.model.AuthorDetailsResponse
 import com.example.movieapp.data.model.CountryResponse
 import com.example.movieapp.data.model.CreditResponse
 import com.example.movieapp.data.model.GenreResponse
 import com.example.movieapp.data.model.MovieResponse
+import com.example.movieapp.data.model.MovieReviewResponse
 import com.example.movieapp.data.model.PersonResponse
+import com.example.movieapp.domain.model.AuthorDetails
 import com.example.movieapp.domain.model.Country
 import com.example.movieapp.domain.model.Credit
 import com.example.movieapp.domain.model.Genre
 import com.example.movieapp.domain.model.Movie
+import com.example.movieapp.domain.model.MovieReview
 import com.example.movieapp.domain.model.Person
 import com.example.movieapp.presenter.model.GenrePresentation
 
@@ -73,5 +77,26 @@ fun PersonResponse.toDomain() : Person{
 fun CreditResponse.toDomain() : Credit{
     return Credit(
         cast = cast?.map { it.toDomain() }
+    )
+}
+
+fun AuthorDetailsResponse.toDomain() : AuthorDetails{
+    return AuthorDetails(
+        name = name,
+        username = username,
+        avatarPath = "https://image.tmdb.org/t/p/w500$avatarPath",
+        rating = rating
+    )
+}
+
+fun MovieReviewResponse.toDomain() : MovieReview{
+    return MovieReview(
+        author = author,
+        authorDetails = authorDetails?.toDomain(),
+        content = content,
+        createdAt = createdAt,
+        id = id,
+        updatedAt = updatedAt,
+        url = url
     )
 }
