@@ -1,17 +1,12 @@
-package com.example.movieapp.presenter.main.movie_details.adapter
+package com.example.movieapp.presenter.main.moviedetails.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.movieapp.R
 import com.example.movieapp.databinding.CastItemBinding
-import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.domain.model.Person
 
 class CastAdapter : ListAdapter<Person, CastAdapter.MyViewHolder>(DIFF_CALLBACK) {

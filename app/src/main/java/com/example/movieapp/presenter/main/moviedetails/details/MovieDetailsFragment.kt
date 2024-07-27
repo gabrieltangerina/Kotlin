@@ -1,4 +1,4 @@
-package com.example.movieapp.presenter.main.movie_details
+package com.example.movieapp.presenter.main.moviedetails.details
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,15 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.domain.model.Movie
-import com.example.movieapp.presenter.main.movie_details.adapter.CastAdapter
-import com.example.movieapp.presenter.main.movie_details.adapter.ViewPagerAdapter
+import com.example.movieapp.presenter.main.moviedetails.similar.SimilarMoviesFragment
+import com.example.movieapp.presenter.main.moviedetails.trailers.TrailersFragment
+import com.example.movieapp.presenter.main.moviedetails.adapter.CastAdapter
+import com.example.movieapp.presenter.main.moviedetails.adapter.ViewPagerAdapter
+import com.example.movieapp.presenter.main.moviedetails.comments.CommentsFragment
 import com.example.movieapp.util.StateView
 import com.example.movieapp.util.getYearFromDate
 import com.example.movieapp.util.initToolbar

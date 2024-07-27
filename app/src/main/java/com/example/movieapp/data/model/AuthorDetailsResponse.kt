@@ -14,7 +14,6 @@ data class AuthorDetailsResponse(
     val avatarPath: String?,
 
     @SerializedName("rating")
-    val rating: Int?,
+    val rating: Int?
 
-
-    )
+)
