@@ -18,6 +18,7 @@ import com.example.movieapp.presenter.main.moviedetails.adapter.CastAdapter
 import com.example.movieapp.presenter.main.moviedetails.adapter.ViewPagerAdapter
 import com.example.movieapp.presenter.main.moviedetails.comments.CommentsFragment
 import com.example.movieapp.util.StateView
+import com.example.movieapp.util.ViewPager2ViewHeightAnimator
 import com.example.movieapp.util.getYearFromDate
 import com.example.movieapp.util.initToolbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -55,7 +56,10 @@ class MovieDetailsFragment : Fragment() {
         viewModel.setMovieId(movieId = args.movieId)
 
         val adapter = ViewPagerAdapter(requireActivity())
-        binding.viewPager.adapter = adapter
+        val mViewPager = ViewPager2ViewHeightAnimator()
+
+        mViewPager.viewPager2 = binding.viewPager
+        mViewPager.viewPager2?.adapter = adapter
 
         adapter.addFragment(TrailersFragment(), R.string.title_trailers_tab_layout)
         adapter.addFragment(SimilarMoviesFragment(), R.string.title_similar_tab_layout)
@@ -63,9 +67,12 @@ class MovieDetailsFragment : Fragment() {
 
         binding.viewPager.offscreenPageLimit = adapter.itemCount
 
-        TabLayoutMediator(binding.tabs, binding.viewPager){tab, position ->
-            tab.text = getString(adapter.getTitle(position))
-        }.attach()
+        mViewPager.viewPager2?.let {viewPager2 ->
+            TabLayoutMediator(binding.tabs, viewPager2){tab, position ->
+                tab.text = getString(adapter.getTitle(position))
+            }.attach()
+        }
+
     }
 
     private fun getMovieDetails() {
