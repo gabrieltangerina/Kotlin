@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     tools:context=".presenter.main.movie_details.MovieDetailsFragment">
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -48,7 +48,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +57,8 @@
                 android:id="@+id/text_movie"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/urbanist_700"
@@ -73,6 +74,7 @@
                 android:id="@+id/linearLayout4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="@+id/text_movie"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -98,6 +100,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="16dp"
                 android:scrollbars="none"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -105,8 +109,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_movie">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +130,7 @@
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/urbanist_500"
                         android:textColor="@color/color_default"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         tools:text="9.8" />
 
                     <ImageView
@@ -142,7 +146,7 @@
                         android:layout_marginStart="12dp"
                         android:fontFamily="@font/urbanist_600"
                         android:textColor="@color/color_text"
-                        android:textSize="12sp"
+                        android:textSize="16sp"
                         tools:text="2024" />
 
                     <TextView
@@ -155,7 +159,7 @@
                         android:paddingVertical="6dp"
                         android:text="13+"
                         android:textColor="@color/color_default"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/text_production_country"
@@ -167,7 +171,7 @@
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="6dp"
                         android:textColor="@color/color_default"
-                        android:textSize="11sp"
+                        android:textSize="12sp"
                         tools:text="United States" />
 
                     <TextView
@@ -180,7 +184,7 @@
                         android:paddingVertical="6dp"
                         android:text="Subtitle"
                         android:textColor="@color/color_default"
-                        android:textSize="11sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -190,6 +194,7 @@
                 android:id="@+id/linearLayout5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -206,6 +211,7 @@
                     android:fontFamily="@font/urbanist_600"
                     android:text="@string/text_button_play_movie_details_fragment"
                     android:textAllCaps="false"
+                    android:textSize="16sp"
                     app:icon="@drawable/ic_play"
                     app:iconGravity="textStart" />
 
@@ -219,6 +225,7 @@
                     android:text="@string/text_button_download_movie_details_fragment"
                     android:textAllCaps="false"
                     android:textColor="@color/color_default"
+                    android:textSize="16sp"
                     app:backgroundTint="@null"
                     app:icon="@drawable/ic_download"
                     app:iconGravity="textStart"
@@ -230,6 +237,7 @@
                 android:id="@+id/text_genres"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="20dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/urbanist_500"
@@ -246,6 +254,7 @@
                 android:id="@+id/text_description"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/urbanist_500"
@@ -263,6 +272,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_description"
