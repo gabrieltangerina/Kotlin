@@ -1,0 +1,15 @@
+object Versions {
+    const val applicationVersion = "8.2.2"
+    const val kotlinVersion = "1.9.22"
+    const val googleServicesVersion = "4.4.2"
+    const val secretsGradleVersion = "2.0.1"
+    const val simpleSearchViewVersion = "0.2.1"
+    const val firebaseVersion = "33.1.2"
+    const val splashVersion = "1.0.1"
+    const val daggerHiltVersion = "2.51.1"
+    const val lifecycleVersion = "2.8.3"
+    const val navigationVersion = "2.7.7"
+    const val glideVersion = "4.16.0"
+    const val okhttpVersion = "4.12.0"
+    const val retrofitVersion = "2.11.0"
+}
