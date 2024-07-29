@@ -1,5 +1,6 @@
 package com.example.movieapp.data.mapper
 
+import com.example.movieapp.data.local.entity.MovieEntity
 import com.example.movieapp.data.model.AuthorDetailsResponse
 import com.example.movieapp.data.model.CountryResponse
 import com.example.movieapp.data.model.CreditResponse
@@ -43,13 +44,13 @@ fun MovieResponse.toDomain(): Movie {
     )
 }
 
-fun CountryResponse.toDomain(): Country{
+fun CountryResponse.toDomain(): Country {
     return Country(
         name = name
     )
 }
 
-fun Genre.toPresentation() : GenrePresentation{
+fun Genre.toPresentation(): GenrePresentation {
     return GenrePresentation(
         id = id,
         name = name,
@@ -57,7 +58,7 @@ fun Genre.toPresentation() : GenrePresentation{
     )
 }
 
-fun PersonResponse.toDomain() : Person{
+fun PersonResponse.toDomain(): Person {
     return Person(
         adult = adult,
         gender = gender,
@@ -74,13 +75,13 @@ fun PersonResponse.toDomain() : Person{
     )
 }
 
-fun CreditResponse.toDomain() : Credit{
+fun CreditResponse.toDomain(): Credit {
     return Credit(
         cast = cast?.map { it.toDomain() }
     )
 }
 
-fun AuthorDetailsResponse.toDomain() : AuthorDetails{
+fun AuthorDetailsResponse.toDomain(): AuthorDetails {
     return AuthorDetails(
         name = name,
         username = username,
@@ -89,7 +90,7 @@ fun AuthorDetailsResponse.toDomain() : AuthorDetails{
     )
 }
 
-fun MovieReviewResponse.toDomain() : MovieReview{
+fun MovieReviewResponse.toDomain(): MovieReview {
     return MovieReview(
         author = author,
         authorDetails = authorDetails?.toDomain(),
@@ -98,5 +99,24 @@ fun MovieReviewResponse.toDomain() : MovieReview{
         id = id,
         updatedAt = updatedAt,
         url = url
+    )
+}
+
+fun Movie.toEntity(): MovieEntity {
+    return MovieEntity(
+        id = id,
+        title = title,
+        poster = posterPath,
+        runtime = runtime,
+        insertion = System.currentTimeMillis()
+    )
+}
+
+fun MovieEntity.toDomain(): Movie {
+    return Movie(
+        id = id,
+        title = title,
+        posterPath = poster,
+        runtime = runtime
     )
 }

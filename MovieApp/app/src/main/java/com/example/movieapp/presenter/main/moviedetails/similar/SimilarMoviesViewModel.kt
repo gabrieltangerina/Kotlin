@@ -3,7 +3,7 @@ package com.example.movieapp.presenter.main.moviedetails.similar
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.movieapp.BuildConfig
-import com.example.movieapp.domain.usecase.movie.GetSimilarUseCase
+import com.example.movieapp.domain.api.usecase.movie.GetSimilarUseCase
 import com.example.movieapp.util.Constants
 import com.example.movieapp.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel

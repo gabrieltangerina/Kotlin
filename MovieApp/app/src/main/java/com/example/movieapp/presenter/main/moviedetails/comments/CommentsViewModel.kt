@@ -3,7 +3,7 @@ package com.example.movieapp.presenter.main.moviedetails.comments
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.movieapp.BuildConfig
-import com.example.movieapp.domain.usecase.movie.GetMovieReviewsUseCase
+import com.example.movieapp.domain.api.usecase.movie.GetMovieReviewsUseCase
 import com.example.movieapp.util.Constants
 import com.example.movieapp.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.BuildConfig
 import com.example.movieapp.domain.model.Movie
-import com.example.movieapp.domain.usecase.movie.SearchMoviesUseCase
+import com.example.movieapp.domain.api.usecase.movie.SearchMoviesUseCase
 import com.example.movieapp.util.Constants
 import com.example.movieapp.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel

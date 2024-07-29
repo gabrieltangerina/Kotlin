@@ -53,6 +53,11 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    // Room
+    implementation("androidx.room:room-runtime:${Versions.room_version}")
+    implementation("androidx.room:room-ktx:${Versions.room_version}")
+    kapt("androidx.room:room-compiler:${Versions.room_version}")
+
     // Simple Search View
     implementation("com.github.Ferfalk:SimpleSearchView:${Versions.simpleSearchViewVersion}")
 

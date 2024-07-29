@@ -4,7 +4,7 @@ import com.example.movieapp.data.api.ServiceAPI
 import com.example.movieapp.data.model.CreditResponse
 import com.example.movieapp.data.model.MovieResponse
 import com.example.movieapp.data.model.MovieReviewResponse
-import com.example.movieapp.domain.repository.movie.MovieDetailsRepository
+import com.example.movieapp.domain.api.repository.movie.MovieDetailsRepository
 import javax.inject.Inject
 
 class MovieDetailsRepositoryImpl @Inject constructor(

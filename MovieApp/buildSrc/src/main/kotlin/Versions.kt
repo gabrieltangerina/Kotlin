@@ -1,4 +1,5 @@
 object Versions {
+    const val room_version = "2.6.1"
     const val applicationVersion = "8.2.2"
     const val kotlinVersion = "1.9.22"
     const val googleServicesVersion = "4.4.2"

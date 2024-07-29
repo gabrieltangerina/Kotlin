@@ -3,7 +3,7 @@ package com.example.movieapp.data.repository.movie
 import com.example.movieapp.data.api.ServiceAPI
 import com.example.movieapp.data.model.GenresResponse
 import com.example.movieapp.data.model.MovieResponse
-import com.example.movieapp.domain.repository.movie.MovieRepository
+import com.example.movieapp.domain.api.repository.movie.MovieRepository
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(

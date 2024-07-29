@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.movieapp.BuildConfig
 import com.example.movieapp.data.mapper.toPresentation
-import com.example.movieapp.domain.usecase.movie.GetGenresUseCase
-import com.example.movieapp.domain.usecase.movie.GetMoviesByGenreUseCase
+import com.example.movieapp.domain.api.usecase.movie.GetGenresUseCase
+import com.example.movieapp.domain.api.usecase.movie.GetMoviesByGenreUseCase
 import com.example.movieapp.util.Constants
 import com.example.movieapp.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
