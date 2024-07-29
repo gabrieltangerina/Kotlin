@@ -40,6 +40,38 @@ class SearchFragment : Fragment() {
 
         initRecycler()
         initSearchView()
+        initObservers()
+    }
+
+    private fun initObservers(){
+        stateObserver()
+        searchObserver()
+    }
+
+    private fun searchObserver() {
+        viewModel.movieList.observe(viewLifecycleOwner){movieList ->
+            movieAdapter.submitList(movieList)
+        }
+    }
+
+    private fun stateObserver(){
+        viewModel.searchState.observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+                    binding.recyclerMovies.isVisible = false
+                    binding.progressBar.isVisible = true
+                }
+
+                is StateView.Success -> {
+                    binding.progressBar.isVisible = false
+                    binding.recyclerMovies.isVisible = true
+                }
+
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                }
+            }
+        }
     }
 
     private fun initSearchView() {
@@ -51,7 +83,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isNotEmpty()) searchMovies(newText)
+                if (newText.isNotEmpty()) viewModel.searchMovies(newText)
                 return false
             }
         })
@@ -79,28 +111,7 @@ class SearchFragment : Fragment() {
         closeButton?.setOnClickListener {
             binding.searchView.setQuery("", false)
             binding.searchView.clearFocus()
-            movieAdapter.submitList(emptyList())
-        }
-    }
-
-    private fun searchMovies(query: String) {
-        viewModel.searchMovies(query).observe(viewLifecycleOwner) { stateView ->
-            when (stateView) {
-                is StateView.Loading -> {
-                    binding.recyclerMovies.isVisible = false
-                    binding.progressBar.isVisible = true
-                }
-
-                is StateView.Success -> {
-                    binding.progressBar.isVisible = false
-                    movieAdapter.submitList(stateView.data)
-                    binding.recyclerMovies.isVisible = true
-                }
-
-                is StateView.Error -> {
-                    binding.progressBar.isVisible = false
-                }
-            }
+            viewModel.clearMovies()
         }
     }
 
