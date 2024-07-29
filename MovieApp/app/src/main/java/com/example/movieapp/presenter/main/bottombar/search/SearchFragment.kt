@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +27,8 @@ class SearchFragment : Fragment() {
 
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var movieAdapter: MovieAdapter
+
+    private var closeButtonState: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +54,12 @@ class SearchFragment : Fragment() {
     private fun searchObserver() {
         viewModel.movieList.observe(viewLifecycleOwner){movieList ->
             movieAdapter.submitList(movieList)
+            if(!closeButtonState){
+                emptyState(empty = movieList.isEmpty())
+            }else{
+                emptyState(empty = false)
+            }
+            closeButtonState = false
         }
     }
 
@@ -87,6 +96,14 @@ class SearchFragment : Fragment() {
                 return false
             }
         })
+
+        val closeButton: View? = binding.searchView.findViewById(androidx.appcompat.R.id.search_close_btn)
+        closeButton?.setOnClickListener {
+            binding.searchView.setQuery("", false)
+            binding.searchView.clearFocus()
+            closeButtonState = true
+            viewModel.clearMovies()
+        }
     }
 
     private fun initRecycler() {
@@ -106,13 +123,11 @@ class SearchFragment : Fragment() {
             setHasFixedSize(true)
             adapter = movieAdapter
         }
+    }
 
-        val closeButton: View? = binding.searchView.findViewById(androidx.appcompat.R.id.search_close_btn)
-        closeButton?.setOnClickListener {
-            binding.searchView.setQuery("", false)
-            binding.searchView.clearFocus()
-            viewModel.clearMovies()
-        }
+    private fun emptyState(empty: Boolean){
+        binding.recyclerMovies.isVisible = !empty
+        binding.layoutEmpty.isVisible = empty
     }
 
     override fun onDestroyView() {

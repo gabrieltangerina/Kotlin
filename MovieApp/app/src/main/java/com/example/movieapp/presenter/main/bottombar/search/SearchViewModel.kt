@@ -25,6 +25,9 @@ class SearchViewModel @Inject constructor(
     private val _searchState = MutableLiveData<StateView<Unit>>()
     val searchState: LiveData<StateView<Unit>> get() = _searchState
 
+    private val _closeButtonState = MutableLiveData<Boolean>(false)
+    val closeButtonState: LiveData<Boolean> get() = _closeButtonState
+
     fun searchMovies(query: String?) {
         viewModelScope.launch {
             try {
