@@ -7,6 +7,8 @@ import androidx.lifecycle.liveData
 import com.example.movieapp.BuildConfig
 import com.example.movieapp.domain.api.usecase.movie.GetCreditsUseCase
 import com.example.movieapp.domain.api.usecase.movie.GetMovieDetailsUseCase
+import com.example.movieapp.domain.local.usecase.InsertMovieUseCase
+import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.util.Constants
 import com.example.movieapp.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieDetailsViewModel @Inject constructor(
     private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
-    private val getCreditsUseCase: GetCreditsUseCase
+    private val getCreditsUseCase: GetCreditsUseCase,
+    private val insertMovieUseCase: InsertMovieUseCase
 ) : ViewModel() {
 
     private val _movieId = MutableLiveData(0)
@@ -35,10 +38,10 @@ class MovieDetailsViewModel @Inject constructor(
 
             emit(StateView.Success(details))
 
-        }catch (ex: HttpException){
+        } catch (ex: HttpException) {
             ex.printStackTrace()
             emit(StateView.Error(ex.message))
-        }catch (ex: Exception){
+        } catch (ex: Exception) {
             ex.printStackTrace()
             emit(StateView.Error(ex.message))
         }
@@ -56,17 +59,31 @@ class MovieDetailsViewModel @Inject constructor(
 
             emit(StateView.Success(credits))
 
-        }catch (ex: HttpException){
+        } catch (ex: HttpException) {
             ex.printStackTrace()
             emit(StateView.Error(ex.message))
-        }catch (ex: Exception){
+        } catch (ex: Exception) {
             ex.printStackTrace()
             emit(StateView.Error(ex.message))
         }
     }
 
-    fun setMovieId(movieId: Int){
-         _movieId.value = movieId
+    fun insertMovie(movie: Movie) = liveData(Dispatchers.IO) {
+        try {
+            emit(StateView.Loading())
+
+            insertMovieUseCase.invoke(movie)
+
+            emit(StateView.Success(Unit))
+
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            emit(StateView.Error(ex.message))
+        }
+    }
+
+    fun setMovieId(movieId: Int) {
+        _movieId.value = movieId
     }
 
 }

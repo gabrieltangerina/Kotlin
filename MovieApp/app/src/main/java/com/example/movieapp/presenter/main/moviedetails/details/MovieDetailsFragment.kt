@@ -41,7 +41,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var castAdapter: CastAdapter
     private lateinit var dialogDownloading: AlertDialog
 
-    private var movie: Movie? = null
+    private lateinit var movie: Movie
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -97,8 +97,10 @@ class MovieDetailsFragment : Fragment() {
                 }
 
                 is StateView.Success -> {
-                    this.movie = stateView.data
-                    configData()
+                    stateView.data?.let {
+                        this.movie = it
+                        configData()
+                    }
                 }
 
                 is StateView.Error -> {
@@ -143,18 +145,18 @@ class MovieDetailsFragment : Fragment() {
 
         Glide
             .with(requireContext())
-            .load("https://image.tmdb.org/t/p/w500${movie?.posterPath}")
+            .load("https://image.tmdb.org/t/p/w500${movie.posterPath}")
             .into(binding.imageMovie)
 
-        binding.textMovie.text = movie?.title
-        binding.textVoteAverage.text = String.format("%.1f", movie?.voteAverage)
-        binding.textProductionCountry.text = movie?.productionCountries?.get(0)?.name ?: ""
-        binding.textReleaseDate.text = movie?.releaseDate?.getYearFromDate()
+        binding.textMovie.text = movie.title
+        binding.textVoteAverage.text = String.format("%.1f", movie.voteAverage)
+        binding.textProductionCountry.text = movie.productionCountries?.get(0)?.name ?: ""
+        binding.textReleaseDate.text = movie.releaseDate?.getYearFromDate()
 
-        val genres = movie?.genres?.map { it.name }?.joinToString(", ")
+        val genres = movie.genres?.map { it.name }?.joinToString(", ")
         binding.textGenres.text = getString(R.string.text_all_genres_movie_details_fragment, genres)
 
-        binding.textDescription.text = movie?.overview
+        binding.textDescription.text = movie.overview
 
         getCredits()
     }
@@ -163,7 +165,7 @@ class MovieDetailsFragment : Fragment() {
         val dialogBinding = DialogDownloadingBinding.inflate(LayoutInflater.from(requireContext()))
         var progress = 0
         var downloaded = 0.0
-        val movieDuration = movie?.runtime?.toDouble() ?: 0.0
+        val movieDuration = movie.runtime?.toDouble() ?: 0.0
 
         // Criando looping estético para barra de download do filme
         val handle = Handler(Looper.getMainLooper())
@@ -183,9 +185,10 @@ class MovieDetailsFragment : Fragment() {
                         R.string.text_download_progress_dialog_downloading,
                         progress
                     )
-                    
+
                     handle.postDelayed(this, 145)
                 } else {
+                    insertMovie()
                     dialogDownloading.dismiss()
                 }
 
@@ -201,6 +204,24 @@ class MovieDetailsFragment : Fragment() {
 
         dialogDownloading = builder.create()
         dialogDownloading.show()
+    }
+
+    private fun insertMovie() {
+        viewModel.insertMovie(movie).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+
+                }
+
+                is StateView.Success -> {
+
+                }
+
+                is StateView.Error -> {
+
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
