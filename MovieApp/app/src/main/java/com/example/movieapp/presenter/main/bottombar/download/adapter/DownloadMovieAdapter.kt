@@ -17,7 +17,7 @@ import com.example.movieapp.util.calculateMovieTime
 class DownloadMovieAdapter(
     private val context: Context,
     private val detailsClickListener: (Int?) -> Unit,
-    private val deleteClickListener: (Int?) -> Unit
+    private val deleteClickListener: (Movie?) -> Unit
 ) : ListAdapter<Movie, DownloadMovieAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     companion object {
@@ -54,11 +54,15 @@ class DownloadMovieAdapter(
         holder.binding.textMovie.text = movie.title
         holder.binding.textDuration.text = movie.runtime?.calculateMovieTime()
         holder.binding.textSize.text = movie.runtime?.toDouble()?.calculateFileSize()
-        holder.binding.ibDelete.setOnClickListener { deleteClickListener(movie.id) }
+        holder.binding.ibDelete.setOnClickListener { deleteClickListener(movie) }
         holder.itemView.setOnClickListener { detailsClickListener(movie.id) }
     }
 
     inner class MyViewHolder(val binding: MovieDownloadItemBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    override fun submitList(list: List<Movie>?) {
+        super.submitList(list?.let { ArrayList(it) })
+    }
 
 }

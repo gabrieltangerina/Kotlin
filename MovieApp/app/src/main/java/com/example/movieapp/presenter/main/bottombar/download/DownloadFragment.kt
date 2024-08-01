@@ -10,11 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.movieapp.MainGraphDirections
 import com.example.movieapp.R
+import com.example.movieapp.databinding.BottomSheetDeleteMovieBinding
 import com.example.movieapp.databinding.FragmentDownloadBinding
+import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.presenter.main.bottombar.download.adapter.DownloadMovieAdapter
+import com.example.movieapp.util.calculateFileSize
+import com.example.movieapp.util.calculateMovieTime
 import com.ferfalk.simplesearchview.SimpleSearchView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,7 +54,7 @@ class DownloadFragment : Fragment() {
         getData()
     }
 
-    private fun getData(){
+    private fun getData() {
         viewModel.getMovies()
     }
 
@@ -68,8 +74,8 @@ class DownloadFragment : Fragment() {
                     findNavController().navigate(action)
                 }
             },
-            deleteClickListener = { movieId ->
-
+            deleteClickListener = { movie ->
+                showBottomSheetDeleteMovie(movie)
             }
         )
 
@@ -121,6 +127,33 @@ class DownloadFragment : Fragment() {
 
             }
         })
+    }
+
+    private fun showBottomSheetDeleteMovie(movie: Movie?) {
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+
+        val bottomSheetBinding = BottomSheetDeleteMovieBinding.inflate(
+            layoutInflater, null, false
+        )
+
+        Glide
+            .with(requireContext())
+            .load("https://image.tmdb.org/t/p/w200${movie?.posterPath}")
+            .into(bottomSheetBinding.ivMovie)
+
+        bottomSheetBinding.textMovie.text = movie?.title
+        bottomSheetBinding.textDuration.text = movie?.runtime?.calculateMovieTime()
+        bottomSheetBinding.textSize.text = movie?.runtime?.toDouble()?.calculateFileSize()
+
+        bottomSheetBinding.btnCancel.setOnClickListener { bottomSheetDialog.dismiss() }
+        bottomSheetBinding.btnConfirm.setOnClickListener {
+            viewModel.deleteMovie(movie?.id)
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.setContentView(bottomSheetBinding.root)
+        bottomSheetDialog.show()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -162,7 +162,7 @@
         app:layout_constraintTop_toBottomOf="@+id/include2">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_confirm"
+            android:id="@+id/btn_cancel"
             style="@style/ThemeSecondButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
             app:layout_constraintTop_toBottomOf="@+id/include2" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_cancel"
+            android:id="@+id/btn_confirm"
             style="@style/ThemePrimaryButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
