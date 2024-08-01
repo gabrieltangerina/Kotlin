@@ -1,23 +1,19 @@
 package com.example.movieapp.presenter.main.bottombar.download
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.MainGraphDirections
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentDownloadBinding
-import com.example.movieapp.databinding.FragmentMovieGenreBinding
 import com.example.movieapp.presenter.main.bottombar.download.adapter.DownloadMovieAdapter
-import com.example.movieapp.presenter.main.bottombar.home.adapter.MovieAdapter
 import com.ferfalk.simplesearchview.SimpleSearchView
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +24,7 @@ class DownloadFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var mAdapter: DownloadMovieAdapter
+    private val viewModel: DownloadViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +43,20 @@ class DownloadFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initSearchView()
+        initRecycler()
+        initObservers()
+        getData()
+    }
+
+    private fun getData(){
+        viewModel.getMovies()
+    }
+
+    private fun initObservers() {
+        // Get movies downloaded
+        viewModel.movieList.observe(viewLifecycleOwner) { movies ->
+            mAdapter.submitList(movies)
+        }
     }
 
     private fun initRecycler() {
@@ -57,7 +68,7 @@ class DownloadFragment : Fragment() {
                     findNavController().navigate(action)
                 }
             },
-            deleteClickListener = {movieId ->
+            deleteClickListener = { movieId ->
 
             }
         )
@@ -99,7 +110,7 @@ class DownloadFragment : Fragment() {
             }
 
             override fun onSearchViewClosed() {
-               //  getMoviesByGenre()
+                //  getMoviesByGenre()
             }
 
             override fun onSearchViewShownAnimation() {

@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.databinding.MovieDownloadItemBinding
 import com.example.movieapp.domain.model.Movie
+import com.example.movieapp.util.calculateFileSize
+import com.example.movieapp.util.calculateMovieTime
 
 class DownloadMovieAdapter(
     private val context: Context,
@@ -50,19 +52,13 @@ class DownloadMovieAdapter(
             .into(holder.binding.ivMovie)
 
         holder.binding.textMovie.text = movie.title
-        holder.binding.textDuration.text = movie.runtime.toString()
-        holder.binding.textSize.text = movie.runtime.toString()
+        holder.binding.textDuration.text = movie.runtime?.calculateMovieTime()
+        holder.binding.textSize.text = movie.runtime?.toDouble()?.calculateFileSize()
         holder.binding.ibDelete.setOnClickListener { deleteClickListener(movie.id) }
         holder.itemView.setOnClickListener { detailsClickListener(movie.id) }
     }
 
     inner class MyViewHolder(val binding: MovieDownloadItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        val movieImage: ImageView
-
-        init {
-            movieImage = itemView.findViewById(R.id.movie_image)
-        }
-    }
+        RecyclerView.ViewHolder(binding.root)
 
 }
