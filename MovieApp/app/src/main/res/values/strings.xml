@@ -86,6 +86,13 @@
     <string name="text_downloaded_size_dialog_downloading">%1$s / %2$s</string>
     <string name="text_download_progress_dialog_downloading">%1$d%%</string>
 
+    <!--  BottomSheetDeleteMovie  -->
+    <string name="text_title_bottom_sheet_delete_movie">Deletar</string>
+    <string name="text_message_bottom_sheet_delete_movie">Tem certeza que deseja excluir o download deste filme?</string>
+    <string name="text_cancel_bottom_sheet_delete_movie">Cancelar</string>
+    <string name="text_confirm_bottom_sheet_delete_movie">Excluir</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
