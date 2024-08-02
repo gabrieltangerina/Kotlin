@@ -6,6 +6,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -20,6 +21,7 @@ import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.presenter.main.bottombar.download.adapter.DownloadMovieAdapter
 import com.example.movieapp.util.calculateFileSize
 import com.example.movieapp.util.calculateMovieTime
+import com.example.movieapp.util.initToolbar
 import com.ferfalk.simplesearchview.SimpleSearchView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,10 +51,12 @@ class DownloadFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initSearchView()
+        initToolbar(toolbar = binding.toolbar, showIconNavigation = false)
+
         initRecycler()
         initObservers()
         getData()
+        initListeners()
     }
 
     private fun getData() {
@@ -65,6 +69,17 @@ class DownloadFragment : Fragment() {
             mAdapter.submitList(movies)
             emptyState(movies.isEmpty())
         }
+
+        viewModel.movieSearchList.observe(viewLifecycleOwner) { movies ->
+            mAdapter.submitList(movies)
+            emptyState(movies.isEmpty())
+        }
+    }
+
+    private fun initListeners(){
+        initSearchView()
+
+        onBackPressed()
     }
 
     private fun initRecycler() {
@@ -101,12 +116,16 @@ class DownloadFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                // if (newText.isNotEmpty()) searchMovies(newText)
+                if (newText.isNotEmpty() || newText.isNotBlank()) {
+                    viewModel.searchMovie(newText)
+                } else {
+                    viewModel.getMovies()
+                }
                 return false
             }
 
             override fun onQueryTextCleared(): Boolean {
-                // getMoviesByGenre()
+                viewModel.getMovies()
                 return false
             }
         })
@@ -118,7 +137,7 @@ class DownloadFragment : Fragment() {
             }
 
             override fun onSearchViewClosed() {
-                //  getMoviesByGenre()
+                viewModel.getMovies()
             }
 
             override fun onSearchViewShownAnimation() {
@@ -158,9 +177,22 @@ class DownloadFragment : Fragment() {
 
     }
 
-    private fun emptyState(empty: Boolean){
+    private fun emptyState(empty: Boolean) {
         binding.rvMovies.isVisible = !empty
         binding.layoutEmpty.isVisible = empty
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (binding.simpleSearchView.isVisible) {
+                        binding.simpleSearchView.closeSearch()
+                    } else {
+                        findNavController().popBackStack()
+                    }
+                }
+            })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

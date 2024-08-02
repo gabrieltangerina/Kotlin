@@ -92,6 +92,9 @@
     <string name="text_cancel_bottom_sheet_delete_movie">Cancelar</string>
     <string name="text_confirm_bottom_sheet_delete_movie">Excluir</string>
 
+    <!--  DownlaodFragment  -->
+    <string name="text_title_empty_state_download_fragment">Não há nenhum filme baixado</string>
+    <string name="text_text_empty_state_download_fragment">Parece que você não realizou o download de nenhum filme</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

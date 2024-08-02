@@ -127,7 +127,7 @@ class MovieGenreFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isNotEmpty()) searchMovies(newText)
+                if (newText.isNotEmpty() || newText.isNotBlank()) searchMovies(newText)
                 return false
             }
 

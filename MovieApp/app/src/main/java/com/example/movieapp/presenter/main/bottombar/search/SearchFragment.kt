@@ -92,7 +92,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isNotEmpty()) viewModel.searchMovies(newText)
+                if (newText.isNotEmpty() || newText.isNotBlank()) viewModel.searchMovies(newText)
                 return false
             }
         })
