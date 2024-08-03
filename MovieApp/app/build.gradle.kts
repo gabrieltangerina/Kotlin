@@ -2,11 +2,11 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
-    id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -53,10 +53,13 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    // Pagging
+    implementation("androidx.paging:paging-runtime-ktx:${Versions.paging_version}")
+
     // Room
     implementation("androidx.room:room-runtime:${Versions.room_version}")
     implementation("androidx.room:room-ktx:${Versions.room_version}")
-    kapt("androidx.room:room-compiler:${Versions.room_version}")
+    ksp("androidx.room:room-compiler:${Versions.room_version}")
 
     // Simple Search View
     implementation("com.github.Ferfalk:SimpleSearchView:${Versions.simpleSearchViewVersion}")
@@ -73,7 +76,9 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor")
 
     // Glide
+    // implementation("com.github.bumptech.glide:ksp:${Versions.glideVersion}")
     implementation("com.github.bumptech.glide:glide:${Versions.glideVersion}")
+    ksp("com.github.bumptech.glide:compiler:${Versions.glideVersion}")
 
     // Navigation
     implementation("androidx.navigation:navigation-fragment-ktx:${Versions.navigationVersion}")
@@ -94,7 +99,7 @@ dependencies {
 
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:${Versions.daggerHiltVersion}")
-    kapt("com.google.dagger:hilt-compiler:${Versions.daggerHiltVersion}")
+    ksp("com.google.dagger:hilt-compiler:${Versions.daggerHiltVersion}")
 
     // Test
     testImplementation("junit:junit:4.13.2")

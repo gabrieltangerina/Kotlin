@@ -1,8 +1,10 @@
 package com.example.movieapp.data.repository.movie
 
+import androidx.paging.PagingSource
 import com.example.movieapp.data.api.ServiceAPI
 import com.example.movieapp.data.model.GenresResponse
 import com.example.movieapp.data.model.MovieResponse
+import com.example.movieapp.data.paging.MovieByGenrePagingSource
 import com.example.movieapp.domain.api.repository.movie.MovieRepository
 import javax.inject.Inject
 
@@ -17,16 +19,12 @@ class MovieRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun getMoviesByGenre(
+    override fun getMoviesByGenre(
         apiKey: String?,
         language: String?,
         genreId: Int?
-    ): List<MovieResponse> {
-        return serviceAPI.getMoviesByGenre(
-            apiKey = apiKey,
-            language = language,
-            genreId = genreId
-        ).results ?: emptyList()
+    ): PagingSource<Int, MovieResponse> {
+        return MovieByGenrePagingSource(serviceAPI, genreId)
     }
 
     override suspend fun searchMovies(

@@ -1,4 +1,5 @@
 object Versions {
+    const val paging_version = "3.3.1"
     const val room_version = "2.6.1"
     const val applicationVersion = "8.2.2"
     const val kotlinVersion = "1.9.22"
@@ -8,7 +9,7 @@ object Versions {
     const val firebaseVersion = "33.1.2"
     const val splashVersion = "1.0.1"
     const val daggerHiltVersion = "2.51.1"
-    const val lifecycleVersion = "2.8.3"
+    const val lifecycleVersion = "2.8.4"
     const val navigationVersion = "2.7.7"
     const val glideVersion = "4.16.0"
     const val okhttpVersion = "4.12.0"
