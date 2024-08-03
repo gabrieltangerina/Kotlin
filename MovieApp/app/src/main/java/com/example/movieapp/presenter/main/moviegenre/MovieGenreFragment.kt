@@ -7,13 +7,17 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
+import androidx.paging.PagingSource
 import androidx.recyclerview.widget.GridLayoutManager
+import br.com.hellodev.movieapp.presenter.main.moviegenre.adapter.LoadStatePagingAdapter
 import com.example.movieapp.MainGraphDirections
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieGenreBinding
@@ -72,10 +76,55 @@ class MovieGenreFragment : Fragment() {
             }
         )
 
+        lifecycleScope.launch {
+            moviePadingAdapter.loadStateFlow.collectLatest { loadState ->
+                when(loadState.refresh){
+                    LoadState.Loading -> {
+                        binding.recyclerMovies.isVisible = false
+                        binding.progressBar.isVisible = true
+                    }
+
+                    is LoadState.NotLoading -> {
+                        binding.recyclerMovies.isVisible = true
+                        binding.progressBar.isVisible = false
+                    }
+
+                    is LoadState.Error -> {
+                        binding.recyclerMovies.isVisible = true
+                        binding.progressBar.isVisible = false
+                        val error = (loadState.refresh as LoadState.Error).error.message
+                            ?: "Ocorreu um erro. Tente novamente mais tarde"
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
         with(binding.recyclerMovies) {
-            layoutManager = GridLayoutManager(requireContext(), 2)
             setHasFixedSize(true)
-            adapter = moviePadingAdapter
+
+            // Código para centralizar a progressBar de Loading para carregar mais filmes
+            // Força a exposição de uma view em um gridlayout, ignorando a qtnd de colunas
+
+            val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = gridLayoutManager
+
+            val footerAdapter = moviePadingAdapter.withLoadStateFooter(
+                footer = LoadStatePagingAdapter()
+            )
+
+            adapter = footerAdapter
+
+            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
+                override fun getSpanSize(position: Int): Int {
+                    return if(position == moviePadingAdapter.itemCount && footerAdapter.itemCount > 0){
+                        2
+                    }else{
+                        1
+                    }
+                }
+            }
+
         }
     }
 
