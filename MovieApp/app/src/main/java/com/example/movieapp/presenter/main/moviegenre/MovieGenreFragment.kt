@@ -15,14 +15,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
-import androidx.paging.PagingSource
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.hellodev.movieapp.presenter.main.moviegenre.adapter.LoadStatePagingAdapter
 import com.example.movieapp.MainGraphDirections
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieGenreBinding
-import com.example.movieapp.presenter.main.bottombar.home.adapter.MovieAdapter
-import com.example.movieapp.presenter.main.moviegenre.adapter.MoviePadingAdapter
+import com.example.movieapp.presenter.main.moviegenre.adapter.MoviePagingAdapter
 import com.example.movieapp.util.StateView
 import com.example.movieapp.util.initToolbar
 import com.ferfalk.simplesearchview.SimpleSearchView
@@ -39,7 +37,7 @@ class MovieGenreFragment : Fragment() {
 
     private val args: MovieGenreFragmentArgs by navArgs()
 
-    private lateinit var moviePadingAdapter: MoviePadingAdapter
+    private lateinit var moviePagingAdapter: MoviePagingAdapter
     private val viewModel: MovieGenreViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +64,7 @@ class MovieGenreFragment : Fragment() {
     }
 
     private fun initRecycler() {
-        moviePadingAdapter = MoviePadingAdapter(
+        moviePagingAdapter = MoviePagingAdapter(
             context = requireContext(),
             movieClickListener = { movieId ->
                 movieId?.let {
@@ -77,21 +75,25 @@ class MovieGenreFragment : Fragment() {
         )
 
         lifecycleScope.launch {
-            moviePadingAdapter.loadStateFlow.collectLatest { loadState ->
+            moviePagingAdapter.loadStateFlow.collectLatest { loadState ->
                 when(loadState.refresh){
                     LoadState.Loading -> {
                         binding.recyclerMovies.isVisible = false
-                        binding.progressBar.isVisible = true
+                        binding.shimmer.startShimmer()
+                        binding.shimmer.isVisible = true
                     }
 
                     is LoadState.NotLoading -> {
+                        binding.shimmer.stopShimmer()
+                        binding.shimmer.isVisible = false
                         binding.recyclerMovies.isVisible = true
-                        binding.progressBar.isVisible = false
                     }
 
                     is LoadState.Error -> {
                         binding.recyclerMovies.isVisible = true
-                        binding.progressBar.isVisible = false
+                        binding.shimmer.stopShimmer()
+                        binding.shimmer.isVisible = false
+
                         val error = (loadState.refresh as LoadState.Error).error.message
                             ?: "Ocorreu um erro. Tente novamente mais tarde"
                         Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
@@ -109,7 +111,7 @@ class MovieGenreFragment : Fragment() {
             val gridLayoutManager = GridLayoutManager(requireContext(), 2)
             layoutManager = gridLayoutManager
 
-            val footerAdapter = moviePadingAdapter.withLoadStateFooter(
+            val footerAdapter = moviePagingAdapter.withLoadStateFooter(
                 footer = LoadStatePagingAdapter()
             )
 
@@ -117,7 +119,7 @@ class MovieGenreFragment : Fragment() {
 
             gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
                 override fun getSpanSize(position: Int): Int {
-                    return if(position == moviePadingAdapter.itemCount && footerAdapter.itemCount > 0){
+                    return if(position == moviePagingAdapter.itemCount && footerAdapter.itemCount > 0){
                         2
                     }else{
                         1
@@ -132,7 +134,7 @@ class MovieGenreFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.getMoviesByGenre(genreId = args.genreId, forceRequest = forceRequest)
             viewModel.movieList.collectLatest { pagingData ->
-                moviePadingAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
+                moviePagingAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
             }
         }
     }
@@ -142,17 +144,20 @@ class MovieGenreFragment : Fragment() {
             when (stateView) {
                 is StateView.Loading -> {
                     binding.recyclerMovies.isVisible = false
-                    binding.progressBar.isVisible = true
+                    binding.shimmer.startShimmer()
+                    binding.shimmer.isVisible = true
                 }
 
                 is StateView.Success -> {
-                    binding.progressBar.isVisible = false
+                    binding.shimmer.stopShimmer()
+                    binding.shimmer.isVisible = false
                     getMoviesByGenre(forceRequest = true)
                     binding.recyclerMovies.isVisible = true
                 }
 
                 is StateView.Error -> {
-                    binding.progressBar.isVisible = false
+                    binding.shimmer.stopShimmer()
+                    binding.shimmer.isVisible = false
                 }
             }
         }

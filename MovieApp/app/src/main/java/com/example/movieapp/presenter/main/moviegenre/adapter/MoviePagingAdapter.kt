@@ -10,10 +10,10 @@ import com.bumptech.glide.Glide
 import com.example.movieapp.databinding.MovieGenreItemBinding
 import com.example.movieapp.domain.model.Movie
 
-class MoviePadingAdapter(
+class MoviePagingAdapter(
     private val context: Context,
     private val movieClickListener: (Int?) -> Unit
-) : PagingDataAdapter<Movie, MoviePadingAdapter.MyViewHolder>(DIFF_CALLBACK) {
+) : PagingDataAdapter<Movie, MoviePagingAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {

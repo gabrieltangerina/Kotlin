@@ -1,4 +1,5 @@
 object Versions {
+    const val shimmer_version = "0.5.0"
     const val paging_version = "3.3.1"
     const val room_version = "2.6.1"
     const val applicationVersion = "8.2.2"
