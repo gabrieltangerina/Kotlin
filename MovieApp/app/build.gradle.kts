@@ -53,6 +53,9 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    // SwipeRefreshLayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipe_refresh_layout_version}")
+
     // Shimmer
     implementation("com.facebook.shimmer:shimmer:${Versions.shimmer_version}")
 
