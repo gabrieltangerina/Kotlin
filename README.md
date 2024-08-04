@@ -79,10 +79,7 @@ Para capturar a estrutura de resposta paginada vinda em JSON de uma requisição
 
 <br>
 
-O código a seguir mostra uma função que faz uma requisição para a API. Nessa função está presente a url, os parâmetros que serão enviados e o tipo de retorno. Perceba que o retorno é do mesmo tipo da data class mostrada anteriormente ```BasePaginationRemote```. Além disso, essa data class recebeu uma lista de objetos ```MovieResponse``` que é uma data class que recebe os retornos da API para um filme.
-
-<br>
-
+O código a seguir mostra uma função que faz uma requisição para a API. Nessa função está presente a url, os parâmetros que serão enviados e o tipo de retorno. Perceba que o retorno é do tipo da data class mostrada anteriormente ```BasePaginationRemote```. Além disso, essa data class recebeu uma lista de objetos ```MovieResponse``` que é uma data class que recebe os retornos da API para um filme:
 ```kotlin
   @GET("discover/movie")
     suspend fun getMoviesByGenre(
@@ -92,12 +89,21 @@ O código a seguir mostra uma função que faz uma requisição para a API. Ness
 ```
 
 <br>
-A própria documentação do Paging3 já nos traz uma classe padrão para implementa-la. Vou passar a seguir um código do projeto MovieApp que está nesse repositório para explicar as mudanças essenciais para que a paginação funcione. Vale ressaltar que o código anterior, o 
 
-```getMoviesByGenre()``` retorna uma ```BasePaginationRemote``` e é ela que está sendo tratada no código a abaixo.
+### Os principais componentes para a criação da páginação são:
+
+#### PagingSource
+É uma classe responsável por definir como os dados são carregados página por página. Ele lida com a lógica de recuperação de dados de uma fonte de dados (como uma API ou banco de dados) e a paginação desses dados.
 
 <br>
- 
+
+Essa classe 2 métodos: <br>
+load(): Método principal onde você define como carregar uma página de dados. <br>
+getRefreshKey(): Método para determinar qual chave (página) deve ser usada ao recarregar os dados. <br>
+
+<br>
+
+A própria documentação do Paging3 já nos traz uma PagingSource padrão. Vou passar a seguir um código do projeto MovieApp que está nesse repositório para explicar as mudanças essenciais da classe PagingSource. Vale ressaltar que o código anterior, o ```getMoviesByGenre()``` retorna uma ```BasePaginationRemote``` e é dessa requisição que vamos tratar a paginação:
 ```kotlin
   class MovieByGenrePagingSource(
     private val serviceAPI: ServiceAPI,
@@ -151,3 +157,68 @@ As principais alterações que foram feitas no código base vindo da documentaç
 <br>
 
 <strong>O tipo de retorno</strong>, perceba que o retorno ```<Int, MovieResponse>``` aparece algumas vezes no código. O ```Int``` faz relação ao tipo de dado da paginação, como página 1, 2, 3 e assim por diante. E o segundo é o tipo de dado que será retornado da nossa paginação, se você voltar no código da requisição verá que o retorno é ```BasePaginationRemote<List<MovieResponse>>```, logo o tipo de retorno é ```MovieResponse```.
+
+<br>
+
+Outra alteração foi em:
+```kt
+  val page = params.key ?: DEFAULT_PAGE_INDEX
+  val result = serviceAPI.getMoviesByGenre(
+      genreId = genreId,
+      page = page
+  ).results ?: emptyList()
+  return LoadResult.Page(
+      data = result,
+      prevKey = if(page == DEFAULT_PAGE_INDEX) null else page - 1,
+      nextKey = if(result.isEmpty()) null else page + 1
+  )
+```
+
+<br>
+
+```kt
+  val page = params.key ?: DEFAULT_PAGE_INDEX
+```
+
+<br>
+
+Este trecho de código determina a chave da página atual que deve ser carregada. O valor de ```params.key``` contém a chave da página que está sendo solicitada. Se esta é a primeira vez que o código está carregando dados (ou seja, params.key é null), ele utilizará DEFAULT_PAGE_INDEX como o valor da página inicial:
+```DEFAULT_PAGE_INDEX``` está em um arquivo chamado ```Constants``` criado dentro da pasta ```util```. Nessa arquivo ficam armazenados as variáveis contantes usadas em diferentes partes do app:
+```kt
+  class Constants {
+  
+      object Paging {
+          const val NETWORK_PAGE_SIZE = 20
+          const val DEFAULT_PAGE_INDEX = 1
+      }
+  
+  }
+```
+O valor dessas contantes podem variar de acordo com o retorno da API que você está utlizando
+
+<br>
+
+```kt
+  val result = serviceAPI.getMoviesByGenre(
+      genreId = genreId,
+      page = page
+  ).results ?: emptyList()
+```
+
+A variável ```result``` armazena a lista de ```MovieResponse``` retornada da requisição ```getMoviesByGenre()```. Mais precisamente, a requisição retornou um ```BasePaginationRemote<List<MovieResponse>>``` mas usando o ```.results``` você consegue acessar a lista de ```MovieResponse```.
+
+
+<br>
+
+Dessa forma, com os valores de ```page``` e ```result``` já é possível carregar a paginação:
+```kt
+  return LoadResult.Page(
+    data = result,
+    prevKey = if(page == DEFAULT_PAGE_INDEX) null else page - 1,
+    nextKey = if(result.isEmpty()) null else page + 1
+  )
+```
+
+```prevKey```: Indica a chave da página anterior. É usada quando o usuário faz scroll para cima, querendo ver dados anteriores. <br>
+```nextKey```: Indica a chave da próxima página. É usada quando o usuário faz scroll para baixo, querendo ver mais dados.
+
