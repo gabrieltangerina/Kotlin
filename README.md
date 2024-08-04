@@ -3,6 +3,9 @@
 ## Descrição
 Este repositório contém minhas anotações e exemplos de código enquanto estudo Kotlin. Aqui você encontrará soluções para problemas comuns, dicas e truques, e implementações práticas de funcionalidades específicas.
 
+## Conteúdos
+- [Paging3 - Scroll Infinito](https://github.com/gabrieltangerina/Kotlin/blob/e75915671b522814213663c3f9317dd0606edf07/README_PAGING.md)
+
 ## Anotações 
 
 ### Funcinalidade de teclado e searchView. 
