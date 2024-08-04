@@ -225,7 +225,7 @@ Dessa forma, com os valores de ```page``` e ```result``` já é possível carreg
 
 <br>
 
-#### 2. Alteração do Repository e RepositoryImpl
+#### 2. Como fica o Repository e RepositoryImpl
 
 A interface repository precisa ter o mesmo tipo de dado retornado do ```PagingSource```, então ela deve ficar assim:
 ```kt
@@ -259,7 +259,7 @@ A alteração também é feita no corpo da função. Ao inves de retornar o mét
 
 <br>
 
-#### 3. Alteração no UseCase
+#### 3. Como fica o UseCase
 
 <br>
 
@@ -303,25 +303,51 @@ O ```Pager()``` retorna um ```Flow``` que são os dados paginados. Esses dados s
 
 <br>
 
-#### 4. Alteração no ViewModel
+#### 4. Como fica o ViewModel
 
 <br>
 
 ```kt
-private val _movieList = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
-val movieList get() = _movieList.asStateFlow()
+class MovieGenreViewModel @Inject constructor(
+    private val getMoviesByGenreUseCase: GetMoviesByGenreUseCase
+) : ViewModel() {
 
-private var currentGenreId: Int? = null
+    private val _movieList = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
+    val movieList get() = _movieList.asStateFlow()
 
-fun getMoviesByGenre(genreId: Int?, forceRequest: Boolean) = viewModelScope.launch {
-    if (genreId != currentGenreId || forceRequest) {
-        currentGenreId = genreId
-        getMoviesByGenreUseCase(
-            genreId = genreId
-        ).cachedIn(viewModelScope).collectLatest { pagingData ->
-            _movieList.emit(pagingData)
+    private var currentGenreId: Int? = null
+
+    fun getMoviesByGenre(genreId: Int?, forceRequest: Boolean) = viewModelScope.launch {
+        if (genreId != currentGenreId || forceRequest) {
+            currentGenreId = genreId
+            getMoviesByGenreUseCase(
+                genreId = genreId
+            ).cachedIn(viewModelScope).collectLatest { pagingData ->
+                _movieList.emit(pagingData)
+            }
+        }
+    }
+
+}
+```
+
+<br>
+
+A verificação ```genreId != currentGenreId``` é para manter a listagem quando você troca de telas. A requisição para a listagem só será chamada quando o id do gênero for diferente da anterior. Dessa forma, se você estiver navegando pela listagem, clicar em um filme por exemplo, irá abrir a tela de detalhes e se você voltar para a tela anterior a listagem estará onde você parou.
+
+<br>
+
+#### 4. Como fica o fragment
+
+<br>
+
+```kt
+private fun getMoviesByGenre(forceRequest: Boolean = false) {
+    lifecycleScope.launch {
+        viewModel.getMoviesByGenre(genreId = args.genreId, forceRequest = forceRequest)
+        viewModel.movieList.collectLatest { pagingData ->
+            moviePagingAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
     }
 }
 ```
-
