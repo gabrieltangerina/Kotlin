@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -61,6 +62,11 @@ class MovieGenreFragment : Fragment() {
         initRecycler()
         getMoviesByGenre()
         initSearchView()
+        initListeners()
+    }
+
+    private fun initListeners(){
+        onBackPressed()
     }
 
     private fun initRecycler() {
@@ -140,25 +146,9 @@ class MovieGenreFragment : Fragment() {
     }
 
     private fun searchMovies(query: String) {
-        viewModel.searchMovies(query).observe(viewLifecycleOwner) { stateView ->
-            when (stateView) {
-                is StateView.Loading -> {
-                    binding.recyclerMovies.isVisible = false
-                    binding.shimmer.startShimmer()
-                    binding.shimmer.isVisible = true
-                }
-
-                is StateView.Success -> {
-                    binding.shimmer.stopShimmer()
-                    binding.shimmer.isVisible = false
-                    getMoviesByGenre(forceRequest = true)
-                    binding.recyclerMovies.isVisible = true
-                }
-
-                is StateView.Error -> {
-                    binding.shimmer.stopShimmer()
-                    binding.shimmer.isVisible = false
-                }
+        lifecycleScope.launch {
+            viewModel.searchMovies(query).collectLatest { pagingData ->
+                moviePagingAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
             }
         }
     }
@@ -207,6 +197,19 @@ class MovieGenreFragment : Fragment() {
         val item = menu.findItem(R.id.action_search)
         binding.simpleSearchView.setMenuItem(item)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher
+            .addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if (binding.simpleSearchView.isVisible) {
+                        binding.simpleSearchView.closeSearch()
+                    } else {
+                        findNavController().popBackStack()
+                    }
+                }
+            })
     }
 
     override fun onDestroyView() {

@@ -1,20 +1,43 @@
 package com.example.movieapp.domain.api.usecase.movie
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.map
 import com.example.movieapp.data.mapper.toDomain
 import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.domain.api.repository.movie.MovieRepository
+import com.example.movieapp.util.Constants
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SearchMoviesUseCase @Inject constructor(
     private val movieRepository: MovieRepository
 ) {
 
-    suspend operator fun invoke(apiKey: String, language: String?, query: String?): List<Movie> {
-        return movieRepository.searchMovies(
-            apiKey = apiKey,
-            language = language,
-            query = query
-        ).filter { it.backdropPath != null }.map { it.toDomain() }
+    operator fun invoke(
+        apiKey: String,
+        language: String?,
+        query: String?
+    ): Flow<PagingData<Movie>> = Pager(
+        config = PagingConfig(
+            pageSize = Constants.Paging.NETWORK_PAGE_SIZE,
+            enablePlaceholders = false,
+            initialLoadSize = Constants.Paging.DEFAULT_PAGE_INDEX
+        ),
+        pagingSourceFactory = {
+            movieRepository.searchMovies(
+                apiKey,
+                language,
+                query
+            )
+        }
+    ).flow.map { pagingData ->
+        pagingData.map { movieResponse ->
+            movieResponse.toDomain()
+        }
     }
+
 
 }
