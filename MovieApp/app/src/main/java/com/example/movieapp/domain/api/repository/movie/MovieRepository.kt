@@ -6,17 +6,13 @@ import com.example.movieapp.data.model.MovieResponse
 
 interface MovieRepository {
 
-    suspend fun getGenres(apiKey: String?, language: String?): GenresResponse
+    suspend fun getGenres(): GenresResponse
 
     fun getMoviesByGenre(
-        apiKey: String?,
-        language: String?,
         genreId: Int?
     ): PagingSource<Int, MovieResponse>
 
     fun searchMovies(
-        apiKey: String?,
-        language: String?,
         query: String?
     ): PagingSource<Int, MovieResponse>
 

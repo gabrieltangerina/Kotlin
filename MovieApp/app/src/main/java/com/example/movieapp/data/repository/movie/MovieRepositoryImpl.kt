@@ -13,25 +13,18 @@ class MovieRepositoryImpl @Inject constructor(
     private val serviceAPI: ServiceAPI
 ) : MovieRepository {
 
-    override suspend fun getGenres(apiKey: String?, language: String?): GenresResponse {
-        return serviceAPI.getGenres(
-            apiKey = apiKey,
-            language = language
-        )
+    override suspend fun getGenres(): GenresResponse {
+        return serviceAPI.getGenres()
     }
 
     override fun getMoviesByGenre(
-        apiKey: String?,
-        language: String?,
         genreId: Int?
     ): PagingSource<Int, MovieResponse> {
         return MovieByGenrePagingSource(serviceAPI, genreId)
     }
 
     override fun searchMovies(
-        apiKey: String?,
-        language: String?,
-        query: String?,
+        query: String?
     ):  PagingSource<Int, MovieResponse> {
        return SearchMoviePagingSource(serviceAPI, query)
     }

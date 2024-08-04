@@ -30,11 +30,7 @@ class MovieDetailsViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val details = getMovieDetailsUseCase.invoke(
-                BuildConfig.API_KEY,
-                Constants.Movie.LANGUAGE,
-                movieId = movieId
-            )
+            val details = getMovieDetailsUseCase.invoke(movieId = movieId)
 
             emit(StateView.Success(details))
 
@@ -51,11 +47,7 @@ class MovieDetailsViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val credits = getCreditsUseCase.invoke(
-                BuildConfig.API_KEY,
-                Constants.Movie.LANGUAGE,
-                movieId = movieId
-            )
+            val credits = getCreditsUseCase.invoke(movieId = movieId)
 
             emit(StateView.Success(credits))
 

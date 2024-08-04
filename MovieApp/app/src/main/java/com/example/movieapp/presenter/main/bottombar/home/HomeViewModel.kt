@@ -23,10 +23,7 @@ class HomeViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val genres = getGenresUseCase.invoke(
-                BuildConfig.API_KEY,
-                Constants.Movie.LANGUAGE
-            ).map { it.toPresentation() }
+            val genres = getGenresUseCase.invoke().map { it.toPresentation() }
 
             emit(StateView.Success(genres))
 
@@ -44,8 +41,6 @@ class HomeViewModel @Inject constructor(
             emit(StateView.Loading())
 
             val movies = getMoviesByGenreUseCase.invoke(
-                BuildConfig.API_KEY,
-                Constants.Movie.LANGUAGE,
                 genreId = genreId
             )
 

@@ -18,8 +18,6 @@ class MovieByGenrePagingSource(
         return try {
             val page = params.key ?: DEFAULT_PAGE_INDEX
             val result = serviceAPI.getMoviesByGenre(
-                BuildConfig.API_KEY,
-                Constants.Movie.LANGUAGE,
                 genreId = genreId,
                 page = page
             ).results ?: emptyList()

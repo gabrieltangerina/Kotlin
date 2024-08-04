@@ -20,11 +20,7 @@ class SimilarMoviesViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val movies = getSimilarUseCase.invoke(
-                BuildConfig.API_KEY,
-                Constants.Movie.LANGUAGE,
-                movieId = movieId
-            )
+            val movies = getSimilarUseCase.invoke(movieId = movieId)
 
             emit(StateView.Success(movies))
 

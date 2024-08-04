@@ -18,8 +18,6 @@ class SearchMoviePagingSource(
         return try {
             val page = params.key ?: DEFAULT_PAGE_INDEX
             val result = serviceAPI.searchMovies(
-                BuildConfig.API_KEY,
-                Constants.Movie.LANGUAGE,
                 query = query,
                 page = page
             ).results ?: emptyList()
