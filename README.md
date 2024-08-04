@@ -90,10 +90,10 @@ O código a seguir mostra uma função que faz uma requisição para a API. Ness
 
 <br>
 
-### Os principais componentes para a criação da páginação são:
+### Passos para implementar a paginação:
 
-#### PagingSource
-É uma classe responsável por definir como os dados são carregados página por página. Ele lida com a lógica de recuperação de dados de uma fonte de dados (como uma API ou banco de dados) e a paginação desses dados.
+#### 1. Criação do PagingSource
+É uma classe responsável por fornecer os dados paginados. Ele lida com a lógica de recuperação de dados de uma fonte de dados (como uma API ou banco de dados) e a paginação desses dados.
 
 <br>
 
@@ -221,4 +221,107 @@ Dessa forma, com os valores de ```page``` e ```result``` já é possível carreg
 
 ```prevKey```: Indica a chave da página anterior. É usada quando o usuário faz scroll para cima, querendo ver dados anteriores. <br>
 ```nextKey```: Indica a chave da próxima página. É usada quando o usuário faz scroll para baixo, querendo ver mais dados.
+
+
+<br>
+
+#### 2. Alteração do Repository e RepositoryImpl
+
+A interface repository precisa ter o mesmo tipo de dado retornado do ```PagingSource```, então ela deve ficar assim:
+```kt
+interface MovieRepository {
+
+  fun getMoviesByGenre(
+    genreId: Int?
+  ): PagingSource<Int, MovieResponse>
+
+}
+```
+
+<br>
+
+Assim, a classe que implementa essa interface terá que fazer a alteração também:
+```kt
+  class MovieRepositoryImpl @Inject constructor(
+    private val serviceAPI: ServiceAPI
+) : MovieRepository {
+
+    override fun getMoviesByGenre(
+        genreId: Int?
+    ): PagingSource<Int, MovieResponse> {
+        return MovieByGenrePagingSource(serviceAPI, genreId)
+    }
+
+}
+```
+
+A alteração também é feita no corpo da função. Ao inves de retornar o método do serviceAPI, ela irá chamar o ```MovieByGenrePagingSource()```
+
+<br>
+
+#### 3. Alteração no UseCase
+
+<br>
+
+```kt
+class GetMoviesByGenreUseCase @Inject constructor(
+    private val movieRepository: MovieRepository
+) {
+
+    operator fun invoke(
+        genreId: Int?
+    ): Flow<PagingData<Movie>>  = Pager(
+        config = PagingConfig(
+            pageSize = NETWORK_PAGE_SIZE,
+            enablePlaceholders = false,
+            initialLoadSize = DEFAULT_PAGE_INDEX
+        ),
+        pagingSourceFactory = {
+            movieRepository.getMoviesByGenre(genreId)
+        }
+    ).flow.map { pagingData ->
+        pagingData.map { movieResponse ->
+            movieResponse.toDomain()
+        }
+    }
+
+}
+```
+
+<br>
+
+O retorno do UseCase passará a ser um ```Flow<PagingData<Movie>>``` e usará o ```Pager``` para criar e gerenciar a instância do PagingSource e controlar a lógica da paginação. 
+
+<br>
+
+```PagingConfig``` configura como a paginação deve funcionar, passando a quantidade de itens por página, se os itens serão exibidos caso seus dados ainda não estiverem disponíveis e o tamanho da carga inicial de dados. <br>
+```pagingSourceFactory``` é uma função lambda que retorna uma instância de PagingSource. Nesse exemplo o getMoviesByGenre() retorna um PagingSource. <br>
+    
+<br>
+
+O ```Pager()``` retorna um ```Flow``` que são os dados paginados. Esses dados são coletados, transformados para a camada Domain e depois podem ser exibidor na UI depois de passar pela ViewModel.
+
+<br>
+
+#### 4. Alteração no ViewModel
+
+<br>
+
+```kt
+private val _movieList = MutableStateFlow<PagingData<Movie>>(PagingData.empty())
+val movieList get() = _movieList.asStateFlow()
+
+private var currentGenreId: Int? = null
+
+fun getMoviesByGenre(genreId: Int?, forceRequest: Boolean) = viewModelScope.launch {
+    if (genreId != currentGenreId || forceRequest) {
+        currentGenreId = genreId
+        getMoviesByGenreUseCase(
+            genreId = genreId
+        ).cachedIn(viewModelScope).collectLatest { pagingData ->
+            _movieList.emit(pagingData)
+        }
+    }
+}
+```
 
