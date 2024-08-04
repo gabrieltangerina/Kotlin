@@ -54,7 +54,12 @@ Aplicativos que utilizam paginação geralmente interagem com APIs paginadas. Is
   ]
 }
 ```
-Para capturar essa estrutura de resposta vinda em JSON da requisição você pode usar data class como essa:
+
+<br>
+Para capturar a estrutura de resposta paginada vinda em JSON de uma requisição, você pode usar uma data class como a seguinte:
+
+<br>
+<br>
 
 ```kotlin
   data class BasePaginationRemote<out T>(
@@ -72,7 +77,11 @@ Para capturar essa estrutura de resposta vinda em JSON da requisição você pod
   )
 ```
 
-O código a seguir mostra como é feita uma requisição e o tipo de dado que foi colocado para seu retorno, no caso, perceba que é do mesmo tipo da data class mostrada anteriormente e essa data class recebe um List que é uma estrutura de dados básica do Kotlin e um MovieResponse que é uma data class que recebe os retornos da API para um filme.
+<br>
+
+O código a seguir mostra uma função que faz uma requisição para a API. Nessa função está presente a url, os parâmetros que serão enviados e o tipo de retorno. Perceba que o retorno é do mesmo tipo da data class mostrada anteriormente ```BasePaginationRemote```. Além disso, essa data class recebeu uma lista de objetos ```MovieResponse``` que é uma data class que recebe os retornos da API para um filme.
+
+<br>
 
 ```kotlin
   @GET("discover/movie")
@@ -82,7 +91,12 @@ O código a seguir mostra como é feita uma requisição e o tipo de dado que fo
     ): BasePaginationRemote<List<MovieResponse>>
 ```
 
-A própria documentação do Paging3 já nos traz uma classe padrão para implementa-la. Vou passar a seguir um código do projeto MovieAp que está nesse repositório para explicar as mudanças essenciais para que a paginação funcione. Vale ressaltar que o código anterior, o "getMoviesByGenre" retorna uma BasePaginationRemote e é ela que está sendo tratada no código a abaixo.
+<br>
+A própria documentação do Paging3 já nos traz uma classe padrão para implementa-la. Vou passar a seguir um código do projeto MovieApp que está nesse repositório para explicar as mudanças essenciais para que a paginação funcione. Vale ressaltar que o código anterior, o 
+
+```getMoviesByGenre()``` retorna uma ```BasePaginationRemote``` e é ela que está sendo tratada no código a abaixo.
+
+<br>
  
 ```kotlin
   class MovieByGenrePagingSource(
@@ -117,15 +131,23 @@ A própria documentação do Paging3 já nos traz uma classe padrão para implem
 }
 ```
 
+<br>
 As principais alterações que foram feitas no código base vindo da documentação da bilioteca foram:
 
+<br>
+<br>
 
-<strong>Os parâmetros</strong>, agora ela recebe a classe ServiceAPI que é responsável por armazenar os dados necessários para as requisições, como url, parâmetros e retorno. Além disso, ela recebe o genreId que é usado na url da requisição. 
-  ```kt
+```kt
   class MovieByGenrePagingSource(
       private val serviceAPI: ServiceAPI,
       private val genreId: Int?
   ) : PagingSource<Int, MovieResponse>() {...}
 ```
 
-<strong>O tipo de retorno</strong>, perceba que o retorno ```<Int, MovieResponse>``` aparece algumas vezes no código. O "Int" faz relação ao tipo de dado da nossa paginação, como página 1, 2, 3 e assim por diante. E o segundo é o tipo de dado que será retornado da nossa paginação, se você voltar no código da requisição verá que o retorno é ```BasePaginationRemote<List<MovieResponse>>```, logo o tipo de retorno é ```MovieResponse```.
+<br>
+
+<strong>Os parâmetros</strong>, agora ela recebe a classe ```ServiceAPI``` que é responsável por armazenar os dados necessários para as requisições, como url, parâmetros e retorno. Além disso, ela recebe o ```genreId``` que é usado na url da requisição. 
+
+<br>
+
+<strong>O tipo de retorno</strong>, perceba que o retorno ```<Int, MovieResponse>``` aparece algumas vezes no código. O ```Int``` faz relação ao tipo de dado da paginação, como página 1, 2, 3 e assim por diante. E o segundo é o tipo de dado que será retornado da nossa paginação, se você voltar no código da requisição verá que o retorno é ```BasePaginationRemote<List<MovieResponse>>```, logo o tipo de retorno é ```MovieResponse```.
