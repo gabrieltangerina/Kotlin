@@ -7,6 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.NavOptions
+import androidx.navigation.navOptions
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.movieapp.R
 import com.google.android.material.snackbar.Snackbar
@@ -124,4 +128,32 @@ fun Context.circularProgressDrawable(): Drawable {
         )
         start()
     }
+}
+
+// Para navegação simples
+fun NavController.animatedNavigate(action: Int){
+    this.navigate(
+        action,
+        null,
+        navOptions = NavOptions.Builder()
+            .setEnterAnim(R.anim.enter)
+            .setExitAnim(R.anim.exit)
+            .setPopEnterAnim(R.anim.pop_enter)
+            .setPopExitAnim(R.anim.pop_exit)
+            .build()
+    )
+}
+
+// Para navegação globar ou com argumento
+fun NavController.animatedNavigate(nav: NavDirections){
+    this.navigate(
+        nav.actionId,
+        nav.arguments,
+        navOptions = NavOptions.Builder()
+            .setEnterAnim(R.anim.enter)
+            .setExitAnim(R.anim.exit)
+            .setPopEnterAnim(R.anim.pop_enter)
+            .setPopExitAnim(R.anim.pop_exit)
+            .build()
+    )
 }

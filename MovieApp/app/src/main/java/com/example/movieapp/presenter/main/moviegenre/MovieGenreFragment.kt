@@ -23,6 +23,7 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieGenreBinding
 import com.example.movieapp.presenter.main.moviegenre.adapter.MoviePagingAdapter
 import com.example.movieapp.util.StateView
+import com.example.movieapp.util.animatedNavigate
 import com.example.movieapp.util.initToolbar
 import com.ferfalk.simplesearchview.SimpleSearchView
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,7 +76,7 @@ class MovieGenreFragment : Fragment() {
             movieClickListener = { movieId ->
                 movieId?.let {
                     val action = MainGraphDirections.actionGlobalMovieDetailsFragment(it)
-                    findNavController().navigate(action)
+                    findNavController().animatedNavigate(action)
                 }
             }
         )

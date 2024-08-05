@@ -15,6 +15,7 @@ import com.example.movieapp.databinding.FragmentLoginBinding
 import com.example.movieapp.presenter.main.activity.MainActivity
 import com.example.movieapp.util.FirebaseHelper
 import com.example.movieapp.util.StateView
+import com.example.movieapp.util.animatedNavigate
 import com.example.movieapp.util.hideKeyboard
 import com.example.movieapp.util.initToolbar
 import com.example.movieapp.util.isEmailValid
@@ -53,7 +54,7 @@ class LoginFragment : Fragment() {
             .into(binding.progressLoading);
 
         binding.btnForgot.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+            findNavController().animatedNavigate(R.id.action_loginFragment_to_forgotPasswordFragment)
         }
     }
 

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieGenreBinding
 import com.example.movieapp.databinding.FragmentSplashBinding
+import com.example.movieapp.util.animatedNavigate
 
 class SplashFragment : Fragment() {
 
@@ -33,7 +34,7 @@ class SplashFragment : Fragment() {
 
     private fun initSplashScreen(){
         Handler(Looper.getMainLooper()).postDelayed({run {
-            findNavController().navigate(R.id.action_splashFragment_to_onboardingFragment)
+            findNavController().animatedNavigate(R.id.action_splashFragment_to_onboardingFragment)
         }}, 3000)
     }
 

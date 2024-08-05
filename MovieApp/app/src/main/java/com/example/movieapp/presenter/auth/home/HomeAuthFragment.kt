@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentHomeAuthBinding
 import com.example.movieapp.databinding.FragmentLoginBinding
+import com.example.movieapp.util.animatedNavigate
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,11 +35,11 @@ class HomeAuthFragment : Fragment() {
 
     private fun initListeners() {
         binding.btnLoginWithPassword.setOnClickListener {
-            findNavController().navigate(R.id.action_homeAuthFragment_to_loginFragment)
+            findNavController().animatedNavigate(R.id.action_homeAuthFragment_to_loginFragment)
         }
 
         binding.btnRegister.setOnClickListener {
-            findNavController().navigate(R.id.action_homeAuthFragment_to_registerFragment)
+            findNavController().animatedNavigate(R.id.action_homeAuthFragment_to_registerFragment)
         }
 
     }

@@ -22,6 +22,7 @@ import com.example.movieapp.databinding.FragmentSearchBinding
 import com.example.movieapp.presenter.main.bottombar.home.adapter.MovieAdapter
 import com.example.movieapp.presenter.main.moviegenre.adapter.MoviePagingAdapter
 import com.example.movieapp.util.StateView
+import com.example.movieapp.util.animatedNavigate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -95,7 +96,7 @@ class SearchFragment : Fragment() {
             movieClickListener = { movieId ->
                 movieId?.let {
                     val action = MainGraphDirections.actionGlobalMovieDetailsFragment(it)
-                    findNavController().navigate(action)
+                    findNavController().animatedNavigate(action)
                 }
             }
         )

@@ -19,6 +19,7 @@ import com.example.movieapp.databinding.BottomSheetDeleteMovieBinding
 import com.example.movieapp.databinding.FragmentDownloadBinding
 import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.presenter.main.bottombar.download.adapter.DownloadMovieAdapter
+import com.example.movieapp.util.animatedNavigate
 import com.example.movieapp.util.calculateFileSize
 import com.example.movieapp.util.calculateMovieTime
 import com.example.movieapp.util.initToolbar
@@ -88,7 +89,7 @@ class DownloadFragment : Fragment() {
             detailsClickListener = { movieId ->
                 movieId?.let {
                     val action = MainGraphDirections.actionGlobalMovieDetailsFragment(it)
-                    findNavController().navigate(action)
+                    findNavController().animatedNavigate(action)
                 }
             },
             deleteClickListener = { movie ->
