@@ -33,8 +33,8 @@ class MovieGenreViewModel @Inject constructor(
             currentGenreId = genreId
             getMoviesByGenreUseCase(
                 genreId = genreId
-            ).cachedIn(viewModelScope).collectLatest { pagindData ->
-                _movieList.emit(pagindData)
+            ).cachedIn(viewModelScope).collectLatest { pagingData ->
+                _movieList.emit(pagingData)
             }
         }
     }

@@ -10,14 +10,21 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
+import br.com.hellodev.movieapp.presenter.main.moviegenre.adapter.LoadStatePagingAdapter
 import com.example.movieapp.MainGraphDirections
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentSearchBinding
 import com.example.movieapp.presenter.main.bottombar.home.adapter.MovieAdapter
+import com.example.movieapp.presenter.main.moviegenre.adapter.MoviePagingAdapter
 import com.example.movieapp.util.StateView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SearchFragment : Fragment() {
@@ -26,7 +33,7 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: SearchViewModel by viewModels()
-    private lateinit var movieAdapter: MovieAdapter
+    private lateinit var moviePagingAdapter: MoviePagingAdapter
 
     private var closeButtonState: Boolean = false
 
@@ -43,43 +50,19 @@ class SearchFragment : Fragment() {
 
         initRecycler()
         initSearchView()
-        initObservers()
     }
 
-    private fun initObservers(){
-        stateObserver()
-        searchObserver()
-    }
-
-    private fun searchObserver() {
-        viewModel.movieList.observe(viewLifecycleOwner){movieList ->
-            movieAdapter.submitList(movieList)
-            if(!closeButtonState){
-                emptyState(empty = movieList.isEmpty())
-            }else{
-                emptyState(empty = false)
+    private fun searchMovies(query: String) {
+        lifecycleScope.launch {
+            viewModel.searchMovies(query).collectLatest { pagingData ->
+                moviePagingAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
             }
-            closeButtonState = false
         }
     }
 
-    private fun stateObserver(){
-        viewModel.searchState.observe(viewLifecycleOwner) { stateView ->
-            when (stateView) {
-                is StateView.Loading -> {
-                    binding.recyclerMovies.isVisible = false
-                    binding.progressBar.isVisible = true
-                }
-
-                is StateView.Success -> {
-                    binding.progressBar.isVisible = false
-                    binding.recyclerMovies.isVisible = true
-                }
-
-                is StateView.Error -> {
-                    binding.progressBar.isVisible = false
-                }
-            }
+    private fun clearMovies() {
+        lifecycleScope.launch {
+            moviePagingAdapter.submitData(PagingData.empty())
         }
     }
 
@@ -92,7 +75,7 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isNotEmpty() || newText.isNotBlank()) viewModel.searchMovies(newText)
+                if (newText.isNotEmpty() || newText.isNotBlank()) searchMovies(newText)
                 return false
             }
         })
@@ -102,14 +85,13 @@ class SearchFragment : Fragment() {
             binding.searchView.setQuery("", false)
             binding.searchView.clearFocus()
             closeButtonState = true
-            viewModel.clearMovies()
+            clearMovies()
         }
     }
 
     private fun initRecycler() {
-        movieAdapter = MovieAdapter(
+        moviePagingAdapter = MoviePagingAdapter(
             context = requireContext(),
-            layoutInflater = R.layout.movie_genre_item,
             movieClickListener = { movieId ->
                 movieId?.let {
                     val action = MainGraphDirections.actionGlobalMovieDetailsFragment(it)
@@ -118,10 +100,59 @@ class SearchFragment : Fragment() {
             }
         )
 
+        lifecycleScope.launch {
+            moviePagingAdapter.loadStateFlow.collectLatest { loadState ->
+                when(loadState.refresh){
+                    LoadState.Loading -> {
+                        binding.recyclerMovies.isVisible = false
+                        binding.shimmer.startShimmer()
+                        binding.shimmer.isVisible = true
+                    }
+
+                    is LoadState.NotLoading -> {
+                        binding.shimmer.stopShimmer()
+                        binding.shimmer.isVisible = false
+                        binding.recyclerMovies.isVisible = true
+                    }
+
+                    is LoadState.Error -> {
+                        binding.recyclerMovies.isVisible = true
+                        binding.shimmer.stopShimmer()
+                        binding.shimmer.isVisible = false
+
+                        val error = (loadState.refresh as LoadState.Error).error.message
+                            ?: "Ocorreu um erro. Tente novamente mais tarde"
+                        Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
         with(binding.recyclerMovies) {
-            layoutManager = GridLayoutManager(requireContext(), 2)
             setHasFixedSize(true)
-            adapter = movieAdapter
+
+            // Código para centralizar a progressBar de Loading para carregar mais filmes
+            // Força a exposição de uma view em um gridlayout, ignorando a qtnd de colunas
+
+            val gridLayoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = gridLayoutManager
+
+            val footerAdapter = moviePagingAdapter.withLoadStateFooter(
+                footer = LoadStatePagingAdapter()
+            )
+
+            adapter = footerAdapter
+
+            gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
+                override fun getSpanSize(position: Int): Int {
+                    return if(position == moviePagingAdapter.itemCount && footerAdapter.itemCount > 0){
+                        2
+                    }else{
+                        1
+                    }
+                }
+            }
+
         }
     }
 
