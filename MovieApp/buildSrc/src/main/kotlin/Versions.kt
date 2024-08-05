@@ -1,4 +1,5 @@
 object Versions {
+    const val lottie_version = "6.0.0"
     const val swipe_refresh_layout_version = "1.1.0"
     const val shimmer_version = "0.5.0"
     const val paging_version = "3.3.1"

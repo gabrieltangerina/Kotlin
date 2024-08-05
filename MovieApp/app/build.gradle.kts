@@ -53,6 +53,9 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    // Lottie
+    implementation("com.airbnb.android:lottie:${Versions.lottie_version}")
+
     // SwipeRefreshLayout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipe_refresh_layout_version}")
 
