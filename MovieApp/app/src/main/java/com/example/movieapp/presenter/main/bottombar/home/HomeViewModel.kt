@@ -2,11 +2,10 @@ package com.example.movieapp.presenter.main.bottombar.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.example.movieapp.BuildConfig
+import com.example.movieapp.data.mapper.toDomain
 import com.example.movieapp.data.mapper.toPresentation
 import com.example.movieapp.domain.api.usecase.movie.GetGenresUseCase
 import com.example.movieapp.domain.api.usecase.movie.GetMoviesByGenreUseCase
-import com.example.movieapp.util.Constants
 import com.example.movieapp.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -44,7 +43,7 @@ class HomeViewModel @Inject constructor(
                 genreId = genreId
             )
 
-            emit(StateView.Success(movies))
+            emit(StateView.Success(movies.map { it.toDomain() }))
 
         }catch (ex: HttpException){
             ex.printStackTrace()

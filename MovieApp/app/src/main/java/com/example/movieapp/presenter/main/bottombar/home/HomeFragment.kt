@@ -73,7 +73,7 @@ class HomeFragment : Fragment() {
                     }
 
                     is StateView.Success -> {
-                        // genreMutableList[index] = genre.copy(movies = stateView.data?.take(5))
+                        genreMutableList[index] = genre.copy(movies = stateView.data?.take(5))
                         lifecycleScope.launch {
                             delay(1000)
                             genreMovieAdapter.submitList(genreMutableList)

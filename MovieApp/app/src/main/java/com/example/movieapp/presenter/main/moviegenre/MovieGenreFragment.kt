@@ -22,7 +22,6 @@ import com.example.movieapp.MainGraphDirections
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieGenreBinding
 import com.example.movieapp.presenter.main.moviegenre.adapter.MoviePagingAdapter
-import com.example.movieapp.util.StateView
 import com.example.movieapp.util.animatedNavigate
 import com.example.movieapp.util.initToolbar
 import com.ferfalk.simplesearchview.SimpleSearchView
@@ -61,7 +60,7 @@ class MovieGenreFragment : Fragment() {
         initToolbar(binding.toolbar)
         binding.toolbar.title = args.genreName
         initRecycler()
-        getMoviesByGenre()
+        getMoviesByGenrePaginationUseCase()
         initSearchView()
         initListeners()
     }
@@ -137,9 +136,9 @@ class MovieGenreFragment : Fragment() {
         }
     }
 
-    private fun getMoviesByGenre(forceRequest: Boolean = false) {
+    private fun getMoviesByGenrePaginationUseCase(forceRequest: Boolean = false) {
         lifecycleScope.launch {
-            viewModel.getMoviesByGenre(genreId = args.genreId, forceRequest = forceRequest)
+            viewModel.getMoviesByGenrePaginationUseCase(genreId = args.genreId, forceRequest = forceRequest)
             viewModel.movieList.collectLatest { pagingData ->
                 moviePagingAdapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
             }
@@ -168,7 +167,7 @@ class MovieGenreFragment : Fragment() {
             }
 
             override fun onQueryTextCleared(): Boolean {
-                getMoviesByGenre()
+                getMoviesByGenrePaginationUseCase()
                 return false
             }
         })
@@ -180,7 +179,7 @@ class MovieGenreFragment : Fragment() {
             }
 
             override fun onSearchViewClosed() {
-                getMoviesByGenre()
+                getMoviesByGenrePaginationUseCase()
             }
 
             override fun onSearchViewShownAnimation() {
