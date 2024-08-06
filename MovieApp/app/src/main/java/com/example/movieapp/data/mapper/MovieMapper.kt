@@ -15,7 +15,6 @@ import com.example.movieapp.domain.model.Genre
 import com.example.movieapp.domain.model.Movie
 import com.example.movieapp.domain.model.MovieReview
 import com.example.movieapp.domain.model.Person
-import com.example.movieapp.presenter.model.GenrePresentation
 
 fun GenreResponse.toDomain(): Genre {
     return Genre(
@@ -48,14 +47,6 @@ fun MovieResponse.toDomain(): Movie {
 fun CountryResponse.toDomain(): Country {
     return Country(
         name = name
-    )
-}
-
-fun Genre.toPresentation(): GenrePresentation {
-    return GenrePresentation(
-        id = id,
-        name = name,
-        movies = emptyList()
     )
 }
 

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.MainGraphDirections
 import com.example.movieapp.databinding.FragmentHomeBinding
 import com.example.movieapp.presenter.main.bottombar.home.adapter.GenreMovieAdapter
-import com.example.movieapp.presenter.model.GenrePresentation
+import com.example.movieapp.presenter.model.MoviesByGenre
 import com.example.movieapp.util.StateView
 import com.example.movieapp.util.animatedNavigate
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,50 +42,29 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
-        getGenres()
+        initObservers()
     }
 
-    private fun getGenres() {
-        viewModel.getGenres().observe(viewLifecycleOwner) { stateView ->
-            when (stateView) {
+    private fun initObservers() {
+        viewModel.homeState.observe(viewLifecycleOwner){stateView ->
+            when(stateView){
                 is StateView.Loading -> {
+                    binding.progressBar.isVisible = true
+                    binding.recyclerGenres.isVisible = false
                 }
-
                 is StateView.Success -> {
-                    val genres = stateView.data
-                    genreMovieAdapter.submitList(genres)
-                    getMoviesByGenre(genres ?: emptyList())
+                    binding.progressBar.isVisible = false
+                    binding.recyclerGenres.isVisible = true
                 }
-
                 is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    binding.recyclerGenres.isVisible = false
                 }
             }
         }
-    }
 
-    private fun getMoviesByGenre(genres: List<GenrePresentation>) {
-        val genreMutableList = genres.toMutableList()
-
-        genreMutableList.forEachIndexed { index, genre ->
-            viewModel.getMoviesByGenre(genre.id).observe(viewLifecycleOwner) { stateView ->
-                when (stateView) {
-                    is StateView.Loading -> {
-
-                    }
-
-                    is StateView.Success -> {
-                        genreMutableList[index] = genre.copy(movies = stateView.data?.take(5))
-                        lifecycleScope.launch {
-                            delay(1000)
-                            genreMovieAdapter.submitList(genreMutableList)
-                        }
-                    }
-
-                    is StateView.Error -> {
-
-                    }
-                }
-            }
+        viewModel.movieList.observe(viewLifecycleOwner){moviesByGenre ->
+            genreMovieAdapter.submitList(moviesByGenre)
         }
     }
 
