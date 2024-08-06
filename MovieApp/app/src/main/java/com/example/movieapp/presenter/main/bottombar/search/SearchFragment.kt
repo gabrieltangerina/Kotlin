@@ -36,8 +36,6 @@ class SearchFragment : Fragment() {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var moviePagingAdapter: MoviePagingAdapter
 
-    private var closeButtonState: Boolean = false
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,7 +59,7 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun clearMovies() {
+    private fun clearListMovies() {
         lifecycleScope.launch {
             moviePagingAdapter.submitData(PagingData.empty())
         }
@@ -85,8 +83,8 @@ class SearchFragment : Fragment() {
         closeButton?.setOnClickListener {
             binding.searchView.setQuery("", false)
             binding.searchView.clearFocus()
-            closeButtonState = true
-            clearMovies()
+            binding.layoutEmpty.isVisible = false
+            clearListMovies()
         }
     }
 
@@ -114,6 +112,8 @@ class SearchFragment : Fragment() {
                         binding.shimmer.stopShimmer()
                         binding.shimmer.isVisible = false
                         binding.recyclerMovies.isVisible = true
+
+                        emptyState(moviePagingAdapter.itemCount == 0)
                     }
 
                     is LoadState.Error -> {
