@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
         getGenres()
     }
 
-    fun getGenres() {
+    private fun getGenres() {
         viewModelScope.launch {
             try {
                 _homeState.postValue(StateView.Loading())
@@ -49,7 +49,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getMoviesByGenre(genres: List<Genre>){
+    private fun getMoviesByGenre(genres: List<Genre>){
         val moviesByGenre : MutableList<MoviesByGenre> = mutableListOf()
         viewModelScope.launch{
             genres.forEach { genre ->
@@ -74,25 +74,6 @@ class HomeViewModel @Inject constructor(
                     _homeState.postValue(StateView.Error(e.message))
                 }
             }
-        }
-    }
-
-    fun getMoviesByGenre(genreId: Int?) = liveData(Dispatchers.IO) {
-        try {
-            emit(StateView.Loading())
-
-            val movies = getMoviesByGenreUseCase.invoke(
-                genreId = genreId
-            )
-
-            emit(StateView.Success(movies.map { it.toDomain() }))
-
-        } catch (ex: HttpException) {
-            ex.printStackTrace()
-            emit(StateView.Error(ex.message))
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-            emit(StateView.Error(ex.message))
         }
     }
 
