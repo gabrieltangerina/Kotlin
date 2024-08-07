@@ -1,6 +1,5 @@
 package com.example.movieapp.presenter.main.moviedetails.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -40,12 +39,12 @@ class CommentsAdapter : ListAdapter<MovieReview, CommentsAdapter.MyViewHolder>(D
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val comment = getItem(position)
 
-        if(comment.authorDetails?.avatarPath?.contains("null") == false){
+        if (comment.authorDetails?.avatarPath?.contains("null") == false) {
             Glide
                 .with(holder.binding.root.context)
                 .load(comment.authorDetails.avatarPath)
                 .into(holder.binding.imageUser)
-        }else{
+        } else {
             Glide
                 .with(holder.binding.root.context)
                 .load(R.drawable.no_user_picture)
@@ -59,6 +58,7 @@ class CommentsAdapter : ListAdapter<MovieReview, CommentsAdapter.MyViewHolder>(D
 
     }
 
-    inner class MyViewHolder(val binding: ItemCommentBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class MyViewHolder(val binding: ItemCommentBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
 }

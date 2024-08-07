@@ -98,10 +98,11 @@
 
     <!--    ProfileFragment-->
     <string name="text_edit_profile_profile_fragment">Editar perfil</string>
-    <string name="text_notificate_profile_fragment">Notificações</string>
+    <string name="text_notifications_profile_fragment">Notificações</string>
     <string name="text_download_profile_fragment">Downloads</string>
     <string name="text_security_profile_fragment">Segurança</string>
     <string name="text_language_profile_fragment">Idioma</string>
+    <string name="text_dark_mode_profile_fragment">Tema escuro</string>
     <string name="text_helper_center_profile_fragment">Centro de ajuda</string>
     <string name="text_privacy_policy_profile_fragment">Política de privacidade</string>
     <string name="text_logout_profile_fragment">Sair</string>
