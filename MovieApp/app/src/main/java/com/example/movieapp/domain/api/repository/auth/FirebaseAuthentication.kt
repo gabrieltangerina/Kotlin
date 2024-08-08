@@ -8,4 +8,5 @@ interface FirebaseAuthentication {
 
     suspend fun forgotPassword(email: String)
 
+    suspend fun logout()
 }

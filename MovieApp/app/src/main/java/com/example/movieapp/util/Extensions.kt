@@ -1,7 +1,9 @@
 package com.example.movieapp.util
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -14,6 +16,7 @@ import androidx.navigation.navOptions
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.movieapp.R
 import com.google.android.material.snackbar.Snackbar
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -130,6 +133,8 @@ fun Context.circularProgressDrawable(): Drawable {
     }
 }
 
+// Ambas são para criar animação na navegacao entre telas, mas uma recebe apenas a action
+// e a outra recebe também o argumento
 // Para navegação simples
 fun NavController.animatedNavigate(action: Int){
     this.navigate(
@@ -144,7 +149,7 @@ fun NavController.animatedNavigate(action: Int){
     )
 }
 
-// Para navegação globar ou com argumento
+// Para navegação global ou com argumento
 fun NavController.animatedNavigate(nav: NavDirections){
     this.navigate(
         nav.actionId,
@@ -156,4 +161,14 @@ fun NavController.animatedNavigate(nav: NavDirections){
             .setPopExitAnim(R.anim.pop_exit)
             .build()
     )
+}
+
+// Para que ao fazer logout vá direto para o login sem passar pela splash screen ou onboarding
+inline fun <reified T : Serializable> Intent.getSerializableCompat(key: String): T? = when {
+    Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializableExtra(
+        key,
+        T::class.java
+    )
+
+    else -> @Suppress("DEPRECATION") getSerializableExtra(key) as? T
 }

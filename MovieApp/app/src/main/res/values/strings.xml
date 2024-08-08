@@ -107,6 +107,22 @@
     <string name="text_privacy_policy_profile_fragment">Política de privacidade</string>
     <string name="text_logout_profile_fragment">Sair</string>
 
+    <!--  EditProfileFragment  -->
+    <string name="text_title_toolbar_edit_profile_fragment">Editar perfil</string>
+    <string name="text_hint_name_edit_profile_fragment">Nome</string>
+    <string name="text_hint_username_edit_profile_fragment">Usuário</string>
+    <string name="text_hint_email_edit_profile_fragment">Email</string>
+    <string name="text_hint_phone_edit_profile_fragment">Telefone</string>
+    <string name="text_hint_sex_edit_profile_fragment">Sexo</string>
+    <string name="text_hint_country_edit_profile_fragment">País</string>
+    <string name="text_button_update_edit_profile_fragment">Atualizar dados</string>
+
+    <!--   BottomSheetLogout -->
+    <string name="text_title_bottom_sheet_logout">Sair</string>
+    <string name="text_message_bottom_sheet_logout">Tem certeza de que deseja sair?</string>
+    <string name="text_confirm_button_bottom_sheet_logout">Sim, sair</string>
+    <string name="text_cancel_button_bottom_sheet_logout">Cancelar</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
