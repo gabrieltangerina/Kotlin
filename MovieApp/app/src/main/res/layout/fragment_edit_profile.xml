@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/no_user_picture" />
+                        android:src="@drawable/no_user_picture"/>
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -108,7 +108,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="24dp"
+                android:clickable="false"
+                android:enabled="false"
+                android:textColor="@color/disabled"
                 android:drawableStart="@drawable/ic_email"
+                tools:text="myname@example.com"
                 android:drawablePadding="12dp"
                 android:hint="@string/text_hint_email_edit_profile_fragment"
                 android:inputType="textEmailAddress"
@@ -132,7 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/edit_email" />
 
             <EditText
-                android:id="@+id/edit_sex"
+                android:id="@+id/edit_genre"
                 style="@style/ThemeEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -155,7 +159,7 @@
                 android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_sex" />
+                app:layout_constraintTop_toBottomOf="@+id/edit_genre" />
 
             <Button
                 android:id="@+id/btn_update"

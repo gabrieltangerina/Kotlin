@@ -45,7 +45,7 @@
     <string name="text_button_forgot_fragment">Recuperar conta</string>
     <string name="text_send_email_success_forgot_fragment">E-mail enviado com sucesso. Por favor, verifique sua caixa de mensagens</string>
 
-    <!--    Erros Firebase Authentication-->
+    <!--    Errors Firebase Authentication-->
     <string name="account_not_registered_register_fragment">E-mail ou senha inválidos.</string>
     <string name="invalid_email_register_fragment">Insira um e-mail válido.</string>
     <string name="invalid_password_register_fragment">Senha inválida, tente novamente.</string>
@@ -116,6 +116,13 @@
     <string name="text_hint_sex_edit_profile_fragment">Sexo</string>
     <string name="text_hint_country_edit_profile_fragment">País</string>
     <string name="text_button_update_edit_profile_fragment">Atualizar dados</string>
+    <!--  EditProfileFragment - notifications  -->
+    <string name="text_name_empty_edit_profile_fragment">Informe seu nome</string>
+    <string name="text_user_empty_edit_profile_fragment">Informe seu usuário</string>
+    <string name="text_email_invalid_edit_profile_fragment">Informe um e-mail válido</string>
+    <string name="text_phone_empty_edit_profile_fragment">Informe um telefone</string>
+    <string name="text_genre_empty_edit_profile_fragment">Informe um gênero</string>
+    <string name="text_country_empty_edit_profile_fragment">Informe um país</string>
 
     <!--   BottomSheetLogout -->
     <string name="text_title_bottom_sheet_logout">Sair</string>
