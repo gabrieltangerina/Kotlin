@@ -7,8 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieapp.R
 import com.example.movieapp.databinding.ItemUserProfileBinding
-import com.example.movieapp.domain.model.MenuProfile
-import com.example.movieapp.domain.model.MenuProfileType
+import com.example.movieapp.domain.model.menu.MenuProfile
+import com.example.movieapp.domain.model.menu.MenuProfileType
 
 class ProfileMenuAdapter(
     private val context: Context,

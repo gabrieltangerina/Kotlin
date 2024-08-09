@@ -1,9 +1,9 @@
 package com.example.movieapp.domain.api.repository.movie
 
 import androidx.paging.PagingSource
-import com.example.movieapp.data.model.BasePaginationRemote
-import com.example.movieapp.data.model.GenresResponse
-import com.example.movieapp.data.model.MovieResponse
+import com.example.movieapp.data.model.movie.BasePaginationRemote
+import com.example.movieapp.data.model.movie.GenresResponse
+import com.example.movieapp.data.model.movie.MovieResponse
 
 interface MovieRepository {
 

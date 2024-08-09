@@ -1,4 +1,4 @@
-package com.example.movieapp.domain.model
+package com.example.movieapp.domain.model.menu
 
 import com.example.movieapp.R
 

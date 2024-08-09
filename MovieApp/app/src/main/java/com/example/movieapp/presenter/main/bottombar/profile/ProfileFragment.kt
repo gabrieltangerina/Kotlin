@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.databinding.BottomSheetLogoutBinding
 import com.example.movieapp.databinding.FragmentProfileBinding
-import com.example.movieapp.domain.model.MenuProfileType
+import com.example.movieapp.domain.model.menu.MenuProfileType
 import com.example.movieapp.presenter.auth.activity.AuthActivity
 import com.example.movieapp.presenter.auth.activity.AuthActivity.Companion.AUTHENTICATION_PARAMETER
 import com.example.movieapp.presenter.auth.enums.AuthenticationDestinations

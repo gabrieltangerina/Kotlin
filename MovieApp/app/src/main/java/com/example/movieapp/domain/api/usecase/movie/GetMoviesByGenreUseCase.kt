@@ -1,6 +1,6 @@
 package com.example.movieapp.domain.api.usecase.movie
 
-import com.example.movieapp.data.model.MovieResponse
+import com.example.movieapp.data.model.movie.MovieResponse
 import com.example.movieapp.domain.api.repository.movie.MovieRepository
 import javax.inject.Inject
 

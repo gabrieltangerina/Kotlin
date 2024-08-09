@@ -1,7 +1,7 @@
 package com.example.movieapp.domain.api.usecase.movie
 
 import com.example.movieapp.data.mapper.toDomain
-import com.example.movieapp.domain.model.MovieReview
+import com.example.movieapp.domain.model.movie.MovieReview
 import com.example.movieapp.domain.api.repository.movie.MovieDetailsRepository
 import javax.inject.Inject
 

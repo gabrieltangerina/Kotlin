@@ -123,6 +123,7 @@
     <string name="text_phone_empty_edit_profile_fragment">Informe um telefone</string>
     <string name="text_genre_empty_edit_profile_fragment">Informe um gênero</string>
     <string name="text_country_empty_edit_profile_fragment">Informe um país</string>
+    <string name="text_update_success_edit_profile_fragment">Perfil atualizado com sucesso</string>
 
     <!--   BottomSheetLogout -->
     <string name="text_title_bottom_sheet_logout">Sair</string>

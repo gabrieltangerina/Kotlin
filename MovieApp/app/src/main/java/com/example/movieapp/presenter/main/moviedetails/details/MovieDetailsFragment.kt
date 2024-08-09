@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
@@ -16,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.movieapp.R
 import com.example.movieapp.databinding.DialogDownloadingBinding
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
-import com.example.movieapp.domain.model.Movie
+import com.example.movieapp.domain.model.movie.Movie
 import com.example.movieapp.presenter.main.moviedetails.adapter.CastAdapter
 import com.example.movieapp.presenter.main.moviedetails.adapter.ViewPagerAdapter
 import com.example.movieapp.presenter.main.moviedetails.comments.CommentsFragment

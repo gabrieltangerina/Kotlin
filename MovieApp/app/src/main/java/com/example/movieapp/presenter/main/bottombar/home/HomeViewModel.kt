@@ -3,18 +3,15 @@ package com.example.movieapp.presenter.main.bottombar.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.data.mapper.toDomain
 import com.example.movieapp.domain.api.usecase.movie.GetGenresUseCase
 import com.example.movieapp.domain.api.usecase.movie.GetMoviesByGenreUseCase
-import com.example.movieapp.domain.model.Genre
+import com.example.movieapp.domain.model.movie.Genre
 import com.example.movieapp.presenter.model.MoviesByGenre
 import com.example.movieapp.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel

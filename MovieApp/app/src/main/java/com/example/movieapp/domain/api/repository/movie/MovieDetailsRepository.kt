@@ -1,8 +1,8 @@
 package com.example.movieapp.domain.api.repository.movie
 
-import com.example.movieapp.data.model.CreditResponse
-import com.example.movieapp.data.model.MovieResponse
-import com.example.movieapp.data.model.MovieReviewResponse
+import com.example.movieapp.data.model.movie.CreditResponse
+import com.example.movieapp.data.model.movie.MovieResponse
+import com.example.movieapp.data.model.movie.MovieReviewResponse
 
 interface MovieDetailsRepository {
 

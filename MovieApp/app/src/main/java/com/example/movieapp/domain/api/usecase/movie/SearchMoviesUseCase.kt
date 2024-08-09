@@ -5,7 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.example.movieapp.data.mapper.toDomain
-import com.example.movieapp.domain.model.Movie
+import com.example.movieapp.domain.model.movie.Movie
 import com.example.movieapp.domain.api.repository.movie.MovieRepository
 import com.example.movieapp.util.Constants
 import kotlinx.coroutines.flow.Flow
