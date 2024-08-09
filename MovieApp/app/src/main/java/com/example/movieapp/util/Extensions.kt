@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
-import androidx.navigation.navOptions
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.movieapp.R
 import com.google.android.material.snackbar.Snackbar
@@ -21,6 +20,9 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.CancellableContinuation
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.resume
 
 fun Fragment.hideKeyboard() {
     val view = activity?.currentFocus

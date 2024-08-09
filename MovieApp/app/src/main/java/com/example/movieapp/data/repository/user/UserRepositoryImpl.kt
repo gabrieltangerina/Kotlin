@@ -30,5 +30,31 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getUser(): User {
+        return suspendCoroutine { continuation ->
+            profileRef
+                .child(FirebaseHelper.getUserId())
+                .get()
+                .addOnCompleteListener{task ->
+                    if(task.isSuccessful){
+                        val user = task.result.getValue(User::class.java)
+                        if(user != null){
+                            continuation.resumeWith(Result.success(user))
+                        }else{
+                            continuation.resumeWith(
+                                Result.failure(
+                                    Exception("User not found")
+                                )
+                            )
+                        }
+                    }else{
+                        task.exception?.let {
+                            continuation.resumeWith(Result.failure(it))
+                        }
+                    }
+                }
+        }
+    }
+
 
 }

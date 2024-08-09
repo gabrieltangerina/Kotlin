@@ -34,6 +34,10 @@ class FirebaseHelper {
                     R.string.strong_password_register_fragment
                 }
 
+                error.contains("User not found") -> {
+                    R.string.error_user_not_found
+                }
+
                 else -> {
                     R.string.error_generic
                 }

@@ -9,6 +9,7 @@
     <string name="text_phone_invalid">Digite um telefone válido</string>
     <string name="text_password_empty">Digite sua senha</string>
     <string name="error_generic">Ocorreu um erro, por favor tente novamente mais tarde.</string>
+    <string name="error_user_not_found">Você não possui seus dados de perfil até o momento. Por favor, adicione seus dados</string>
     <string name="text_formated_value">R$ %1$s</string>
 
     <!--  HomeAuthFragment  -->

@@ -136,8 +136,14 @@ class ProfileFragment : Fragment() {
             )
         )
 
-        binding.textUsername.text = "Gabriel Tangerina"
-        binding.textEmail.text = "gabriel@example.com"
+        binding.textUsername.text = generateRandomUsername()
+        binding.textEmail.text = FirebaseHelper.getAuth().currentUser?.email
+    }
+
+    // Gera um número aleatório de 7 dígitos
+    private fun generateRandomUsername(): String {
+        val randomNumber = (1000000..9999999).random()
+        return "user$randomNumber"
     }
 
     private fun showBottomSheetLogout() {

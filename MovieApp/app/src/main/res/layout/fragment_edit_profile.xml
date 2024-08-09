@@ -128,7 +128,7 @@
                 android:enabled="false"
                 android:hint="@string/text_hint_email_edit_profile_fragment"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/disabled"
+                android:textColor="#ccc"
                 tools:text="myname@example.com" />
 
             <EditText
