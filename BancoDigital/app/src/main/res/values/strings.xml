@@ -2,4 +2,12 @@
     <string name="app_name">BancoDigital</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--  RecoverFragment  -->
+    <string name="text_hint_input_recover_fragment">E-mail</string>
+    <string name="text_message_recover_fragment">Informe seu e-mail para que seja enviado uma mensagem de recuperação</string>
+    <string name="text_button_recover_fragment">Enviar</string>
+    <string name="text_title_recover_fragment">Recupera conta</string>
+
 </resources>
