@@ -3,20 +3,34 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--  LoginFragment  -->
+    <string name="text_edit_email_login_fragment">E-mail</string>
+    <string name="text_hint_email_login_fragment">Digite seu email</string>
+    <string name="text_edit_password_login_fragment">Senha</string>
+    <string name="text_hint_password_login_fragment">Digite sua senha</string>
+    <string name="text_button_login_fragment">Entrar</string>
+    <string name="text_create_account_login_fragment">Criar conta</string>
+    <string name="text_recover_account_login_fragment">Recuperar conta</string>
 
     <!--  RecoverFragment  -->
-    <string name="text_hint_input_recover_fragment">E-mail</string>
+    <string name="text_edit_email_recover_fragment">E-mail</string>
+    <string name="text_hint_email_recover_fragment">Digite seu email</string>
     <string name="text_message_recover_fragment">Informe seu e-mail para que seja enviado uma mensagem de recuperação</string>
     <string name="text_button_recover_fragment">Enviar</string>
     <string name="text_title_recover_fragment">Recupera conta</string>
 
     <!--  RegisterFragment  -->
-    <string name="text_hint_name_register_fragment">Nome</string>
-    <string name="text_hint_email_register_fragment">E-mail</string>
-    <string name="text_hint_phone_register_fragment">Telefone</string>
-    <string name="text_hint_password_register_fragment">Senha</string>
-    <string name="text_hint_confirm_password_register_fragment">Confirmar senha</string>
+    <string name="text_hint_name_register_fragment">Digite seu nome</string>
+    <string name="text_hint_email_register_fragment">Digite seu e-mail</string>
+    <string name="text_hint_phone_register_fragment">Digite seu telefone</string>
+    <string name="text_hint_password_register_fragment">Digite uma senha</string>
+    <string name="text_hint_confirm_password_register_fragment">Confirme a senha</string>
     <string name="text_title_register_fragment">Criar conta</string>
     <string name="text_button_register_fragment">Cadastrar</string>
+    <string name="text_edit_name_register_fragment">Nome</string>
+    <string name="text_edit_email_register_fragment">E-mail</string>
+    <string name="text_edit_phone_register_fragment">Telefone</string>
+    <string name="text_edit_password_register_fragment">Senha</string>
+    <string name="text_edit_confirm_password_register_fragment">Confirmar senha</string>
 
 </resources>
