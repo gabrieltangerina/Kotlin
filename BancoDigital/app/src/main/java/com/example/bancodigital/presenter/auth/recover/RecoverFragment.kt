@@ -1,13 +1,12 @@
 package com.example.bancodigital.presenter.auth.recover
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.bancodigital.R
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.bancodigital.databinding.FragmentRecoverBinding
-import com.example.bancodigital.databinding.FragmentSplashBinding
 
 class RecoverFragment : Fragment() {
 
@@ -20,6 +19,26 @@ class RecoverFragment : Fragment() {
     ): View {
         _binding = FragmentRecoverBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initListeners()
+    }
+
+    private fun initListeners(){
+        binding.btnRecover.setOnClickListener { validateData() }
+    }
+
+    private fun validateData(){
+        val email = binding.editEmail.text.toString().trim()
+
+        if(email.isNotEmpty()){
+
+        }else{
+            Toast.makeText(requireContext(), "Digite um e-mail", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {
