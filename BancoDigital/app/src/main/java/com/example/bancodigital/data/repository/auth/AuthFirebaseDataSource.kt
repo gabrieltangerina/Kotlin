@@ -1,6 +1,6 @@
 package com.example.bancodigital.data.repository.auth
 
-import com.google.firebase.auth.FirebaseUser
+import com.example.bancodigital.data.model.User
 
 interface AuthFirebaseDataSource {
 
@@ -9,12 +9,7 @@ interface AuthFirebaseDataSource {
         password: String
     )
 
-    suspend fun register(
-        name: String,
-        email: String,
-        phone: String,
-        password: String
-    ): FirebaseUser
+    suspend fun register(user: User): User
 
     suspend fun recover(
         email: String

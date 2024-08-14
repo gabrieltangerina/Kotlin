@@ -1,8 +1,9 @@
 package com.example.bancodigital.domain.auth
 
 import com.example.bancodigital.data.repository.auth.AuthFirebaseDataSourceImpl
+import javax.inject.Inject
 
-class LoginUseCase(
+class LoginUseCase @Inject constructor(
     private val firebaseDataSourceImpl: AuthFirebaseDataSourceImpl
 ) {
 
