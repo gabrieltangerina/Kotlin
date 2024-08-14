@@ -92,7 +92,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:indeterminateTint="@color/color_default" />
+            android:indeterminateTint="@color/color_default"
+            android:visibility="invisible"
+            tools:visibility="visible" />
 
     </LinearLayout>
 
