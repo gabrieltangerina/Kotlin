@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.R
 import com.example.bancodigital.databinding.FragmentLoginBinding
 import com.example.bancodigital.databinding.FragmentSplashBinding
@@ -33,6 +35,14 @@ class LoginFragment : Fragment() {
 
     private fun initListeners(){
         binding.btnLogin.setOnClickListener { validateData() }
+
+        binding.textRegister.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+
+        binding.textRecover.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_recoverFragment)
+        }
     }
 
     private fun validateData(){
