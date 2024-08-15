@@ -31,7 +31,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/text_title_recover_fragment" />
+                    android:text="@string/text_title_recover_fragment"
+                    android:textColor="@color/color_default" />
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -65,17 +66,15 @@
 
         <EditText
             android:id="@+id/edit_email"
+            style="@style/Theme.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="24dp"
             android:layout_marginTop="4dp"
-            android:background="@drawable/bg_edit"
             android:drawableStart="@drawable/ic_email_fill"
             android:drawablePadding="8dp"
             android:drawableTint="@color/color_default"
             android:hint="@string/text_hint_email_recover_fragment"
-            android:padding="14dp"
-            android:textColorHint="#7DCAFF"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />

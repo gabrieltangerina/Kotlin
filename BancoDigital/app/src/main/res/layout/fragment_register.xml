@@ -32,7 +32,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/text_title_register_fragment" />
+                    android:text="@string/text_title_register_fragment"
+                    android:textColor="@color/color_default"/>
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -53,16 +54,14 @@
 
             <EditText
                 android:id="@+id/edit_name"
+                style="@style/Theme.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_edit"
                 android:drawableStart="@drawable/ic_user_fill"
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/color_default"
-                android:hint="@string/text_hint_name_register_fragment"
-                android:padding="14dp"
-                android:textColorHint="#7DCAFF" />
+                android:hint="@string/text_hint_name_register_fragment" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -72,16 +71,14 @@
 
             <EditText
                 android:id="@+id/edit_email"
+                style="@style/Theme.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_edit"
                 android:drawableStart="@drawable/ic_email_fill"
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/color_default"
-                android:hint="@string/text_hint_email_register_fragment"
-                android:padding="14dp"
-                android:textColorHint="#7DCAFF" />
+                android:hint="@string/text_hint_email_register_fragment" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -91,16 +88,14 @@
 
             <EditText
                 android:id="@+id/edit_phone"
+                style="@style/Theme.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_edit"
                 android:drawableStart="@drawable/ic_phone_fill"
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/color_default"
-                android:hint="@string/text_hint_phone_register_fragment"
-                android:padding="14dp"
-                android:textColorHint="#7DCAFF" />
+                android:hint="@string/text_hint_phone_register_fragment" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -110,16 +105,14 @@
 
             <EditText
                 android:id="@+id/edit_password"
+                style="@style/Theme.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_edit"
                 android:drawableStart="@drawable/ic_password_fill"
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/color_default"
-                android:hint="@string/text_hint_password_register_fragment"
-                android:padding="14dp"
-                android:textColorHint="#7DCAFF" />
+                android:hint="@string/text_hint_password_register_fragment" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -129,16 +122,14 @@
 
             <EditText
                 android:id="@+id/edit_confirm_password"
+                style="@style/Theme.EditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
-                android:background="@drawable/bg_edit"
                 android:drawableStart="@drawable/ic_password_fill"
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/color_default"
-                android:hint="@string/text_hint_confirm_password_register_fragment"
-                android:padding="14dp"
-                android:textColorHint="#7DCAFF" />
+                android:hint="@string/text_hint_confirm_password_register_fragment" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_register"
