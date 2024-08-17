@@ -31,7 +31,8 @@
             android:drawableStart="@drawable/ic_email_fill"
             android:drawablePadding="8dp"
             android:drawableTint="@color/color_default"
-            android:hint="@string/text_hint_email_login_fragment" />
+            android:hint="@string/text_hint_email_login_fragment"
+            android:inputType="textEmailAddress" />
 
         <TextView
             android:layout_width="match_parent"
@@ -45,11 +46,11 @@
             style="@style/Theme.EditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
             android:drawableStart="@drawable/ic_password_fill"
             android:drawablePadding="8dp"
             android:drawableTint="@color/color_default"
-            android:hint="@string/text_hint_password_login_fragment" />
+            android:hint="@string/text_hint_password_login_fragment"
+            android:inputType="textPassword" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"

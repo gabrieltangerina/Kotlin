@@ -75,6 +75,7 @@
             android:drawablePadding="8dp"
             android:drawableTint="@color/color_default"
             android:hint="@string/text_hint_email_recover_fragment"
+            android:inputType="textEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
