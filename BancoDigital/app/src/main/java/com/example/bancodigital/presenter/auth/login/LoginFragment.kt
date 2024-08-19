@@ -15,6 +15,7 @@ import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.FragmentLoginBinding
 import com.example.bancodigital.databinding.FragmentSplashBinding
 import com.example.bancodigital.util.StateView
+import com.example.bancodigital.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -33,4 +33,8 @@
     <string name="text_edit_password_register_fragment">Senha</string>
     <string name="text_edit_confirm_password_register_fragment">Confirmar senha</string>
 
+    <!--  BottomSheet  -->
+    <string name="text_title_bottom_sheet">Atenção</string>
+    <string name="text_button_bottom_sheet">Entendi</string>
+
 </resources>
