@@ -57,12 +57,12 @@ class LoginFragment : Fragment() {
         val password = binding.editPassword.text.toString().trim()
 
         if(email.isEmpty()){
-            Toast.makeText(requireContext(), "Informe um e-mail", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.text_email_empty))
             return
         }
 
         if(password.isEmpty()){
-            Toast.makeText(requireContext(), "Informe uma senha", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.text_password_empty))
             return
         }
 

@@ -13,6 +13,7 @@ import com.example.bancodigital.R
 import com.example.bancodigital.databinding.FragmentRecoverBinding
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
+import com.example.bancodigital.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,7 +47,7 @@ class RecoverFragment : Fragment() {
         val email = binding.editEmail.text.toString().trim()
 
         if(email.isEmpty()){
-            Toast.makeText(requireContext(), "Digite um e-mail", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.text_email_empty))
             return
         }
 
@@ -62,7 +63,7 @@ class RecoverFragment : Fragment() {
 
                 is StateView.Sucess -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), "Mensagem de recuperação enviada ao email", Toast.LENGTH_SHORT).show()
+                    showBottomSheet(message = getString(R.string.text_message_send_recover_fragment))
                 }
 
                 is StateView.Error -> {

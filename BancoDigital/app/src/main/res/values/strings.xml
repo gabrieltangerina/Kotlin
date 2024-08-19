@@ -3,6 +3,15 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--  Generics  -->
+    <string name="text_name_empty">Digite um nome</string>
+    <string name="text_email_empty">Digite um e-mail</string>
+    <string name="text_phone_empty">Digite um telefone</string>
+    <string name="text_password_empty">Digite uma senha</string>
+    <string name="text_confirm_password_empty">Confirme sua senha</string>
+    <string name="fields_password_not_equals">Campo senha e confirmar senha não são iguais</string>
+
+
     <!--  LoginFragment  -->
     <string name="text_edit_email_login_fragment">E-mail</string>
     <string name="text_hint_email_login_fragment">Digite seu email</string>
@@ -18,6 +27,7 @@
     <string name="text_message_recover_fragment">Informe seu e-mail para que seja enviado uma mensagem de recuperação</string>
     <string name="text_button_recover_fragment">Enviar</string>
     <string name="text_title_recover_fragment">Recupera conta</string>
+    <string name="text_message_send_recover_fragment">A mensagem de recuperação foi enviada ao seu e-mail</string>
 
     <!--  RegisterFragment  -->
     <string name="text_hint_name_register_fragment">Digite seu nome</string>

@@ -8,10 +8,13 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.bancodigital.R
 import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.FragmentRegisterBinding
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
+import com.example.bancodigital.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,33 +52,32 @@ class RegisterFragment : Fragment() {
         val confirmPassword = binding.editConfirmPassword.text.toString().trim()
 
         if (name.isEmpty()) {
-            Toast.makeText(requireContext(), "Informe um nome", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.text_name_empty))
             return
         }
 
         if (email.isEmpty()) {
-            Toast.makeText(requireContext(), "Informe um e-mail", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.text_email_empty))
             return
         }
 
         if (phone.isEmpty()) {
-            Toast.makeText(requireContext(), "Informe um telefone", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.text_phone_empty))
             return
         }
 
         if (password.isEmpty()) {
-            Toast.makeText(requireContext(), "Informe uma senha", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.text_password_empty))
             return
         }
 
         if (confirmPassword.isEmpty()) {
-            Toast.makeText(requireContext(), "Confirme a senha", Toast.LENGTH_SHORT).show()
+            showBottomSheet(message = getString(R.string.text_confirm_password_empty))
             return
         }
 
         if (password != confirmPassword) {
-            Toast.makeText(requireContext(), "As senhas não estão iguais", Toast.LENGTH_SHORT)
-                .show()
+            showBottomSheet(message = getString(R.string.fields_password_not_equals))
             return
         }
 
@@ -93,7 +95,7 @@ class RegisterFragment : Fragment() {
 
                 is StateView.Sucess -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), "Cadastro realizado com sucesso", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_global_homeFragment)
                 }
 
                 is StateView.Error -> {

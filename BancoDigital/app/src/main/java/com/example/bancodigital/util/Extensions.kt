@@ -31,7 +31,10 @@ fun Fragment.showBottomSheet(
     bottomSheetBinding.textTitle.text = getString(titleDialog ?: R.string.text_title_bottom_sheet)
     bottomSheetBinding.textMessage.text = message
     bottomSheetBinding.btnOk.text = getString(titleButton ?: R.string.text_button_bottom_sheet)
-    bottomSheetBinding.btnOk.setOnClickListener { onClick() }
+    bottomSheetBinding.btnOk.setOnClickListener {
+        bottomSheetDialog.dismiss()
+        onClick()
+    }
 
     bottomSheetDialog.setContentView(bottomSheetBinding.root)
     bottomSheetDialog.show()
