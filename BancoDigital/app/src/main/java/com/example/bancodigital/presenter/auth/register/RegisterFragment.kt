@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.R
 import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.FragmentRegisterBinding
+import com.example.bancodigital.presenter.profile.ProfileViewModel
 import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
@@ -24,6 +25,7 @@ class RegisterFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val registerViewModel: RegisterViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +68,7 @@ class RegisterFragment : Fragment() {
             return
         }
 
-        if(phone?.length != 11){
+        if (phone?.length != 11) {
             showBottomSheet(message = getString(R.string.text_phone_invalid))
             return
         }
@@ -86,18 +88,48 @@ class RegisterFragment : Fragment() {
             return
         }
 
-        phone?.let {
-            val user = User(name, email, it, password)
-            registerUser(user)
-        }
+
+        registerUser(name, email, phone, password)
 
     }
 
-    private fun registerUser(user: User) {
-        registerViewModel.register(user).observe(viewLifecycleOwner) { stateView ->
+    private fun registerUser(name: String, email: String, phone: String, password: String) {
+        registerViewModel.register(name, email, phone, password)
+            .observe(viewLifecycleOwner) { stateView ->
+                when (stateView) {
+                    is StateView.Loading -> {
+                        binding.progressBar.isVisible = true
+                    }
+
+                    is StateView.Sucess -> {
+                        val user = User(
+                            name = name,
+                            id = FirebaseHelper.getUserId(),
+                            email = email,
+                            phone = phone
+                        )
+                        saveProfile(user)
+                    }
+
+                    is StateView.Error -> {
+                        binding.progressBar.isVisible = false
+                        showBottomSheet(
+                            message = getString(
+                                FirebaseHelper.validError(
+                                    stateView.message ?: ""
+                                )
+                            )
+                        )
+                    }
+                }
+            }
+    }
+
+    private fun saveProfile(user: User) {
+        profileViewModel.saveProfile(user).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {
-                    binding.progressBar.isVisible = true
+
                 }
 
                 is StateView.Sucess -> {

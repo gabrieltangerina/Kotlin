@@ -8,8 +8,13 @@ class RegisterUseCase @Inject constructor(
     private val firebaseDataSourceImpl: AuthFirebaseDataSourceImpl
 ) {
 
-    suspend operator fun invoke(user: User): User {
-        return firebaseDataSourceImpl.register(user)
+    suspend operator fun invoke(
+        name: String,
+        email: String,
+        phone: String,
+        password: String
+    ): User {
+        return firebaseDataSourceImpl.register(name, email, phone, password)
     }
 
 }
