@@ -47,7 +47,7 @@ class RegisterFragment : Fragment() {
     private fun validateData() {
         val name = binding.editName.text.toString().trim()
         val email = binding.editEmail.text.toString().trim()
-        val phone = binding.editPhone.text.toString().trim()
+        val phone = binding.editPhone.unMaskedText
         val password = binding.editPassword.text.toString().trim()
         val confirmPassword = binding.editConfirmPassword.text.toString().trim()
 
@@ -61,8 +61,13 @@ class RegisterFragment : Fragment() {
             return
         }
 
-        if (phone.isEmpty()) {
+        if (phone?.isEmpty() == true) {
             showBottomSheet(message = getString(R.string.text_phone_empty))
+            return
+        }
+
+        if(phone?.length != 11){
+            showBottomSheet(message = getString(R.string.text_phone_invalid))
             return
         }
 
@@ -81,8 +86,10 @@ class RegisterFragment : Fragment() {
             return
         }
 
-        val user = User(name, email, phone, password)
-        registerUser(user)
+        phone?.let {
+            val user = User(name, email, it, password)
+            registerUser(user)
+        }
 
     }
 
