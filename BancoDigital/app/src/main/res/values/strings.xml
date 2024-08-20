@@ -11,6 +11,14 @@
     <string name="text_confirm_password_empty">Confirme sua senha</string>
     <string name="fields_password_not_equals">Campo senha e confirmar senha não são iguais</string>
 
+    <!--    Errors Firebase Authentication-->
+    <string name="account_not_registered_register_fragment">E-mail ou senha inválidos.</string>
+    <string name="invalid_email_register_fragment">Insira um e-mail válido.</string>
+    <string name="invalid_password_register_fragment">Senha inválida, tente novamente.</string>
+    <string name="email_in_use_register_fragment">Este e-mail já está em uso.</string>
+    <string name="strong_password_register_fragment">Insira uma senha mais forte.</string>
+    <string name="error_generic">Ocorreu um erro, por favor tente novamente mais tarde.</string>
+    <string name="error_user_not_found">Você não possui seus dados de perfil até o momento. Por favor, adicione seus dados</string>
 
     <!--  LoginFragment  -->
     <string name="text_edit_email_login_fragment">E-mail</string>

@@ -1,19 +1,16 @@
 package com.example.bancodigital.presenter.auth.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.R
-import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.FragmentLoginBinding
-import com.example.bancodigital.databinding.FragmentSplashBinding
+import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +37,7 @@ class LoginFragment : Fragment() {
         initListeners()
     }
 
-    private fun initListeners(){
+    private fun initListeners() {
         binding.btnLogin.setOnClickListener { validateData() }
 
         binding.textRegister.setOnClickListener {
@@ -52,16 +49,16 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun validateData(){
+    private fun validateData() {
         val email = binding.editEmail.text.toString().trim()
         val password = binding.editPassword.text.toString().trim()
 
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             showBottomSheet(message = getString(R.string.text_email_empty))
             return
         }
 
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             showBottomSheet(message = getString(R.string.text_password_empty))
             return
         }
@@ -71,8 +68,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginUser(email: String, password: String) {
-        loginViewModel.login(email, password).observe(viewLifecycleOwner){stateView ->
-            when(stateView){
+        loginViewModel.login(email, password).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.progressBar.isVisible = true
                 }
@@ -84,7 +81,13 @@ class LoginFragment : Fragment() {
 
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                    showBottomSheet(
+                        message = getString(
+                            FirebaseHelper.validError(
+                                stateView.message ?: ""
+                            )
+                        )
+                    )
                 }
             }
         }

@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.R
 import com.example.bancodigital.databinding.FragmentRecoverBinding
+import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
 import com.example.bancodigital.util.showBottomSheet
@@ -22,7 +21,7 @@ class RecoverFragment : Fragment() {
     private var _binding: FragmentRecoverBinding? = null
     private val binding get() = _binding!!
 
-    private val recoverViewModel : RecoverViewModel by viewModels()
+    private val recoverViewModel: RecoverViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,14 +38,14 @@ class RecoverFragment : Fragment() {
         initListeners()
     }
 
-    private fun initListeners(){
+    private fun initListeners() {
         binding.btnRecover.setOnClickListener { validateData() }
     }
 
-    private fun validateData(){
+    private fun validateData() {
         val email = binding.editEmail.text.toString().trim()
 
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             showBottomSheet(message = getString(R.string.text_email_empty))
             return
         }
@@ -55,8 +54,8 @@ class RecoverFragment : Fragment() {
     }
 
     private fun recoverAccount(email: String) {
-        recoverViewModel.recover(email).observe(viewLifecycleOwner){stateView ->
-            when(stateView){
+        recoverViewModel.recover(email).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.progressBar.isVisible = true
                 }
@@ -68,7 +67,13 @@ class RecoverFragment : Fragment() {
 
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    Toast.makeText(requireContext(), stateView.message, Toast.LENGTH_SHORT).show()
+                    showBottomSheet(
+                        message = getString(
+                            FirebaseHelper.validError(
+                                stateView.message ?: ""
+                            )
+                        )
+                    )
                 }
             }
         }
