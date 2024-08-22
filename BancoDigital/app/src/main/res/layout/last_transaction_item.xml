@@ -48,6 +48,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_transaction_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_transaction_type"
-        tools:text="R$ 65,20" />
+        tools:text="- R$ 65,20" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
