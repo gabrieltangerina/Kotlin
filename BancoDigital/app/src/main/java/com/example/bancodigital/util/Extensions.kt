@@ -7,11 +7,11 @@ import com.example.bancodigital.R
 import com.example.bancodigital.databinding.LayoutBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
-fun Fragment.initToolbar(toolbar: Toolbar, showIconNavigation: Boolean = true) {
+fun Fragment.initToolbar(toolbar: Toolbar, showIconNavigation: Boolean = true, icon: Int = R.drawable.ic_back_blue) {
     (activity as AppCompatActivity).setSupportActionBar(toolbar)
     (activity as AppCompatActivity).title = ""
     (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(showIconNavigation)
-    (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+    (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(icon)
     toolbar.setNavigationOnClickListener {
         activity?.onBackPressedDispatcher?.onBackPressed()
     }
