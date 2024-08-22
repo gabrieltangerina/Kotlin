@@ -56,4 +56,7 @@
     <string name="text_title_bottom_sheet">Atenção</string>
     <string name="text_button_bottom_sheet">Entendi</string>
 
+    <!--  HomeFragment  -->
+    <string name="text_balance_format_value">R$ %1$s</string>
+
 </resources>
