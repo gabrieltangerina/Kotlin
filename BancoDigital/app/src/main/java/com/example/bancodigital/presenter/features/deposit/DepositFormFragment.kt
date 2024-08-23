@@ -9,7 +9,10 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.example.bancodigital.R
+import com.example.bancodigital.data.enum.TransactionOperation
+import com.example.bancodigital.data.enum.TransactionType
 import com.example.bancodigital.data.model.Deposit
+import com.example.bancodigital.data.model.Transaction
 import com.example.bancodigital.databinding.FragmentDepositFormBinding
 import com.example.bancodigital.databinding.FragmentHomeBinding
 import com.example.bancodigital.util.StateView
@@ -65,9 +68,38 @@ class DepositFormFragment : Fragment() {
                 }
                 
                 is StateView.Sucess -> {
+
                     Toast.makeText(requireContext(), "Deposito salvo", Toast.LENGTH_SHORT).show()
+
+                    val transaction = Transaction(
+                        id = stateView.data?.id ?: "",
+                        operation = TransactionOperation.DEPOSIT,
+                        date = stateView.data?.date ?: 0,
+                        amount = stateView.data?.amount ?: 0f,
+                        type = TransactionType.CASH_IN
+                    )
+
+                    saveTransaction(transaction)
                 }
                 
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                }
+            }
+        }
+    }
+
+    private fun saveTransaction(transaction: Transaction){
+        depositViewModel.saveTransaction(transaction).observe(viewLifecycleOwner){stateView ->
+            when(stateView){
+                is StateView.Loading -> {
+
+                }
+
+                is StateView.Sucess -> {
+                    Toast.makeText(requireContext(), "Transação salvo", Toast.LENGTH_SHORT).show()
+                }
+
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
                 }
