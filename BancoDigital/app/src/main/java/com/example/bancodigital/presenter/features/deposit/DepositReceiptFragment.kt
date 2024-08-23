@@ -7,26 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.bancodigital.R
 import com.example.bancodigital.databinding.FragmentDepositFormBinding
-import com.example.bancodigital.databinding.FragmentHomeBinding
-import com.example.bancodigital.util.initToolbar
+import com.example.bancodigital.databinding.FragmentDepositReceiptBinding
 
-class DepositFormFragment : Fragment() {
 
-    private var _binding: FragmentDepositFormBinding? = null
+class DepositReceiptFragment : Fragment() {
+
+    private var _binding: FragmentDepositReceiptBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentDepositFormBinding.inflate(inflater, container, false)
+        _binding = FragmentDepositReceiptBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        initToolbar(toolbar = binding.toolbar, icon = R.drawable.ic_back_white)
     }
 
     override fun onDestroyView() {
