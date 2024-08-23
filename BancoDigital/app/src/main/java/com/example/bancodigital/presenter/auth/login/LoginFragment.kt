@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.btnLogin.setOnClickListener { validateData() }
+        binding.btnConfirm.setOnClickListener { validateData() }
 
         binding.textRegister.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
