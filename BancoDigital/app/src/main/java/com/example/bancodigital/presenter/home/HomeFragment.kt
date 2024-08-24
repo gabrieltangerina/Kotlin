@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.R
+import com.example.bancodigital.data.enum.TransactionType
+import com.example.bancodigital.data.model.Transaction
 import com.example.bancodigital.data.model.Wallet
 import com.example.bancodigital.databinding.FragmentHomeBinding
 import com.example.bancodigital.util.GetMask
@@ -35,21 +37,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getWallet()
+        getTransactions()
         initListeners()
     }
 
-    private fun getWallet() {
-        homeViewModel.getWallet().observe(viewLifecycleOwner) { stateView ->
+    private fun getTransactions() {
+        homeViewModel.getTransactions().observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {
 
                 }
 
                 is StateView.Sucess -> {
-                    stateView.data?.let {
-                        showBalance(it)
-                    }
+                    showBalance(stateView?.data ?: emptyList())
                 }
 
                 is StateView.Error -> {
@@ -65,9 +65,22 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun showBalance(wallet: Wallet) {
+    private fun showBalance(transactions: List<Transaction>) {
+        var cashIn = 0f
+        var cashOut = 0f
+
+        transactions.forEach { transaction ->
+            if(transaction.type == TransactionType.CASH_IN){
+                cashIn += transaction.amount
+            }else{
+                cashOut += transaction.amount
+            }
+        }
+
+        var total = cashIn - cashOut
+
         binding.textBalance.text =
-            getString(R.string.text_balance_format_value, GetMask.getFormatedValue(wallet.balance))
+            getString(R.string.text_balance_format_value, GetMask.getFormatedValue(total))
     }
 
     override fun onDestroyView() {
