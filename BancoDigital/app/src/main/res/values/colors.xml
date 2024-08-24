@@ -2,8 +2,13 @@
 <resources>
     <color name="color_default">#31A6F6</color>
     <color name="color_text_hint">#7DCAFF</color>
+
     <color name="color_success">#24BC61</color>
     <color name="color_error">#FA0014</color>
+
+    <color name="color_cash_in">#48D995</color>
+    <color name="color_cash_out">#D92B04</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

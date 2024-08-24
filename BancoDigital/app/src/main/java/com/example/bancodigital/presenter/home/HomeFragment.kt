@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bancodigital.R
 import com.example.bancodigital.data.enum.TransactionType
 import com.example.bancodigital.data.model.Transaction
-import com.example.bancodigital.data.model.Wallet
 import com.example.bancodigital.databinding.FragmentHomeBinding
+import com.example.bancodigital.presenter.home.adapter.TransactionsAdapter
 import com.example.bancodigital.util.GetMask
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.showBottomSheet
@@ -25,6 +26,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val homeViewModel: HomeViewModel by viewModels()
+    private lateinit var adapterTransaction: TransactionsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +39,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        configRecyclerView()
         getTransactions()
         initListeners()
     }
@@ -45,21 +48,36 @@ class HomeFragment : Fragment() {
         homeViewModel.getTransactions().observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {
-
+                    binding.progressBar.isVisible = true
                 }
 
                 is StateView.Sucess -> {
-                    showBalance(stateView?.data ?: emptyList())
+                    binding.progressBar.isVisible = false
+                    adapterTransaction.submitList(stateView.data?.reversed())
+                    showBalance(stateView.data ?: emptyList())
                 }
 
                 is StateView.Error -> {
+                    binding.progressBar.isVisible = false
                     showBottomSheet(message = stateView.message)
                 }
             }
         }
     }
 
-    private fun initListeners(){
+    private fun configRecyclerView() {
+        adapterTransaction = TransactionsAdapter(requireContext()) { transaction ->
+
+        }
+
+        with(binding.rvTransactions) {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = adapterTransaction
+        }
+    }
+
+    private fun initListeners() {
         binding.cardDeposit.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_depositFormFragment)
         }
@@ -70,9 +88,9 @@ class HomeFragment : Fragment() {
         var cashOut = 0f
 
         transactions.forEach { transaction ->
-            if(transaction.type == TransactionType.CASH_IN){
+            if (transaction.type == TransactionType.CASH_IN) {
                 cashIn += transaction.amount
-            }else{
+            } else {
                 cashOut += transaction.amount
             }
         }
