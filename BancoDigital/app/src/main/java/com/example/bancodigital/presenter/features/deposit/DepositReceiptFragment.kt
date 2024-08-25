@@ -4,20 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bancodigital.R
+import com.example.bancodigital.data.model.Deposit
 import com.example.bancodigital.databinding.FragmentDepositReceiptBinding
 import com.example.bancodigital.util.GetMask
+import com.example.bancodigital.util.StateView
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class DepositReceiptFragment : Fragment() {
 
     private var _binding: FragmentDepositReceiptBinding? = null
     private val binding get() = _binding!!
 
     private val args: DepositReceiptFragmentArgs by navArgs()
+
+    private val depositReceiptViewModel: DepositReceiptViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,20 +37,41 @@ class DepositReceiptFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        configData()
+        getDeposit()
         initListeners()
     }
 
-    private fun configData() {
-        binding.textCodeTransaction.text = args.deposit.id
+    private fun getDeposit(){
+        depositReceiptViewModel.getDeposit(args.idDeposit).observe(viewLifecycleOwner){stateView ->
+            when(stateView){
+                is StateView.Loading -> {
+
+                }
+
+                is StateView.Sucess -> {
+                    stateView.data?.let {
+                        configData(it)
+                    }
+                }
+
+                is StateView.Error -> {
+                    Toast.makeText(requireContext(), "Ocorreu um erro", Toast.LENGTH_SHORT).show()
+                    findNavController().popBackStack()
+                }
+            }
+        }
+    }
+
+    private fun configData(deposit: Deposit) {
+        binding.textCodeTransaction.text = deposit.id
 
         binding.textDateTransaction.text = getString(
             R.string.text_balance_format_value,
-            GetMask.getFormatedDate(args.deposit.date, GetMask.DAY_MONTH_YEAR_HOUR_MINUTE)
+            GetMask.getFormatedDate(deposit.date, GetMask.DAY_MONTH_YEAR_HOUR_MINUTE)
         )
 
 
-        binding.textAmountTransaction.text = GetMask.getFormatedValue(args.deposit.amount)
+        binding.textAmountTransaction.text = GetMask.getFormatedValue(deposit.amount)
     }
 
     private fun initListeners() {

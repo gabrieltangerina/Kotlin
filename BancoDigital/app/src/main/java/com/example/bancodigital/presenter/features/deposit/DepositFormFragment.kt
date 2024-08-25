@@ -15,7 +15,6 @@ import com.example.bancodigital.data.enum.TransactionType
 import com.example.bancodigital.data.model.Deposit
 import com.example.bancodigital.data.model.Transaction
 import com.example.bancodigital.databinding.FragmentDepositFormBinding
-import com.example.bancodigital.databinding.FragmentHomeBinding
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,7 +25,7 @@ class DepositFormFragment : Fragment() {
     private var _binding: FragmentDepositFormBinding? = null
     private val binding get() = _binding!!
 
-    private val depositViewModel: DepositViewModel by viewModels()
+    private val depositFormViewModel: DepositFormViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,15 +61,13 @@ class DepositFormFragment : Fragment() {
     }
 
     private fun saveDeposit(deposit: Deposit){
-        depositViewModel.saveDeposit(deposit).observe(viewLifecycleOwner){stateView ->
+        depositFormViewModel.saveDeposit(deposit).observe(viewLifecycleOwner){ stateView ->
             when(stateView){
                 is StateView.Loading -> {
                     binding.progressBar.isVisible = true
                 }
                 
                 is StateView.Sucess -> {
-
-                    Toast.makeText(requireContext(), "Deposito salvo", Toast.LENGTH_SHORT).show()
                     saveTransaction(deposit)
                 }
                 
@@ -90,7 +87,7 @@ class DepositFormFragment : Fragment() {
             type = TransactionType.CASH_IN
         )
 
-        depositViewModel.saveTransaction(transaction).observe(viewLifecycleOwner){stateView ->
+        depositFormViewModel.saveTransaction(transaction).observe(viewLifecycleOwner){ stateView ->
             when(stateView){
                 is StateView.Loading -> {
 
@@ -98,7 +95,7 @@ class DepositFormFragment : Fragment() {
 
                 is StateView.Sucess -> {
                     val action = DepositFormFragmentDirections
-                        .actionDepositFormFragmentToDepositReceiptFragment(deposit)
+                        .actionDepositFormFragmentToDepositReceiptFragment(deposit.id)
 
                     findNavController().navigate(action)
                 }

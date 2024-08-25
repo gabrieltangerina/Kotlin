@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 @HiltViewModel
-class DepositViewModel @Inject constructor(
+class DepositFormViewModel @Inject constructor(
     private val saveDepositUseCase: SaveDepositUseCase,
     private val saveTransactionUseCase: SaveTransactionUseCase
 ) : ViewModel(){
