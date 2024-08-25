@@ -1,12 +1,12 @@
 package com.example.bancodigital.presenter.features.deposit
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.R
@@ -42,17 +42,18 @@ class DepositFormFragment : Fragment() {
         initListeners()
     }
 
-    private fun initListeners(){
+    private fun initListeners() {
         binding.btnConfirm.setOnClickListener {
             validateDeposit()
         }
     }
 
-    private fun validateDeposit(){
+    private fun validateDeposit() {
         val amount = binding.editAmount.text.toString().trim()
 
-        if(amount.isEmpty()){
-            Toast.makeText(requireContext(), "Informe um valor para o deposito", Toast.LENGTH_SHORT).show()
+        if (amount.isEmpty()) {
+            Toast.makeText(requireContext(), "Informe um valor para o deposito", Toast.LENGTH_SHORT)
+                .show()
             return
         }
 
@@ -60,17 +61,17 @@ class DepositFormFragment : Fragment() {
         saveDeposit(deposit)
     }
 
-    private fun saveDeposit(deposit: Deposit){
-        depositFormViewModel.saveDeposit(deposit).observe(viewLifecycleOwner){ stateView ->
-            when(stateView){
+    private fun saveDeposit(deposit: Deposit) {
+        depositFormViewModel.saveDeposit(deposit).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.progressBar.isVisible = true
                 }
-                
+
                 is StateView.Sucess -> {
                     saveTransaction(deposit)
                 }
-                
+
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
                 }
@@ -78,7 +79,7 @@ class DepositFormFragment : Fragment() {
         }
     }
 
-    private fun saveTransaction(deposit: Deposit){
+    private fun saveTransaction(deposit: Deposit) {
         val transaction = Transaction(
             id = deposit.id,
             operation = TransactionOperation.DEPOSIT,
@@ -87,15 +88,18 @@ class DepositFormFragment : Fragment() {
             type = TransactionType.CASH_IN
         )
 
-        depositFormViewModel.saveTransaction(transaction).observe(viewLifecycleOwner){ stateView ->
-            when(stateView){
+        depositFormViewModel.saveTransaction(transaction).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
 
                 }
 
                 is StateView.Sucess -> {
                     val action = DepositFormFragmentDirections
-                        .actionDepositFormFragmentToDepositReceiptFragment(deposit.id)
+                        .actionDepositFormFragmentToDepositReceiptFragment(
+                            deposit.id,
+                            showIconNavigation = false
+                        )
 
                     findNavController().navigate(action)
                 }

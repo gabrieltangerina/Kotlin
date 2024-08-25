@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_homeFragment_to_depositFormFragment"
             app:destination="@id/depositFormFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_depositReceiptFragment"
+            app:destination="@id/depositReceiptFragment" />
     </fragment>
     <fragment
         android:id="@+id/depositFormFragment"
@@ -80,5 +83,8 @@
         <argument
             android:name="idDeposit"
             app:argType="string" />
+        <argument
+            android:name="showIconNavigation"
+            app:argType="boolean" />
     </fragment>
 </navigation>

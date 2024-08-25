@@ -14,6 +14,7 @@ import com.example.bancodigital.data.model.Deposit
 import com.example.bancodigital.databinding.FragmentDepositReceiptBinding
 import com.example.bancodigital.util.GetMask
 import com.example.bancodigital.util.StateView
+import com.example.bancodigital.util.initToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,29 +38,32 @@ class DepositReceiptFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initToolbar(toolbar = binding.toolbar, showIconNavigation = args.showIconNavigation)
         getDeposit()
         initListeners()
     }
 
-    private fun getDeposit(){
-        depositReceiptViewModel.getDeposit(args.idDeposit).observe(viewLifecycleOwner){stateView ->
-            when(stateView){
-                is StateView.Loading -> {
+    private fun getDeposit() {
+        depositReceiptViewModel.getDeposit(args.idDeposit)
+            .observe(viewLifecycleOwner) { stateView ->
+                when (stateView) {
+                    is StateView.Loading -> {
 
-                }
+                    }
 
-                is StateView.Sucess -> {
-                    stateView.data?.let {
-                        configData(it)
+                    is StateView.Sucess -> {
+                        stateView.data?.let {
+                            configData(it)
+                        }
+                    }
+
+                    is StateView.Error -> {
+                        Toast.makeText(requireContext(), "Ocorreu um erro", Toast.LENGTH_SHORT)
+                            .show()
+                        findNavController().popBackStack()
                     }
                 }
-
-                is StateView.Error -> {
-                    Toast.makeText(requireContext(), "Ocorreu um erro", Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
-                }
             }
-        }
     }
 
     private fun configData(deposit: Deposit) {
