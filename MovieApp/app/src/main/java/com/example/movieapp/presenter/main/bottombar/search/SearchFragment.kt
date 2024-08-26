@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,13 +14,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
-import br.com.hellodev.movieapp.presenter.main.moviegenre.adapter.LoadStatePagingAdapter
+import com.example.movieapp.presenter.main.moviegenre.adapter.LoadStatePagingAdapter
 import com.example.movieapp.MainGraphDirections
-import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentSearchBinding
-import com.example.movieapp.presenter.main.bottombar.home.adapter.MovieAdapter
 import com.example.movieapp.presenter.main.moviegenre.adapter.MoviePagingAdapter
-import com.example.movieapp.util.StateView
 import com.example.movieapp.util.animatedNavigate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

@@ -1,6 +1,8 @@
 package com.example.bancodigital.presenter.profile
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +24,11 @@ class ProfileFragment : Fragment() {
 
     private val profileViewModel: ProfileViewModel by viewModels()
 
+    private lateinit var initialName: String
+    private lateinit var initialPhone: String
+    private var flagChangedName: Boolean = false
+    private var flagChangedPhone: Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +42,7 @@ class ProfileFragment : Fragment() {
 
         initToolbar(binding.toolbar)
         getProfile()
+        initObservers()
     }
 
     private fun getProfile(){
@@ -48,6 +56,8 @@ class ProfileFragment : Fragment() {
                     binding.progressBar.isVisible = false
 
                     stateView.data?.let {
+                        initialName = stateView.data.name
+                        initialPhone = stateView.data.phone
                         configData(it)
                     }
 
@@ -59,6 +69,40 @@ class ProfileFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun initObservers(){
+        binding.editName.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                return
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                flagChangedName = s.toString().trim() != initialName
+                binding.btnUpdate.isEnabled = flagChangedName || flagChangedPhone
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                return
+            }
+
+        })
+
+        binding.editPhone.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                return
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                flagChangedPhone = s.toString().trim() != initialPhone
+                binding.btnUpdate.isEnabled = flagChangedName || flagChangedPhone
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                return
+            }
+
+        })
     }
 
     private fun configData(user: User){

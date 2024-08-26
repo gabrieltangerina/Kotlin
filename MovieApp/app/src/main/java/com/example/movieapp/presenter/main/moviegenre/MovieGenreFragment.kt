@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import br.com.hellodev.movieapp.presenter.main.moviegenre.adapter.LoadStatePagingAdapter
+import com.example.movieapp.presenter.main.moviegenre.adapter.LoadStatePagingAdapter
 import com.example.movieapp.MainGraphDirections
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieGenreBinding
