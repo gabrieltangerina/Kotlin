@@ -51,7 +51,7 @@ class DepositReceiptFragment : Fragment() {
 
                     }
 
-                    is StateView.Sucess -> {
+                    is StateView.Success -> {
                         stateView.data?.let {
                             configData(it)
                         }

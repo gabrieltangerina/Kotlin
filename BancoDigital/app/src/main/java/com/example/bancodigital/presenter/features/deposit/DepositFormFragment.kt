@@ -68,7 +68,7 @@ class DepositFormFragment : Fragment() {
                     binding.progressBar.isVisible = true
                 }
 
-                is StateView.Sucess -> {
+                is StateView.Success -> {
                     saveTransaction(deposit)
                 }
 
@@ -94,7 +94,7 @@ class DepositFormFragment : Fragment() {
 
                 }
 
-                is StateView.Sucess -> {
+                is StateView.Success -> {
                     val action = DepositFormFragmentDirections
                         .actionDepositFormFragmentToDepositReceiptFragment(
                             deposit.id,

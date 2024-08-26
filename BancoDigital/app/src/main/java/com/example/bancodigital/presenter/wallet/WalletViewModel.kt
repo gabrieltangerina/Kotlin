@@ -21,7 +21,7 @@ class WalletViewModel @Inject constructor(
 
             initWalletUseCase.invoke(wallet)
 
-            emit(StateView.Sucess(Unit))
+            emit(StateView.Success(Unit))
 
         }catch (ex: Exception){
             emit(StateView.Error(ex.message))

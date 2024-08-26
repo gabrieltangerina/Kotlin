@@ -2,7 +2,6 @@ package com.example.bancodigital.presenter.auth.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.example.bancodigital.data.model.User
 import com.example.bancodigital.domain.auth.RegisterUseCase
 import com.example.bancodigital.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,7 +19,7 @@ class RegisterViewModel @Inject constructor(
 
             val user = registerUseCase.invoke(name, email, phone, password)
 
-            emit(StateView.Sucess(user))
+            emit(StateView.Success(user))
 
         }catch (ex: Exception){
             emit(StateView.Error(ex.message))

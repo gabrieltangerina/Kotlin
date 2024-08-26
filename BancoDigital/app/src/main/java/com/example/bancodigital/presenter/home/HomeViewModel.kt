@@ -21,7 +21,7 @@ class HomeViewModel @Inject constructor(
 
             val wallet = getWalletUseCase.invoke()
 
-            emit(StateView.Sucess(wallet))
+            emit(StateView.Success(wallet))
 
         }catch (ex: Exception){
             emit(StateView.Error(ex.message))
@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
 
             val transactions = getTransactionsUseCase.invoke()
 
-            emit(StateView.Sucess(transactions))
+            emit(StateView.Success(transactions))
 
         }catch (ex: Exception){
             emit(StateView.Error(ex.message))

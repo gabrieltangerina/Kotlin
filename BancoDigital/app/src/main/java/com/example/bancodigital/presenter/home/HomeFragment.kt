@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
                     binding.progressBar.isVisible = true
                 }
 
-                is StateView.Sucess -> {
+                is StateView.Success -> {
                     binding.progressBar.isVisible = false
                     adapterTransaction.submitList(stateView.data?.reversed()?.take(6))
                     showBalance(stateView.data ?: emptyList())
@@ -112,6 +112,10 @@ class HomeFragment : Fragment() {
                 FirebaseHelper.getAuth().signOut()
                 findNavController().navigate(R.id.action_homeFragment_to_authentication)
             }
+        }
+
+        binding.cardProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_profileFragment)
         }
     }
 

@@ -23,7 +23,7 @@ class DepositFormViewModel @Inject constructor(
 
             val result = saveDepositUseCase.invoke(deposit)
 
-            emit(StateView.Sucess(result))
+            emit(StateView.Success(result))
 
         }catch (ex: Exception){
             emit(StateView.Error(ex.message))
@@ -36,7 +36,7 @@ class DepositFormViewModel @Inject constructor(
 
            saveTransactionUseCase.invoke(transaction)
 
-            emit(StateView.Sucess(Unit))
+            emit(StateView.Success(Unit))
 
         }catch (ex: Exception){
             emit(StateView.Error(ex.message))

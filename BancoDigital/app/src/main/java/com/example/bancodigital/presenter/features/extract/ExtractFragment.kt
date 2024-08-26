@@ -78,7 +78,7 @@ class ExtractFragment : Fragment() {
                     binding.progressBar.isVisible = true
                 }
 
-                is StateView.Sucess -> {
+                is StateView.Success -> {
                     binding.progressBar.isVisible = false
                     adapterTransaction.submitList(stateView.data?.reversed())
                 }
