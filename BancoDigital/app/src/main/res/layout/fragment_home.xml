@@ -35,6 +35,16 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <ImageView
+                android:id="@+id/btn_logout"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/logout_circle_r_line"
+                app:layout_constraintBottom_toBottomOf="@+id/materialCardView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/materialCardView" />
+
+
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
