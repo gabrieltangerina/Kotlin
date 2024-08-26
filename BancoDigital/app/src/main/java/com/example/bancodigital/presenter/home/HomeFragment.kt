@@ -83,8 +83,6 @@ class HomeFragment : Fragment() {
 
                 }
             }
-
-
         }
 
         with(binding.rvTransactions) {
@@ -97,6 +95,14 @@ class HomeFragment : Fragment() {
     private fun initListeners() {
         binding.cardDeposit.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_depositFormFragment)
+        }
+
+        binding.btnShowAll.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_extractFragment)
+        }
+
+        binding.cardExtract.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_extractFragment)
         }
     }
 

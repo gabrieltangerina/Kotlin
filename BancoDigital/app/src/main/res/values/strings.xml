@@ -68,5 +68,7 @@
     <string name="text_message_amount_deposit_receipt_fragment">Valor deposito</string>
     <string name="text_button_confirm_deposit_receipt_fragment">Ok</string>
 
+    <!-- ExtractFragment   -->
+    <string name="text_title_toolbar_extract_fragment">Extrato</string>
 
 </resources>

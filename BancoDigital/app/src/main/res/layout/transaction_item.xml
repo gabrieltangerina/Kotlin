@@ -18,7 +18,7 @@
         android:textSize="26sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="G" />
+        tools:text="T" />
 
     <TextView
         android:id="@+id/text_transaction_operation"
