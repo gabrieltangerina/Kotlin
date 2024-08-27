@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
     android:background="@color/white"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.5"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.5"
-    tools:context=".presenter.features.deposit.DepositReceiptFragment">
+    tools:context=".presenter.features.recharge.RechargeReceiptFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -37,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/text_title_toolbar_deposit_receipt_fragment"
+                    android:text="@string/text_title_toolbar_recharge_receipt_fragment"
                     android:textColor="@color/color_default"
                     android:textStyle="bold"
                     android:textSize="18sp" />
@@ -52,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="32dp"
             android:layout_marginTop="32dp"
-            android:text="@string/text_message_status_deposit_receipt_fragment"
+            android:text="@string/text_message_status_recharge_receipt_fragment"
             android:textAlignment="center"
             android:textColor="@color/color_success"
             android:textSize="30sp"
@@ -68,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginHorizontal="24dp"
-            android:text="@string/text_message_information_deposit_receipt_fragment"
+            android:text="@string/text_message_information_recharge_receipt_fragment"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -80,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/text_message_code_transaction_deposit_receipt_fragment"
+            android:text="@string/text_message_code_transaction_recharge_receipt_fragment"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -116,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
-            android:text="@string/text_message_data_deposit_receipt_fragment"
+            android:text="@string/text_message_data_recharge_receipt_fragment"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -127,10 +121,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
-            android:text="@string/text_message_amount_deposit_receipt_fragment"
+            android:text="@string/text_message_amount_recharge_receipt_fragment"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:text="@string/text_message_phone_recharge_receipt_fragment"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <TextView
             android:id="@+id/text_date_transaction"
@@ -154,7 +159,19 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_date_transaction"
-            tools:text="R$100,00" />
+            tools:text="R$20,00" />
+
+        <TextView
+            android:id="@+id/text_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="8"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_amount_transaction"
+            tools:text="(77) 77777-7777" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_continue"

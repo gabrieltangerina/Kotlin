@@ -62,11 +62,21 @@
     <!-- DepositReceiptFragment   -->
     <string name="text_title_toolbar_deposit_receipt_fragment">Recibo</string>
     <string name="text_message_status_deposit_receipt_fragment">Depósito efetuado com sucesso</string>
-    <string name="text_message_information_deposit_receipt_fragment">Seu depósito ficará disponível em até 3 dias úteis</string>
+    <string name="text_message_information_deposit_receipt_fragment">Seu depósito ficará disponível em até 3 dias úteis.</string>
     <string name="text_message_code_transaction_deposit_receipt_fragment">Código Transação</string>
     <string name="text_message_data_deposit_receipt_fragment">Data deposito</string>
     <string name="text_message_amount_deposit_receipt_fragment">Valor deposito</string>
     <string name="text_button_confirm_deposit_receipt_fragment">Ok</string>
+
+    <!-- RechargeReceiptFragment   -->
+    <string name="text_title_toolbar_recharge_receipt_fragment">Recarga</string>
+    <string name="text_message_status_recharge_receipt_fragment">Recarga efetuada com sucesso</string>
+    <string name="text_message_information_recharge_receipt_fragment">Seu crédito estará disponível em alguns minutos.</string>
+    <string name="text_message_code_transaction_recharge_receipt_fragment">Código Transação</string>
+    <string name="text_message_data_recharge_receipt_fragment">Data recarga</string>
+    <string name="text_message_amount_recharge_receipt_fragment">Valor recarga</string>
+    <string name="text_message_phone_recharge_receipt_fragment">Número</string>
+    <string name="text_button_confirm_recharge_receipt_fragment">Ok</string>
 
     <!-- ExtractFragment   -->
     <string name="text_title_toolbar_extract_fragment">Extrato</string>

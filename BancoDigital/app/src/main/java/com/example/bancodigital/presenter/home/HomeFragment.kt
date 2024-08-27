@@ -131,7 +131,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        var total = cashIn - cashOut
+        val total = cashIn - cashOut
 
         binding.textBalance.text =
             getString(R.string.text_balance_format_value, GetMask.getFormatedValue(total))
