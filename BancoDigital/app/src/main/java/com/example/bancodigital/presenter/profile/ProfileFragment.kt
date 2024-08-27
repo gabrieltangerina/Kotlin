@@ -34,6 +34,8 @@ class ProfileFragment : Fragment() {
     private var nameValid: Boolean = false
     private var phoneValid: Boolean = false
 
+    private var initialUser: User? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,6 +49,7 @@ class ProfileFragment : Fragment() {
 
         initToolbar(binding.toolbar)
         getProfile()
+        initListeners()
     }
 
     private fun getProfile() {
@@ -61,6 +64,7 @@ class ProfileFragment : Fragment() {
 
                     stateView.data?.let {
                         configData(it)
+                        initialUser = it
                     }
 
                 }
@@ -73,6 +77,44 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun initListeners(){
+        binding.btnUpdate.setOnClickListener {
+            updateProfile()
+        }
+    }
+
+    private fun updateProfile(){
+        val name = binding.editName.text.toString().trim()
+        val phone = binding.editPhone.unMaskedText.toString()
+
+        val profile = User(
+            id = initialUser?.id ?: "",
+            name = name,
+            phone = phone,
+            email = initialUser?.email ?: ""
+        )
+
+        profileViewModel.updateProfile(profile).observe(viewLifecycleOwner){stateView ->
+            when(stateView){
+                is StateView.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+
+                is StateView.Success -> {
+                    binding.progressBar.isVisible = false
+
+                    stateView.data?.let {
+                        configData(it)
+                    }
+                }
+
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                }
+            }
+        }
+    }
+
     private fun configData(user: User) {
         binding.editEmail.setText(user.email)
         binding.editName.setText(user.name)
@@ -80,7 +122,6 @@ class ProfileFragment : Fragment() {
 
         initialName = binding.editName.text.toString()
         initialPhone = binding.editPhone.text.toString()
-        Log.i("INFOTESTE", "initialName: $initialName | initialPhone: $initialPhone")
         initObservers()
     }
 
@@ -101,6 +142,7 @@ class ProfileFragment : Fragment() {
                             R.drawable.bg_btn
                         )
                     )
+                    binding.btnUpdate.isEnabled = true
                 } else {
                     binding.btnUpdate.setBackgroundDrawable(
                         ContextCompat.getDrawable(
@@ -108,6 +150,7 @@ class ProfileFragment : Fragment() {
                             R.drawable.bg_btn_not_enabled
                         )
                     )
+                    binding.btnUpdate.isEnabled = false
                 }
 
             }
@@ -134,6 +177,7 @@ class ProfileFragment : Fragment() {
                             R.drawable.bg_btn
                         )
                     )
+                    binding.btnUpdate.isEnabled = true
                 } else {
                     binding.btnUpdate.setBackgroundDrawable(
                         ContextCompat.getDrawable(
@@ -141,6 +185,7 @@ class ProfileFragment : Fragment() {
                             R.drawable.bg_btn_not_enabled
                         )
                     )
+                    binding.btnUpdate.isEnabled = false
                 }
 
             }

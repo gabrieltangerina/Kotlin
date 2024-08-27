@@ -124,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="12dp"
                 android:background="@drawable/bg_btn_not_enabled"
+                android:enabled="false"
                 android:text="Salvar alterações"
                 app:backgroundTint="@null" />
 

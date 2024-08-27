@@ -5,6 +5,7 @@ import androidx.lifecycle.liveData
 import com.example.bancodigital.data.model.User
 import com.example.bancodigital.domain.profile.GetProfileUseCase
 import com.example.bancodigital.domain.profile.SaveProfileUseCase
+import com.example.bancodigital.domain.profile.UpdateProfileUseCase
 import com.example.bancodigital.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val saveProfileUseCase: SaveProfileUseCase,
-    private val getProfileUseCase: GetProfileUseCase
+    private val getProfileUseCase: GetProfileUseCase,
+    private val updateProfileUseCase: UpdateProfileUseCase
 ) : ViewModel() {
 
     fun saveProfile(user: User) = liveData(Dispatchers.IO) {
@@ -36,6 +38,19 @@ class ProfileViewModel @Inject constructor(
             val profile = getProfileUseCase.invoke()
 
             emit(StateView.Success(profile))
+
+        } catch (ex: Exception) {
+            emit(StateView.Error(ex.message))
+        }
+    }
+
+    fun updateProfile(user: User) = liveData(Dispatchers.IO) {
+        try {
+            emit(StateView.Loading())
+
+            updateProfileUseCase.invoke(user)
+
+            emit(StateView.Success(user))
 
         } catch (ex: Exception) {
             emit(StateView.Error(ex.message))

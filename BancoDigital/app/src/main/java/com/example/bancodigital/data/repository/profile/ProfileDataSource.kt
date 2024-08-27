@@ -8,4 +8,6 @@ interface ProfileDataSource {
 
     suspend fun getProfile(): User
 
+    suspend fun updateProfile(user: User): User
+
 }

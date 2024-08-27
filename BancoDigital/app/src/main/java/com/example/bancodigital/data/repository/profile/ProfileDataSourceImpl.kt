@@ -50,4 +50,18 @@ class ProfileDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun updateProfile(user: User): User {
+        return suspendCoroutine { continuation ->
+            profileReference.setValue(user).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    continuation.resumeWith(Result.success(user))
+                } else {
+                    task.exception?.let {
+                        continuation.resumeWith(Result.failure(it))
+                    }
+                }
+            }
+        }
+    }
+
 }
