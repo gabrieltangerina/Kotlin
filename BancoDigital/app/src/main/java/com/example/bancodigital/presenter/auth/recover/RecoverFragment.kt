@@ -11,6 +11,7 @@ import com.example.bancodigital.R
 import com.example.bancodigital.databinding.FragmentRecoverBinding
 import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
+import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
 import com.example.bancodigital.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +44,7 @@ class RecoverFragment : Fragment() {
     }
 
     private fun validateData() {
+        hideKeyboard()
         val email = binding.editEmail.text.toString().trim()
 
         if (email.isEmpty()) {

@@ -15,6 +15,7 @@ import com.example.bancodigital.R
 import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.FragmentProfileBinding
 import com.example.bancodigital.util.StateView
+import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
 import com.example.bancodigital.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -84,6 +85,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateProfile(){
+        hideKeyboard()
         val name = binding.editName.text.toString().trim()
         val phone = binding.editPhone.unMaskedText.toString()
 

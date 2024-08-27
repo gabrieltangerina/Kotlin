@@ -16,6 +16,7 @@ import com.example.bancodigital.presenter.profile.ProfileViewModel
 import com.example.bancodigital.presenter.wallet.WalletViewModel
 import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
+import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
 import com.example.bancodigital.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +51,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun validateData() {
+        hideKeyboard()
         val name = binding.editName.text.toString().trim()
         val email = binding.editEmail.text.toString().trim()
         val phone = binding.editPhone.unMaskedText
@@ -112,6 +114,7 @@ class RegisterFragment : Fragment() {
                             email = email,
                             phone = phone
                         )
+
                         saveProfile(user)
                     }
 

@@ -12,6 +12,7 @@ import com.example.bancodigital.R
 import com.example.bancodigital.databinding.FragmentLoginBinding
 import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
+import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.showBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,6 +51,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun validateData() {
+        hideKeyboard()
         val email = binding.editEmail.text.toString().trim()
         val password = binding.editPassword.text.toString().trim()
 
@@ -64,7 +66,6 @@ class LoginFragment : Fragment() {
         }
 
         loginUser(email, password)
-
     }
 
     private fun loginUser(email: String, password: String) {
