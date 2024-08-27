@@ -103,7 +103,6 @@
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/white"
                 android:inputType="phone|number"
-                android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="#f1f1f1"
                 android:textSize="20sp"

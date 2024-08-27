@@ -6,6 +6,7 @@
     <!--  Validate Errors -->
     <string name="text_name_empty">Digite um nome</string>
     <string name="text_email_empty">Digite um e-mail</string>
+    <string name="text_amount_empty">Digite um valor</string>
     <string name="text_phone_empty">Digite um telefone</string>
     <string name="text_phone_invalid">Número de telefone inválido</string>
     <string name="text_password_empty">Digite uma senha</string>
