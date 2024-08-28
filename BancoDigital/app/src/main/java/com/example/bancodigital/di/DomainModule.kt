@@ -4,6 +4,8 @@ import com.example.bancodigital.data.repository.auth.AuthFirebaseDataSource
 import com.example.bancodigital.data.repository.auth.AuthFirebaseDataSourceImpl
 import com.example.bancodigital.data.repository.deposit.DepositDataSource
 import com.example.bancodigital.data.repository.deposit.DepositDataSourceImpl
+import com.example.bancodigital.data.repository.recharge.RechargeDataSource
+import com.example.bancodigital.data.repository.recharge.RechargeDataSourceImpl
 import com.example.bancodigital.data.repository.transaction.TransactionDataSource
 import com.example.bancodigital.data.repository.transaction.TransactionDataSourceImpl
 import dagger.Binds
@@ -18,16 +20,21 @@ abstract class DomainModule {
     @Binds
     abstract fun bindsAuthDataSource(
         authFirebaseDataSourceImpl: AuthFirebaseDataSourceImpl
-    ) : AuthFirebaseDataSource
+    ): AuthFirebaseDataSource
 
     @Binds
     abstract fun bindsDepositDataSource(
         depositDataSourceImpl: DepositDataSourceImpl
-    ) : DepositDataSource
+    ): DepositDataSource
 
     @Binds
     abstract fun bindsTransactionDataSource(
         transactionDataSourceImpl: TransactionDataSourceImpl
-    ) : TransactionDataSource
+    ): TransactionDataSource
+
+    @Binds
+    abstract fun bindsRechargeDataSource(
+        rechargeDataSourceImpl: RechargeDataSourceImpl
+    ): RechargeDataSource
 
 }

@@ -9,6 +9,10 @@ enum class TransactionType {
                 TransactionOperation.DEPOSIT -> {
                     return 'D'
                 }
+
+                TransactionOperation.RECHARGE -> {
+                    return 'R'
+                }
             }
         }
     }

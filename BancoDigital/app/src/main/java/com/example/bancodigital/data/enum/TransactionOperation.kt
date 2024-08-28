@@ -1,13 +1,17 @@
 package com.example.bancodigital.data.enum
 
 enum class TransactionOperation {
-    DEPOSIT;
+    DEPOSIT, RECHARGE;
 
     companion object {
         fun getOperation(operation: TransactionOperation): String {
-            when (operation) {
+            return when (operation) {
                 DEPOSIT -> {
-                    return "DEPÓSITO"
+                    "DEPÓSITO"
+                }
+
+                RECHARGE -> {
+                    "RECARGA"
                 }
             }
         }

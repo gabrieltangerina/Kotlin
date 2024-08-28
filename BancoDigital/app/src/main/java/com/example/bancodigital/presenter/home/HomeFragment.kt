@@ -84,6 +84,10 @@ class HomeFragment : Fragment() {
                 null -> {
 
                 }
+
+                TransactionOperation.RECHARGE -> {
+
+                }
             }
         }
 

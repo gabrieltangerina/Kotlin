@@ -109,6 +109,9 @@
         <action
             android:id="@+id/action_extractFragment_to_depositReceiptFragment"
             app:destination="@id/depositReceiptFragment" />
+        <action
+            android:id="@+id/action_extractFragment_to_rechargeReceiptFragment"
+            app:destination="@id/rechargeReceiptFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -120,4 +123,9 @@
         android:name="com.example.bancodigital.presenter.features.recharge.RechargeFormFragment"
         android:label="fragment_recharge_form"
         tools:layout="@layout/fragment_recharge_form" />
+    <fragment
+        android:id="@+id/rechargeReceiptFragment"
+        android:name="com.example.bancodigital.presenter.features.recharge.RechargeReceiptFragment"
+        android:label="fragment_recharge_recepit"
+        tools:layout="@layout/fragment_recharge_recepit" />
 </navigation>

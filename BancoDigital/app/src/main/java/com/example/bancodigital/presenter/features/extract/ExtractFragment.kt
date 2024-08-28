@@ -61,6 +61,10 @@ class ExtractFragment : Fragment() {
                 null -> {
 
                 }
+
+                TransactionOperation.RECHARGE -> {
+
+                }
             }
         }
 
