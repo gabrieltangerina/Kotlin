@@ -46,9 +46,8 @@ class ExtractFragment : Fragment() {
     private fun configRecyclerView() {
         adapterTransaction = TransactionsAdapter(requireContext()) { transaction ->
             when (transaction.operation) {
+
                 TransactionOperation.DEPOSIT -> {
-
-
                     val action =
                         ExtractFragmentDirections.actionExtractFragmentToDepositReceiptFragment(
                             transaction.id,
@@ -58,11 +57,17 @@ class ExtractFragment : Fragment() {
                     findNavController().navigate(action)
                 }
 
-                null -> {
+                TransactionOperation.RECHARGE -> {
+                    val action =
+                        ExtractFragmentDirections.actionExtractFragmentToRechargeReceiptFragment(
+                            transaction.id,
+                            showIconNavigation = true
+                        )
 
+                    findNavController().navigate(action)
                 }
 
-                TransactionOperation.RECHARGE -> {
+                null -> {
 
                 }
             }

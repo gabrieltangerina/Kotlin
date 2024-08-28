@@ -80,9 +80,9 @@ class RechargeFormFragment : Fragment() {
                 }
 
                 is StateView.Success -> {
-                    val action = DepositFormFragmentDirections
-                        .actionDepositFormFragmentToDepositReceiptFragment(
-                            transaction.id,
+                    val action = RechargeFormFragmentDirections
+                        .actionRechargeFormFragmentToRechargeReceiptFragment(
+                            recharge.id,
                             showIconNavigation = false
                         )
 

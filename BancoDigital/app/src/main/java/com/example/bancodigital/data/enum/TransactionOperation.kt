@@ -11,7 +11,7 @@ enum class TransactionOperation {
                 }
 
                 RECHARGE -> {
-                    "RECARGA"
+                    "RECARGA DE CELULAR"
                 }
             }
         }

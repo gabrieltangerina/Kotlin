@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.bancodigital.data.model.Recharge
 import com.example.bancodigital.data.model.Transaction
+import com.example.bancodigital.domain.recharge.GetRechargeUseCase
 import com.example.bancodigital.domain.recharge.SaveRechargeUseCase
 import com.example.bancodigital.domain.transaction.SaveTransactionUseCase
 import com.example.bancodigital.util.StateView
@@ -14,7 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class RechargeViewModel @Inject constructor(
     private val saveRechargeUseCase: SaveRechargeUseCase,
-    private val saveTransactionUseCase: SaveTransactionUseCase
+    private val saveTransactionUseCase: SaveTransactionUseCase,
+    private val getRechargeUseCase: GetRechargeUseCase
 ) : ViewModel() {
 
     fun saveRecharge(recharge: Recharge) = liveData(Dispatchers.IO) {
