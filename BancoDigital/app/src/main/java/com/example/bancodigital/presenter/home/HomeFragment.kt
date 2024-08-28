@@ -132,6 +132,10 @@ class HomeFragment : Fragment() {
         binding.cardRechargePhone.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_rechargeFormFragment)
         }
+
+        binding.cardTransfer.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_transferUserFragment)
+        }
     }
 
     private fun showBalance(transactions: List<Transaction>) {

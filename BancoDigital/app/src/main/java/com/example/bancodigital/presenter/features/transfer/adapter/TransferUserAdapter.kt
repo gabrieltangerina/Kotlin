@@ -1,6 +1,7 @@
 package com.example.bancodigital.presenter.features.transfer.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,7 +12,6 @@ import com.example.bancodigital.databinding.TransferUserItemBinding
 import com.squareup.picasso.Picasso
 
 class TransferUserAdapter(
-    private val context: Context,
     private val userSelected: (User) -> Unit
 ) : ListAdapter<User, TransferUserAdapter.ViewHolder>(DIFF_CALLBACK) {
 

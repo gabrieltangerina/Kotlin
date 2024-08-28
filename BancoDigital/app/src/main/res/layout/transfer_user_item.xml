@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:padding="16dp">
+    android:padding="8dp">
 
     <io.woong.shapedimageview.CircleImageView
         android:id="@+id/user_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        app:border_size="2dp"
+        android:src="@drawable/no_user_picture"
         app:border_color="@color/white"
-        tools:src="@drawable/no_user_picture"
+        app:border_size="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,15 +21,15 @@
         android:id="@+id/text_user_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textSize="18sp"
         android:textColor="@color/white"
-        android:layout_marginHorizontal="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/circleImageView"
-        app:layout_constraintTop_toTopOf="@+id/circleImageView"
+        app:layout_constraintStart_toEndOf="@+id/user_image"
+        app:layout_constraintTop_toTopOf="@+id/user_image"
         tools:text="Gabriel Tangerina Gonzalez" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

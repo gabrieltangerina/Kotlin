@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_homeFragment_to_rechargeReceiptFragment"
             app:destination="@id/rechargeReceiptFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_transferUserFragment"
+            app:destination="@id/transferUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/depositFormFragment"
@@ -144,4 +147,9 @@
             android:name="showIconNavigation"
             app:argType="boolean" />
     </fragment>
+    <fragment
+        android:id="@+id/transferUserFragment"
+        android:name="com.example.bancodigital.presenter.features.transfer.TransferUserFragment"
+        android:label="fragment_transfer_user"
+        tools:layout="@layout/fragment_transfer_user" />
 </navigation>

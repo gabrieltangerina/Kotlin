@@ -94,4 +94,7 @@
     <!-- ExtractFragment   -->
     <string name="text_title_toolbar_extract_fragment">Extrato</string>
 
+    <!-- TransferFragment   -->
+    <string name="text_title_toolbar_transfer_fragment">Usuários</string>
+
 </resources>
