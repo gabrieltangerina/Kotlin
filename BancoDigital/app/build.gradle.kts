@@ -50,7 +50,10 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // Shapedimageview
+    // Picasso https://github.com/square/picasso
+    implementation("com.squareup.picasso:picasso:2.8")
+
+    // Shapedimageview https://github.com/cheonjaeung/shapedimageview
     implementation("io.woong.shapedimageview:shapedimageview:1.4.3")
 
     // MaskedEditText
