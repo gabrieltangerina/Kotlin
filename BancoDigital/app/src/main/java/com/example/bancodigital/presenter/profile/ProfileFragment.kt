@@ -22,6 +22,8 @@ import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.example.bancodigital.R
 import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.FragmentProfileBinding
@@ -30,6 +32,7 @@ import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
 import com.example.bancodigital.util.showBottomSheetProfile
 import com.example.bancodigital.util.showBottomSheetValidateInputs
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
@@ -54,7 +57,7 @@ class ProfileFragment : Fragment() {
     private var phoneValid: Boolean = false
     private var initialUser: User? = null
 
-    private var imageProfile: String? = null
+    private var imageProfile = MutableLiveData<String>()
     private var currentPhotoPath: String? = null
 
     override fun onCreateView(
@@ -71,6 +74,29 @@ class ProfileFragment : Fragment() {
         initToolbar(binding.toolbar)
         getProfile()
         initListeners()
+        observerImageProfile()
+    }
+
+    private fun saveImageProfile() {
+        imageProfile.value.let {
+            profileViewModel.saveImageProfile(it.toString())
+                .observe(viewLifecycleOwner) { stateView ->
+                    when (stateView) {
+                        is StateView.Loading -> {
+                            binding.progressBar.isVisible = true
+                        }
+
+                        is StateView.Success -> {
+                            updateProfile(stateView.data)
+                        }
+
+                        is StateView.Error -> {
+                            binding.progressBar.isVisible = false
+                            showBottomSheetValidateInputs(message = stateView.message)
+                        }
+                    }
+                }
+        }
     }
 
     private fun getProfile() {
@@ -100,7 +126,11 @@ class ProfileFragment : Fragment() {
 
     private fun initListeners() {
         binding.btnUpdate.setOnClickListener {
-            updateProfile()
+            if (imageProfile.value == null) {
+                updateProfile()
+            } else {
+                saveImageProfile()
+            }
         }
 
         binding.imageProfile.setOnClickListener {
@@ -116,17 +146,21 @@ class ProfileFragment : Fragment() {
         galleryLauncher.launch(intent)
     }
 
-    private fun openCamera(){
+    private fun openCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        
+
         var photoFile: File? = null
-        try{
+        try {
             photoFile = createImageFile()
-        }catch (ex: IOException){
-            Toast.makeText(requireContext(), "Não foi possível abrir a camera do dispositivo", Toast.LENGTH_SHORT).show()
+        } catch (ex: IOException) {
+            Toast.makeText(
+                requireContext(),
+                "Não foi possível abrir a camera do dispositivo",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
-        if(photoFile != null){
+        if (photoFile != null) {
             val photoURI = FileProvider.getUriForFile(
                 requireContext(),
                 "com.example.bancodigital.fileprovider",
@@ -137,7 +171,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun createImageFile():File{
+    private fun createImageFile(): File {
         val timeStamp = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale("pt", "BR")).format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
         val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -153,12 +187,12 @@ class ProfileFragment : Fragment() {
 
     private val cameraLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
-    ){result: ActivityResult ->
-        if(result.resultCode == Activity.RESULT_OK){
+    ) { result: ActivityResult ->
+        if (result.resultCode == Activity.RESULT_OK) {
             val file = File(currentPhotoPath!!)
             binding.imageProfile.setImageURI(Uri.fromFile(file))
 
-            imageProfile = file.toURI().toString()
+            imageProfile.value = file.toURI().toString()
         }
     }
 
@@ -168,7 +202,7 @@ class ProfileFragment : Fragment() {
         if (result.resultCode == Activity.RESULT_OK) {
 
             val imageSelected = result.data!!.data
-            imageProfile = imageSelected.toString()
+            imageProfile.value = imageSelected.toString()
 
             if (imageSelected != null) {
                 binding.imageProfile.setImageBitmap(getBitmap(imageSelected))
@@ -194,7 +228,7 @@ class ProfileFragment : Fragment() {
         return bitmap
     }
 
-    private fun updateProfile() {
+    private fun updateProfile(urlImage: String? = null) {
         hideKeyboard()
         val name = binding.editName.text.toString().trim()
         val phone = binding.editPhone.unMaskedText.toString()
@@ -205,6 +239,10 @@ class ProfileFragment : Fragment() {
             phone = phone,
             email = initialUser?.email ?: ""
         )
+
+        if (urlImage != null) {
+            profile.image = urlImage
+        }
 
         profileViewModel.updateProfile(profile).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
@@ -218,6 +256,7 @@ class ProfileFragment : Fragment() {
                     stateView.data?.let {
                         configData(it)
                     }
+                    Toast.makeText(requireContext(), "Perfil atualizado com sucesso", Toast.LENGTH_SHORT).show()
                 }
 
                 is StateView.Error -> {
@@ -228,6 +267,15 @@ class ProfileFragment : Fragment() {
     }
 
     private fun configData(user: User) {
+
+        user.image.let {
+            Picasso.get()
+                .load(it)
+                .fit()
+                .centerCrop()
+                .into(binding.imageProfile)
+        }
+
         binding.editEmail.setText(user.email)
         binding.editName.setText(user.name)
         binding.editPhone.setText(user.phone)
@@ -306,6 +354,20 @@ class ProfileFragment : Fragment() {
                 return
             }
 
+        })
+    }
+
+    private fun observerImageProfile() {
+        imageProfile.observe(viewLifecycleOwner, Observer {
+            if (imageProfile.value != "") {
+                binding.btnUpdate.setBackgroundDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.bg_btn
+                    )
+                )
+                binding.btnUpdate.isEnabled = true
+            }
         })
     }
 

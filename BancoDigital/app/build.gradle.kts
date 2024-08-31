@@ -66,6 +66,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-storage")
 
     // Dagger Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
