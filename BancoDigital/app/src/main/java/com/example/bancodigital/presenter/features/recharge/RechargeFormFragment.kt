@@ -11,16 +11,13 @@ import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.R
 import com.example.bancodigital.data.enum.TransactionOperation
 import com.example.bancodigital.data.enum.TransactionType
-import com.example.bancodigital.data.model.Deposit
 import com.example.bancodigital.data.model.Recharge
 import com.example.bancodigital.data.model.Transaction
-import com.example.bancodigital.databinding.FragmentDepositReceiptBinding
 import com.example.bancodigital.databinding.FragmentRechargeFormBinding
-import com.example.bancodigital.presenter.features.deposit.DepositFormFragmentDirections
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
-import com.example.bancodigital.util.showBottomSheet
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -110,12 +107,12 @@ class RechargeFormFragment : Fragment() {
         val phone = binding.editPhone.unMaskedText.toString()
 
         if (amount.isEmpty()) {
-            showBottomSheet(message = getString(R.string.text_amount_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_amount_empty))
             return
         }
 
         if(phone.isEmpty()){
-            showBottomSheet(message = getString(R.string.text_phone_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_phone_empty))
             return
         }
 

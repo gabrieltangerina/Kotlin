@@ -18,7 +18,7 @@ import com.example.bancodigital.presenter.home.adapter.TransactionsAdapter
 import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.GetMask
 import com.example.bancodigital.util.StateView
-import com.example.bancodigital.util.showBottomSheet
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import com.example.bancodigital.util.showBottomSheetSignOut
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
 
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    showBottomSheet(message = stateView.message)
+                    showBottomSheetValidateInputs(message = stateView.message)
                 }
             }
         }

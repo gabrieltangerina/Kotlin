@@ -18,7 +18,7 @@ import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
-import com.example.bancodigital.util.showBottomSheet
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,37 +59,37 @@ class RegisterFragment : Fragment() {
         val confirmPassword = binding.editConfirmPassword.text.toString().trim()
 
         if (name.isEmpty()) {
-            showBottomSheet(message = getString(R.string.text_name_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_name_empty))
             return
         }
 
         if (email.isEmpty()) {
-            showBottomSheet(message = getString(R.string.text_email_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_email_empty))
             return
         }
 
         if (phone?.isEmpty() == true) {
-            showBottomSheet(message = getString(R.string.text_phone_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_phone_empty))
             return
         }
 
         if (phone?.length != 11) {
-            showBottomSheet(message = getString(R.string.text_phone_invalid))
+            showBottomSheetValidateInputs(message = getString(R.string.text_phone_invalid))
             return
         }
 
         if (password.isEmpty()) {
-            showBottomSheet(message = getString(R.string.text_password_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_password_empty))
             return
         }
 
         if (confirmPassword.isEmpty()) {
-            showBottomSheet(message = getString(R.string.text_confirm_password_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_confirm_password_empty))
             return
         }
 
         if (password != confirmPassword) {
-            showBottomSheet(message = getString(R.string.fields_password_not_equals))
+            showBottomSheetValidateInputs(message = getString(R.string.fields_password_not_equals))
             return
         }
 
@@ -120,7 +120,7 @@ class RegisterFragment : Fragment() {
 
                     is StateView.Error -> {
                         binding.progressBar.isVisible = false
-                        showBottomSheet(
+                        showBottomSheetValidateInputs(
                             message = getString(
                                 FirebaseHelper.validError(
                                     stateView.message ?: ""
@@ -146,7 +146,7 @@ class RegisterFragment : Fragment() {
 
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    showBottomSheet(
+                    showBottomSheetValidateInputs(
                         message = getString(
                             FirebaseHelper.validError(
                                 stateView.message ?: ""
@@ -174,7 +174,7 @@ class RegisterFragment : Fragment() {
 
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    showBottomSheet(
+                    showBottomSheetValidateInputs(
                         message = getString(
                             FirebaseHelper.validError(
                                 stateView.message ?: ""

@@ -13,7 +13,7 @@ import com.example.bancodigital.databinding.FragmentLoginBinding
 import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.hideKeyboard
-import com.example.bancodigital.util.showBottomSheet
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,12 +56,12 @@ class LoginFragment : Fragment() {
         val password = binding.editPassword.text.toString().trim()
 
         if (email.isEmpty()) {
-            showBottomSheet(message = getString(R.string.text_email_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_email_empty))
             return
         }
 
         if (password.isEmpty()) {
-            showBottomSheet(message = getString(R.string.text_password_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_password_empty))
             return
         }
 
@@ -82,7 +82,7 @@ class LoginFragment : Fragment() {
 
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    showBottomSheet(
+                    showBottomSheetValidateInputs(
                         message = getString(
                             FirebaseHelper.validError(
                                 stateView.message ?: ""

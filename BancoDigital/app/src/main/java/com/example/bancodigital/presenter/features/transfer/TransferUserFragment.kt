@@ -14,7 +14,7 @@ import com.example.bancodigital.databinding.FragmentTransferUserBinding
 import com.example.bancodigital.presenter.features.transfer.adapter.TransferUserAdapter
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
-import com.example.bancodigital.util.showBottomSheet
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -56,7 +56,7 @@ class TransferUserFragment : Fragment() {
 
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    showBottomSheet(message = stateView.message)
+                    showBottomSheetValidateInputs(message = stateView.message)
                 }
             }
         }

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.example.bancodigital.R
+import com.example.bancodigital.databinding.LayoutBottomSheetProfileBinding
 import com.example.bancodigital.databinding.LayoutBottomSheetSignOutBinding
 import com.example.bancodigital.databinding.LayoutBottomSheetValidadeInputsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -24,7 +25,7 @@ fun Fragment.initToolbar(
     }
 }
 
-fun Fragment.showBottomSheet(
+fun Fragment.showBottomSheetValidateInputs(
     titleDialog: Int? = null,
     titleButton: Int? = null,
     message: String?,
@@ -67,6 +68,28 @@ fun Fragment.showBottomSheetSignOut(
     bottomSheetDialog.show()
 }
 
+fun Fragment.showBottomSheetProfile(
+    onClickGallery: () -> Unit ,
+    onClickCamera: () -> Unit
+) {
+
+    val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+    val bottomSheetBinding: LayoutBottomSheetProfileBinding =
+        LayoutBottomSheetProfileBinding.inflate(layoutInflater, null, false)
+
+    bottomSheetBinding.btnGallery.setOnClickListener {
+        onClickGallery()
+        bottomSheetDialog.dismiss()
+    }
+    bottomSheetBinding.btnCamera.setOnClickListener {
+        onClickCamera()
+        bottomSheetDialog.dismiss()
+    }
+
+    bottomSheetDialog.setContentView(bottomSheetBinding.root)
+    bottomSheetDialog.show()
+}
+
 fun Fragment.hideKeyboard() {
     val view = activity?.currentFocus
     if (view != null) {
@@ -75,3 +98,5 @@ fun Fragment.hideKeyboard() {
         view.clearFocus()
     }
 }
+
+

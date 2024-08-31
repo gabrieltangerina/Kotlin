@@ -13,7 +13,7 @@ import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
-import com.example.bancodigital.util.showBottomSheet
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -48,7 +48,7 @@ class RecoverFragment : Fragment() {
         val email = binding.editEmail.text.toString().trim()
 
         if (email.isEmpty()) {
-            showBottomSheet(message = getString(R.string.text_email_empty))
+            showBottomSheetValidateInputs(message = getString(R.string.text_email_empty))
             return
         }
 
@@ -64,12 +64,12 @@ class RecoverFragment : Fragment() {
 
                 is StateView.Success -> {
                     binding.progressBar.isVisible = false
-                    showBottomSheet(message = getString(R.string.text_message_send_recover_fragment))
+                    showBottomSheetValidateInputs(message = getString(R.string.text_message_send_recover_fragment))
                 }
 
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    showBottomSheet(
+                    showBottomSheetValidateInputs(
                         message = getString(
                             FirebaseHelper.validError(
                                 stateView.message ?: ""

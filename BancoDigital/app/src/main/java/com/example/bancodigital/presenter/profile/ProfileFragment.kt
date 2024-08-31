@@ -28,7 +28,8 @@ import com.example.bancodigital.databinding.FragmentProfileBinding
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
-import com.example.bancodigital.util.showBottomSheet
+import com.example.bancodigital.util.showBottomSheetProfile
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
@@ -91,7 +92,7 @@ class ProfileFragment : Fragment() {
 
                 is StateView.Error -> {
                     binding.progressBar.isVisible = false
-                    showBottomSheet(message = stateView.message)
+                    showBottomSheetValidateInputs(message = stateView.message)
                 }
             }
         }
@@ -103,8 +104,10 @@ class ProfileFragment : Fragment() {
         }
 
         binding.imageProfile.setOnClickListener {
-            // openGallery()
-            openCamera()
+            showBottomSheetProfile(
+                { openGallery() },
+                { openCamera() }
+            )
         }
     }
 
