@@ -7,6 +7,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +18,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,9 +29,12 @@ import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
 import com.example.bancodigital.util.showBottomSheet
-import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.normal.TedPermission
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -65,12 +70,93 @@ class ProfileFragment : Fragment() {
         initToolbar(binding.toolbar)
         getProfile()
         initListeners()
-        checkPermissionGallery()
+    }
+
+    private fun getProfile() {
+        profileViewModel.getProfileUseCase().observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+
+                is StateView.Success -> {
+                    binding.progressBar.isVisible = false
+
+                    stateView.data?.let {
+                        configData(it)
+                        initialUser = it
+                    }
+
+                }
+
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    showBottomSheet(message = stateView.message)
+                }
+            }
+        }
+    }
+
+    private fun initListeners() {
+        binding.btnUpdate.setOnClickListener {
+            updateProfile()
+        }
+
+        binding.imageProfile.setOnClickListener {
+            // openGallery()
+            openCamera()
+        }
     }
 
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         galleryLauncher.launch(intent)
+    }
+
+    private fun openCamera(){
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        
+        var photoFile: File? = null
+        try{
+            photoFile = createImageFile()
+        }catch (ex: IOException){
+            Toast.makeText(requireContext(), "Não foi possível abrir a camera do dispositivo", Toast.LENGTH_SHORT).show()
+        }
+
+        if(photoFile != null){
+            val photoURI = FileProvider.getUriForFile(
+                requireContext(),
+                "com.example.bancodigital.fileprovider",
+                photoFile
+            )
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            cameraLauncher.launch(takePictureIntent)
+        }
+    }
+
+    private fun createImageFile():File{
+        val timeStamp = SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale("pt", "BR")).format(Date())
+        val imageFileName = "JPEG_" + timeStamp + "_"
+        val storageDir = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val image = File.createTempFile(
+            imageFileName,
+            ".jpg",
+            storageDir
+        )
+
+        currentPhotoPath = image.absolutePath
+        return image
+    }
+
+    private val cameraLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ){result: ActivityResult ->
+        if(result.resultCode == Activity.RESULT_OK){
+            val file = File(currentPhotoPath!!)
+            binding.imageProfile.setImageURI(Uri.fromFile(file))
+
+            imageProfile = file.toURI().toString()
+        }
     }
 
     private val galleryLauncher = registerForActivityResult(
@@ -103,88 +189,6 @@ class ProfileFragment : Fragment() {
             ex.printStackTrace()
         }
         return bitmap
-    }
-
-    private fun checkPermissionCamera() {
-        val permissionListener: PermissionListener = object : PermissionListener {
-            override fun onPermissionGranted() {
-                Toast.makeText(requireContext(), "Permissão aceita", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onPermissionDenied(deniedPermissions: List<String>) {
-                Toast.makeText(requireContext(), "Permissão negada", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        showDialogPermissionDenied(
-            permissionListener = permissionListener,
-            permission = android.Manifest.permission.CAMERA,
-            message = R.string.text_message_gallery_denied_profile_fragment
-        )
-    }
-
-    private fun checkPermissionGallery() {
-        val permissionListener: PermissionListener = object : PermissionListener {
-            override fun onPermissionGranted() {
-                openGallery()
-            }
-
-            override fun onPermissionDenied(deniedPermissions: List<String>) {
-                Toast.makeText(requireContext(), "Permissão negada", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        showDialogPermissionDenied(
-            permissionListener = permissionListener,
-            permission = android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            message = R.string.text_message_gallery_denied_profile_fragment
-        )
-    }
-
-    private fun showDialogPermissionDenied(
-        permissionListener: PermissionListener,
-        permission: String,
-        message: Int
-    ) {
-        TedPermission.create()
-            .setPermissionListener(permissionListener)
-            .setDeniedTitle("Permissão negada")
-            .setDeniedMessage(message)
-            .setDeniedCloseButtonText("Não")
-            .setGotoSettingButtonText("Sim")
-            .setPermissions(permission)
-            .check()
-    }
-
-    private fun getProfile() {
-        profileViewModel.getProfileUseCase().observe(viewLifecycleOwner) { stateView ->
-            when (stateView) {
-                is StateView.Loading -> {
-                    binding.progressBar.isVisible = true
-                }
-
-                is StateView.Success -> {
-                    binding.progressBar.isVisible = false
-
-                    stateView.data?.let {
-                        configData(it)
-                        initialUser = it
-                    }
-
-                }
-
-                is StateView.Error -> {
-                    binding.progressBar.isVisible = false
-                    showBottomSheet(message = stateView.message)
-                }
-            }
-        }
-    }
-
-    private fun initListeners() {
-        binding.btnUpdate.setOnClickListener {
-            updateProfile()
-        }
     }
 
     private fun updateProfile() {
