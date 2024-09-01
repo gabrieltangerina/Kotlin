@@ -21,34 +21,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/app_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/text_title_toolbar_transfer_fragment"
-                    android:textColor="@color/white"
-                    android:textSize="16sp" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            </androidx.appcompat.widget.Toolbar>
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/text_title_toolbar_transfer_fragment"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                    </androidx.appcompat.widget.Toolbar>
+
+                    <com.ferfalk.simplesearchview.SimpleSearchView
+                        android:id="@+id/searchView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:theme="@style/SearchViewTheme"/>
+
+                </FrameLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
 
             <View
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                app:layout_constraintBottom_toBottomOf="@+id/app_bar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+                app:layout_constraintTop_toBottomOf="@+id/app_bar" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_users"
@@ -58,7 +81,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintTop_toBottomOf="@+id/app_bar"
                 tools:listitem="@layout/transfer_user_item" />
 
             <ProgressBar
@@ -70,7 +93,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintTop_toBottomOf="@+id/app_bar"
                 tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

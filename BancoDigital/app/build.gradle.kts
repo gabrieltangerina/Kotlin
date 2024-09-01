@@ -50,6 +50,9 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    // SearchView https://github.com/Ferfalk/SimpleSearchView
+    implementation("com.github.Ferfalk:SimpleSearchView:0.2.1")
+
     // TedPermission https://github.com/ParkSangGwon/TedPermission
     implementation("io.github.ParkSangGwon:tedpermission-normal:3.4.2")
 

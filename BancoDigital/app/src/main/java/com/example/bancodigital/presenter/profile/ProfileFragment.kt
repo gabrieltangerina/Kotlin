@@ -268,13 +268,11 @@ class ProfileFragment : Fragment() {
 
     private fun configData(user: User) {
 
-        user.image.let {
-            Picasso.get()
-                .load(it)
-                .fit()
-                .centerCrop()
-                .into(binding.imageProfile)
-        }
+        Picasso.get()
+            .load(user.image)
+            .fit()
+            .centerCrop()
+            .into(binding.imageProfile)
 
         binding.editEmail.setText(user.email)
         binding.editName.setText(user.name)

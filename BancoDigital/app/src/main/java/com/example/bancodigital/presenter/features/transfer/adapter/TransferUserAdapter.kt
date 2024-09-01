@@ -62,6 +62,7 @@ class TransferUserAdapter(
     private fun loadImageUser(holder: ViewHolder, user: User) {
         Picasso.get()
             .load(user.image)
+            .fit()
             .centerCrop()
             .into(holder.binding.userImage)
     }
