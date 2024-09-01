@@ -1,12 +1,11 @@
 package com.example.bancodigital.presenter.features.transfer.adapter
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bancodigital.R
 import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.TransferUserItemBinding
 import com.squareup.picasso.Picasso
@@ -48,6 +47,7 @@ class TransferUserAdapter(
 
         holder.binding.textUserName.text = user.name
 
+        loadUserImageStandard(holder, user)
         if (user.image.isNotEmpty()) {
             loadImageUser(holder, user)
         }
@@ -62,6 +62,14 @@ class TransferUserAdapter(
     private fun loadImageUser(holder: ViewHolder, user: User) {
         Picasso.get()
             .load(user.image)
+            .fit()
+            .centerCrop()
+            .into(holder.binding.userImage)
+    }
+
+    private fun loadUserImageStandard(holder: ViewHolder, user: User) {
+        Picasso.get()
+            .load(R.drawable.no_user_picture)
             .fit()
             .centerCrop()
             .into(holder.binding.userImage)
