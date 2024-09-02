@@ -13,6 +13,7 @@ import com.example.bancodigital.R
 import com.example.bancodigital.data.enum.TransactionOperation
 import com.example.bancodigital.data.enum.TransactionType
 import com.example.bancodigital.data.model.Transaction
+import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.FragmentHomeBinding
 import com.example.bancodigital.presenter.home.adapter.TransactionsAdapter
 import com.example.bancodigital.util.FirebaseHelper
@@ -20,7 +21,10 @@ import com.example.bancodigital.util.GetMask
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.showBottomSheetValidateInputs
 import com.example.bancodigital.util.showBottomSheetSignOut
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Exception
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -45,6 +49,44 @@ class HomeFragment : Fragment() {
         configRecyclerView()
         getTransactions()
         initListeners()
+        getProfile()
+    }
+
+    private fun configData(user: User){
+        Picasso.get()
+            .load(user.image)
+            .fit()
+            .centerCrop()
+            .into(binding.userImage, object : Callback{
+                override fun onSuccess() {
+                    // Not yet implemented
+                }
+
+                override fun onError(e: Exception?) {
+                    // Not yet implemented
+                }
+
+            })
+    }
+
+    private fun getProfile(){
+        homeViewModel.getProfileUseCase().observe(viewLifecycleOwner){stateView ->
+            when(stateView){
+                is StateView.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+
+                is StateView.Success -> {
+                    binding.progressBar.isVisible = false
+                    stateView.data?.let { configData(it) }
+                }
+
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    showBottomSheetValidateInputs(message = stateView.message)
+                }
+            }
+        }
     }
 
     private fun getTransactions() {
