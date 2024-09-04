@@ -15,6 +15,7 @@ import com.example.bancodigital.data.enum.TransactionType
 import com.example.bancodigital.data.model.Deposit
 import com.example.bancodigital.data.model.Transaction
 import com.example.bancodigital.databinding.FragmentDepositFormBinding
+import com.example.bancodigital.util.MoneyTextWatcher
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
@@ -46,6 +47,10 @@ class DepositFormFragment : Fragment() {
     private fun initListeners() {
         binding.btnConfirm.setOnClickListener {
             validateDeposit()
+        }
+
+        with(binding.editAmount){
+            addTextChangedListener(MoneyTextWatcher(this))
         }
     }
 

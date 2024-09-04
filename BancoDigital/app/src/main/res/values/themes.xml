@@ -35,4 +35,8 @@
         <item name="iconsTint">@color/white</item>
     </style>
 
+    <style name="Theme.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorControlActivated">@color/white</item>
+    </style>
+
 </resources>
