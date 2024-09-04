@@ -84,6 +84,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:backgroundTint="@color/white"
                 android:ems="10"
+                android:maxLength="17"
                 android:inputType="numberDecimal"
                 android:text="R$ 0,00"
                 android:textAlignment="center"
