@@ -35,6 +35,8 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var adapterTransaction: TransactionsAdapter
 
+    private val tagPicasso = "tagPicasso";
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,6 +57,7 @@ class HomeFragment : Fragment() {
     private fun configData(user: User){
         Picasso.get()
             .load(user.image)
+            .tag(tagPicasso)
             .fit()
             .centerCrop()
             .into(binding.userImage, object : Callback{
@@ -200,6 +203,8 @@ class HomeFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        // Para nao dar erro se sair da tela sem que a imagem seja carregada
+        Picasso.get().cancelTag(tagPicasso)
         _binding = null
     }
 
