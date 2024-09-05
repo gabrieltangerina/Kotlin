@@ -68,14 +68,14 @@ class RechargeReceiptFragment : Fragment() {
     private fun configData(recharge: Recharge) {
         binding.textCodeTransaction.text = recharge.id
 
-        binding.textDateTransaction.text = getString(
-            R.string.text_balance_format_value,
-            GetMask.getFormatedDate(recharge.date, GetMask.DAY_MONTH_YEAR_HOUR_MINUTE)
-        )
+        binding.textDateTransaction.text = GetMask.getFormatedDate(recharge.date, GetMask.DAY_MONTH_YEAR_HOUR_MINUTE)
 
         binding.textPhone.text = recharge.number
 
-        binding.textAmountTransaction.text = GetMask.getFormatedValue(recharge.amount)
+        binding.textAmountTransaction.text = getString(
+            R.string.text_balance_format_value,
+            GetMask.getFormatedValue(recharge.amount)
+        )
     }
 
     private fun initListeners() {

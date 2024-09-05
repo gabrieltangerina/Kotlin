@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.R
@@ -14,6 +15,7 @@ import com.example.bancodigital.data.enum.TransactionType
 import com.example.bancodigital.data.model.Recharge
 import com.example.bancodigital.data.model.Transaction
 import com.example.bancodigital.databinding.FragmentRechargeFormBinding
+import com.example.bancodigital.util.MoneyTextWatcher
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
@@ -94,6 +96,15 @@ class RechargeFormFragment : Fragment() {
     }
 
     private fun initListeners(){
+        with(binding.editAmount){
+            addTextChangedListener(MoneyTextWatcher(this))
+
+            doAfterTextChanged {
+                this.text?.length?.let { this.setSelection(it) }
+            }
+
+        }
+
         binding.btnConfirm.setOnClickListener {
             validateData()
         }
@@ -103,21 +114,23 @@ class RechargeFormFragment : Fragment() {
         hideKeyboard()
         binding.progressBar.isVisible = true
 
-        val amount = binding.editAmount.text.toString().trim()
+        val amount = MoneyTextWatcher.getValueUnMasked(binding.editAmount)
         val phone = binding.editPhone.unMaskedText.toString()
 
-        if (amount.isEmpty()) {
-            showBottomSheetValidateInputs(message = getString(R.string.text_amount_empty))
+        if (amount < 10) {
+            showBottomSheetValidateInputs(message = getString(R.string.text_amount_valid_empty))
+            binding.progressBar.isVisible = false
             return
         }
 
         if(phone.isEmpty()){
             showBottomSheetValidateInputs(message = getString(R.string.text_phone_empty))
+            binding.progressBar.isVisible = false
             return
         }
 
         val recharge = Recharge(
-            amount = amount.toFloat(),
+            amount = amount,
             number = phone
         )
 
