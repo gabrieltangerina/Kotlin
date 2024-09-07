@@ -24,8 +24,10 @@
         android:id="@+id/text_transaction_operation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginHorizontal="12dp"
         android:textSize="18sp"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintEnd_toStartOf="@+id/text_transaction_value"
         app:layout_constraintStart_toEndOf="@+id/text_transaction_type"
         app:layout_constraintTop_toTopOf="@+id/text_transaction_type"
@@ -49,6 +51,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/text_transaction_type"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_transaction_type"
-        tools:text="- R$ 65,20" />
+        tools:text="R$ 65,20" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

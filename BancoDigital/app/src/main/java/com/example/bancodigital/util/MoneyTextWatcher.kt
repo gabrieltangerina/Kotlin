@@ -19,7 +19,7 @@ class MoneyTextWatcher(private val editText: EditText) : TextWatcher {
         // editText.setSelection(formatted.length)
         editText.setSelection(editText.selectionEnd)
         editText.addTextChangedListener(this)
-    } 
+    }
 
     override fun afterTextChanged(editable: Editable) {
 

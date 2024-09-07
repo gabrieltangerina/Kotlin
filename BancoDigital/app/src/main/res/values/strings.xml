@@ -103,4 +103,11 @@
     <string name="text_message_camera_denied_profile_fragment">Para que você capture imagens utilizando a câmera precisaremos da permissão. Acesse as configurações de permissões e habilite a permissão </string>
     <string name="text_message_gallery_denied_profile_fragment">Para que você carregue imagens utilizando a galeria precisaremos da permissão. Acesse as configurações de permissões e habilite a permissão </string>
 
+    <!--  TransferFormFragment  -->
+    <string name="text_title_toolbar_transfer_form_fragment">Transferência</string>
+    <string name="text_message_amount_transfer_form_fragment">Informe o valor a ser transferido.</string>
+    <string name="text_message_input_amount_transfer_form_fragment">Valor da transferência</string>
+    <string name="text_button_confirm_transfer_form_fragment">Confirmar</string>
+    <string name="text_message_empty_amount_transfer_form_fragment">Informe um valor para a transferência</string>
+
 </resources>

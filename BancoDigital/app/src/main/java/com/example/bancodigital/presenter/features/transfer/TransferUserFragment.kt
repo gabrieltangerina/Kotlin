@@ -1,16 +1,15 @@
 package com.example.bancodigital.presenter.features.transfer
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bancodigital.R
 import com.example.bancodigital.data.model.User
@@ -128,7 +127,10 @@ class TransferUserFragment : Fragment() {
 
     private fun configRecyclerView() {
         adapterTransferUser = TransferUserAdapter { user ->
-            Toast.makeText(requireContext(), "Nome: ${user.name}", Toast.LENGTH_SHORT).show()
+            val action =
+                TransferUserFragmentDirections.actionTransferUserFragmentToTransferFormFragment(user)
+
+            findNavController().navigate(action)
         }
 
         with(binding.rvUsers) {

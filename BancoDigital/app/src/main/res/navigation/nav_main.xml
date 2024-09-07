@@ -151,5 +151,18 @@
         android:id="@+id/transferUserFragment"
         android:name="com.example.bancodigital.presenter.features.transfer.TransferUserFragment"
         android:label="fragment_transfer_user"
-        tools:layout="@layout/fragment_transfer_user" />
+        tools:layout="@layout/fragment_transfer_user" >
+        <action
+            android:id="@+id/action_transferUserFragment_to_transferFormFragment"
+            app:destination="@id/transferFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/transferFormFragment"
+        android:name="com.example.bancodigital.presenter.features.transfer.TransferFormFragment"
+        android:label="fragment_transfer_form"
+        tools:layout="@layout/fragment_transfer_form" >
+        <argument
+            android:name="user"
+            app:argType="com.example.bancodigital.data.model.User" />
+    </fragment>
 </navigation>
