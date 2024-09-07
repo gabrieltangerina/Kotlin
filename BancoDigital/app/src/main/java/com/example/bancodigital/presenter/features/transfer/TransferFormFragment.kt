@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.bancodigital.R
 import com.example.bancodigital.databinding.FragmentTransferFormBinding
 import com.example.bancodigital.util.MoneyTextWatcher
@@ -20,7 +22,7 @@ class TransferFormFragment : Fragment() {
     private var _binding: FragmentTransferFormBinding? = null
     private val binding get() = _binding!!
 
-    // private val depositFormViewModel: DepositFormViewModel by viewModels()
+    private val args: TransferFormFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,7 +63,13 @@ class TransferFormFragment : Fragment() {
             return
         }
 
-        // Navegação para a tela de confirmação da transferência
+        val action =
+            TransferFormFragmentDirections.actionTransferFormFragmentToConfirmTransferFragment(
+                user = args.user,
+                amount = amount
+            )
+
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {

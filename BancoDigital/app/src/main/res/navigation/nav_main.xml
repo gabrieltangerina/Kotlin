@@ -164,5 +164,21 @@
         <argument
             android:name="user"
             app:argType="com.example.bancodigital.data.model.User" />
+        <action
+            android:id="@+id/action_transferFormFragment_to_confirmTransferFragment"
+            app:destination="@id/confirmTransferFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmTransferFragment"
+        android:name="com.example.bancodigital.presenter.features.transfer.ConfirmTransferFragment"
+        android:label="fragment_transfer_confirm"
+        tools:layout="@layout/fragment_transfer_confirm" >
+        <argument
+            android:name="user"
+            app:argType="com.example.bancodigital.data.model.User" />
+        <argument
+            android:name="amount"
+            app:argType="float"
+            android:defaultValue="0" />
     </fragment>
 </navigation>

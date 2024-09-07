@@ -110,4 +110,13 @@
     <string name="text_button_confirm_transfer_form_fragment">Confirmar</string>
     <string name="text_message_empty_amount_transfer_form_fragment">Informe um valor para a transferência</string>
 
+    <!--  ConfirmTransferFragment  -->
+    <string name="text_title_toolbar_confirm_transfer_fragment">Transferência</string>
+    <string name="text_message_verify_data_confirm_transfer_fragment">Verifique os dados antes de confirmar a transferência.</string>
+    <string name="text_message_warning_confirm_transfer_fragment">Após confirmar a transferência não será possível desfazê-la</string>
+    <string name="text_subtitle_data_confirm_transfer_fragment">Dados da transferência</string>
+    <string name="text_message_input_amount_confirm_transfer_form_fragment">Valor da transferência</string>
+    <string name="text_button_confirm_confirm_transfer_fragment">Confirmar</string>
+    <string name="text_message_empty_amount_confirm_transfer_fragment">Informe um valor para a transferência</string>
+
 </resources>

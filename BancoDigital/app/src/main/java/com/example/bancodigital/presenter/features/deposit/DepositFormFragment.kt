@@ -21,6 +21,7 @@ import com.example.bancodigital.util.MoneyTextWatcher
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.hideKeyboard
 import com.example.bancodigital.util.initToolbar
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,15 +64,14 @@ class DepositFormFragment : Fragment() {
 
     private fun validateDeposit() {
         hideKeyboard()
-        val amount = binding.editAmount.text.toString().trim()
+        val amount = MoneyTextWatcher.getValueUnMasked(binding.editAmount)
 
-        if (amount.isEmpty()) {
-            Toast.makeText(requireContext(), "Informe um valor para o deposito", Toast.LENGTH_SHORT)
-                .show()
+        if (amount <= 0f) {
+            showBottomSheetValidateInputs(message = "Informe um valor para o deposito")
             return
         }
 
-        val deposit = Deposit(amount = amount.toFloat())
+        val deposit = Deposit(amount = amount)
         saveDeposit(deposit)
     }
 
