@@ -109,6 +109,7 @@
     <string name="text_message_input_amount_transfer_form_fragment">Valor da transferência</string>
     <string name="text_button_confirm_transfer_form_fragment">Confirmar</string>
     <string name="text_message_empty_amount_transfer_form_fragment">Informe um valor para a transferência</string>
+    <string name="text_balance_format_value_form_fragment">Saldo: R$ %1$s</string>
 
     <!--  ConfirmTransferFragment  -->
     <string name="text_title_toolbar_confirm_transfer_fragment">Transferência</string>

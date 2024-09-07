@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.bancodigital.domain.profile.GetProfileUseCase
 import com.example.bancodigital.domain.transaction.GetTransactionsUseCase
+import com.example.bancodigital.domain.wallet.GetBalanceUseCase
 import com.example.bancodigital.domain.wallet.GetWalletUseCase
 import com.example.bancodigital.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getWalletUseCase: GetWalletUseCase,
     private val getTransactionsUseCase: GetTransactionsUseCase,
-    private val getProfileUseCase: GetProfileUseCase
+    private val getProfileUseCase: GetProfileUseCase,
+    private val getBalanceUseCase: GetBalanceUseCase
 ) : ViewModel() {
 
     fun getWallet() = liveData(Dispatchers.IO) {
@@ -24,6 +26,19 @@ class HomeViewModel @Inject constructor(
             val wallet = getWalletUseCase.invoke()
 
             emit(StateView.Success(wallet))
+
+        }catch (ex: Exception){
+            emit(StateView.Error(ex.message))
+        }
+    }
+
+    fun getBalance() = liveData(Dispatchers.IO) {
+        try {
+            emit(StateView.Loading())
+
+            val balance = getBalanceUseCase.invoke()
+
+            emit(StateView.Success(balance))
 
         }catch (ex: Exception){
             emit(StateView.Error(ex.message))

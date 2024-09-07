@@ -11,20 +11,17 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bancodigital.R
 import com.example.bancodigital.data.enum.TransactionOperation
-import com.example.bancodigital.data.enum.TransactionType
-import com.example.bancodigital.data.model.Transaction
 import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.FragmentHomeBinding
 import com.example.bancodigital.presenter.home.adapter.TransactionsAdapter
 import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.GetMask
 import com.example.bancodigital.util.StateView
-import com.example.bancodigital.util.showBottomSheetValidateInputs
 import com.example.bancodigital.util.showBottomSheetSignOut
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import java.lang.Exception
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -54,13 +51,13 @@ class HomeFragment : Fragment() {
         getProfile()
     }
 
-    private fun configData(user: User){
+    private fun configData(user: User) {
         Picasso.get()
             .load(user.image)
             .tag(tagPicasso)
             .fit()
             .centerCrop()
-            .into(binding.userImage, object : Callback{
+            .into(binding.userImage, object : Callback {
                 override fun onSuccess() {
                     // Not yet implemented
                 }
@@ -72,9 +69,9 @@ class HomeFragment : Fragment() {
             })
     }
 
-    private fun getProfile(){
-        homeViewModel.getProfileUseCase().observe(viewLifecycleOwner){stateView ->
-            when(stateView){
+    private fun getProfile() {
+        homeViewModel.getProfileUseCase().observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.progressBar.isVisible = true
                 }
@@ -102,7 +99,33 @@ class HomeFragment : Fragment() {
                 is StateView.Success -> {
                     binding.progressBar.isVisible = false
                     adapterTransaction.submitList(stateView.data?.reversed()?.take(6))
-                    showBalance(stateView.data ?: emptyList())
+                    // showBalance(stateView.data ?: emptyList())
+                    getBalance()
+                }
+
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    showBottomSheetValidateInputs(message = stateView.message)
+                }
+            }
+        }
+    }
+
+    private fun getBalance() {
+        homeViewModel.getBalance().observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+
+                }
+
+                is StateView.Success -> {
+                    stateView.data?.let {
+                        binding.textBalance.text =
+                            getString(
+                                R.string.text_balance_format_value,
+                                GetMask.getFormatedValue(stateView.data)
+                            )
+                    }
                 }
 
                 is StateView.Error -> {
@@ -181,24 +204,6 @@ class HomeFragment : Fragment() {
         binding.cardTransfer.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_transferUserFragment)
         }
-    }
-
-    private fun showBalance(transactions: List<Transaction>) {
-        var cashIn = 0f
-        var cashOut = 0f
-
-        transactions.forEach { transaction ->
-            if (transaction.type == TransactionType.CASH_IN) {
-                cashIn += transaction.amount
-            } else {
-                cashOut += transaction.amount
-            }
-        }
-
-        val total = cashIn - cashOut
-
-        binding.textBalance.text =
-            getString(R.string.text_balance_format_value, GetMask.getFormatedValue(total))
     }
 
     override fun onDestroyView() {

@@ -58,24 +58,36 @@
                 android:layout_marginTop="32dp"
                 android:text="@string/text_message_amount_transfer_form_fragment"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
             <TextView
+                android:id="@+id/text_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView4"
+                tools:text="Saldo: R$ 593,68" />
+
+            <TextView
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
                 android:text="@string/text_message_input_amount_transfer_form_fragment"
+                android:layout_marginTop="16dp"
                 android:textColor="@color/white"
                 android:textSize="22sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toBottomOf="@+id/text_balance" />
 
             <EditText
                 android:id="@+id/edit_amount"
@@ -84,8 +96,8 @@
                 android:layout_marginHorizontal="16dp"
                 android:backgroundTint="@color/white"
                 android:ems="10"
-                android:maxLength="17"
                 android:inputType="numberDecimal"
+                android:maxLength="17"
                 android:text="R$ 0,00"
                 android:textAlignment="center"
                 android:textColor="@color/white"

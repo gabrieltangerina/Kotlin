@@ -8,4 +8,6 @@ interface WalletDataSource {
 
     suspend fun getWallet(): Wallet
 
+    suspend fun getBalance() : Float
+
 }
