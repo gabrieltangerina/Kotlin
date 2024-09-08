@@ -52,21 +52,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun configData(user: User) {
-        Picasso.get()
-            .load(user.image)
-            .tag(tagPicasso)
-            .fit()
-            .centerCrop()
-            .into(binding.userImage, object : Callback {
-                override fun onSuccess() {
-                    // Not yet implemented
-                }
+        if (user.image.isNotEmpty()) {
+            Picasso.get()
+                .load(user.image)
+                .tag(tagPicasso)
+                .fit()
+                .centerCrop()
+                .into(binding.userImage, object : Callback {
+                    override fun onSuccess() {
+                        // Not yet implemented
+                    }
 
-                override fun onError(e: Exception?) {
-                    // Not yet implemented
-                }
+                    override fun onError(e: Exception?) {
+                        // Not yet implemented
+                    }
 
-            })
+                })
+        }
+
     }
 
     private fun getProfile() {

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/Theme.Dark"
-    tools:context=".presenter.features.transfer.TransferFormFragment">
+    tools:context=".presenter.features.transfer.transfer_form.TransferFormFragment">
 
     <ScrollView
         android:id="@+id/scrollView2"

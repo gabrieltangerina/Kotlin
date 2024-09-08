@@ -1,4 +1,4 @@
-package com.example.bancodigital.presenter.features.transfer
+package com.example.bancodigital.presenter.features.transfer.transfer_receipt
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bancodigital.R
-import com.example.bancodigital.databinding.FragmentTransferConfirmBinding
+import com.example.bancodigital.data.model.User
+import com.example.bancodigital.databinding.FragmentTransferReceiptBinding
 import com.example.bancodigital.util.GetMask
 import com.example.bancodigital.util.initToolbar
 import com.squareup.picasso.Callback
@@ -16,12 +18,13 @@ import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ConfirmTransferFragment : Fragment() {
+class ReceiptTransferFragment : Fragment() {
 
-    private var _binding: FragmentTransferConfirmBinding? = null
+    private var _binding: FragmentTransferReceiptBinding? = null
     private val binding get() = _binding!!
 
-    private val args: ConfirmTransferFragmentArgs by navArgs()
+    private val args: ReceiptTransferFragmentArgs by navArgs()
+    private val receiptTransferViewModel: ReceiptTransferViewModel by viewModels()
 
     private val tagPicasso = "tagPicasso"
 
@@ -29,7 +32,7 @@ class ConfirmTransferFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTransferConfirmBinding.inflate(inflater, container, false)
+        _binding = FragmentTransferReceiptBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,15 +40,15 @@ class ConfirmTransferFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initToolbar(toolbar = binding.toolbar)
-        configData()
+        configData(args.)
         initListeners()
     }
 
-    private fun configData() {
+    private fun configData(user: User) {
 
-        if (args.user.image != "") {
+        if (user.image != "") {
             Picasso.get()
-                .load(args.user.image)
+                .load(user.image)
                 .tag(tagPicasso)
                 .fit()
                 .centerCrop()
@@ -61,7 +64,7 @@ class ConfirmTransferFragment : Fragment() {
                 })
         }
 
-        binding.textUsername.text = args.user.name
+        binding.textUsername.text = user.name
 
         binding.textAmountTransaction.text = getString(
             R.string.text_balance_format_value,
@@ -70,8 +73,8 @@ class ConfirmTransferFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.btnContinue.setOnClickListener {
-            // findNavController().popBackStack()
+        binding.btnOk.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

@@ -1,25 +1,25 @@
-package com.example.bancodigital.presenter.features.transfer
+package com.example.bancodigital.presenter.features.transfer.transfer_form
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import com.example.bancodigital.domain.profile.GetProfilesUseCase
+import com.example.bancodigital.domain.wallet.GetBalanceUseCase
 import com.example.bancodigital.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 @HiltViewModel
-class TransferUserViewModel @Inject constructor(
-    private val getProfilesUseCase: GetProfilesUseCase
+class TransferFormViewModel @Inject constructor(
+    private val getBalanceUseCase: GetBalanceUseCase
 ) : ViewModel() {
 
-    fun getProfilesUseCase() = liveData(Dispatchers.IO) {
+    fun getBalance() = liveData(Dispatchers.IO) {
         try {
             emit(StateView.Loading())
 
-            val profiles = getProfilesUseCase.invoke()
+            val balance = getBalanceUseCase.invoke()
 
-            emit(StateView.Success(profiles))
+            emit(StateView.Success(balance))
 
         } catch (ex: Exception) {
             emit(StateView.Error(ex.message))

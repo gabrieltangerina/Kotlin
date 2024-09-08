@@ -1,4 +1,4 @@
-package com.example.bancodigital.presenter.features.transfer
+package com.example.bancodigital.presenter.features.transfer.transfer_user_list
 
 import android.os.Bundle
 import android.view.LayoutInflater

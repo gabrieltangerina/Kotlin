@@ -129,7 +129,7 @@
         android:name="com.example.bancodigital.presenter.features.recharge.RechargeFormFragment"
         android:label="fragment_recharge_form"
         tools:layout="@layout/fragment_recharge_form" >
-        <action
+         <action
             android:id="@+id/action_rechargeFormFragment_to_rechargeReceiptFragment"
             app:destination="@id/rechargeReceiptFragment"
             app:popUpTo="@id/rechargeFormFragment"
@@ -149,7 +149,7 @@
     </fragment>
     <fragment
         android:id="@+id/transferUserFragment"
-        android:name="com.example.bancodigital.presenter.features.transfer.TransferUserFragment"
+        android:name="com.example.bancodigital.presenter.features.transfer.transfer_user_list.TransferUserFragment"
         android:label="fragment_transfer_user"
         tools:layout="@layout/fragment_transfer_user" >
         <action
@@ -158,7 +158,7 @@
     </fragment>
     <fragment
         android:id="@+id/transferFormFragment"
-        android:name="com.example.bancodigital.presenter.features.transfer.TransferFormFragment"
+        android:name="com.example.bancodigital.presenter.features.transfer.transfer_form.TransferFormFragment"
         android:label="fragment_transfer_form"
         tools:layout="@layout/fragment_transfer_form" >
         <argument
@@ -170,7 +170,7 @@
     </fragment>
     <fragment
         android:id="@+id/confirmTransferFragment"
-        android:name="com.example.bancodigital.presenter.features.transfer.ConfirmTransferFragment"
+        android:name="com.example.bancodigital.presenter.features.transfer.transfer_confirm.ConfirmTransferFragment"
         android:label="fragment_transfer_confirm"
         tools:layout="@layout/fragment_transfer_confirm" >
         <argument
@@ -180,5 +180,19 @@
             android:name="amount"
             app:argType="float"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_confirmTransferFragment_to_receiptTransferFragment"
+            app:destination="@id/receiptTransferFragment"
+            app:popUpTo="@id/confirmTransferFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/receiptTransferFragment"
+        android:name="com.example.bancodigital.presenter.features.transfer.transfer_receipt.ReceiptTransferFragment"
+        android:label="fragment_transfer_receipt"
+        tools:layout="@layout/fragment_transfer_receipt" >
+        <argument
+            android:name="idTransfer"
+            app:argType="string" />
     </fragment>
 </navigation>

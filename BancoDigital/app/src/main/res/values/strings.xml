@@ -120,4 +120,13 @@
     <string name="text_button_confirm_confirm_transfer_fragment">Confirmar</string>
     <string name="text_message_empty_amount_confirm_transfer_fragment">Informe um valor para a transferência</string>
 
+    <!--  ReceiptTransferFragment  -->
+    <string name="text_title_toolbar_receipt_transfer_fragment">Recibo</string>
+    <string name="text_message_verify_data_receipt_transfer_fragment">Transferência realizada com sucesso</string>
+    <string name="text_message_warning_receipt_transfer_fragment">Débito realizado com sucesso. A previsão do crédito na conta de destino é de até 30 minutos</string>
+    <string name="text_data_receipt_transfer_fragment">Data</string>
+    <string name="text_balance_transfer_receipt_transfer_fragment">Valor da transferência</string>
+    <string name="text_message_code_transaction_receipt_transfer_fragment">Código Transação</string>
+
+
 </resources>
