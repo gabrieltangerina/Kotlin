@@ -4,12 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.example.bancodigital.R
+import com.example.bancodigital.data.model.Transfer
 import com.example.bancodigital.databinding.FragmentTransferConfirmBinding
+import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.GetMask
+import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +28,7 @@ class ConfirmTransferFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args: ConfirmTransferFragmentArgs by navArgs()
+    private val confirmTransferViewModel: ConfirmTransferViewModel by viewModels()
 
     private val tagPicasso = "tagPicasso"
 
@@ -68,9 +76,38 @@ class ConfirmTransferFragment : Fragment() {
         )
     }
 
+    private fun saveTransfer(transfer: Transfer) {
+        confirmTransferViewModel.saveTransfer(transfer).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+                    binding.btnConfirm.isEnabled = false
+                    binding.progressBar.isVisible = true
+                }
+
+                is StateView.Success -> {
+                    Toast.makeText(requireContext(), "OK!", Toast.LENGTH_SHORT).show()
+                }
+
+                is StateView.Error -> {
+                    binding.btnConfirm.isEnabled = false
+                    binding.progressBar.isVisible = false
+                    showBottomSheetValidateInputs(message = stateView.message)
+                }
+            }
+        }
+    }
+
     private fun initListeners() {
-        binding.btnContinue.setOnClickListener {
-            // findNavController().popBackStack()
+        binding.btnConfirm.setOnClickListener {
+
+            val transfer = Transfer(
+                idUserReceipt = args.user.id,
+                idUserSent = FirebaseHelper.getUserId(),
+                amount = args.amount
+            )
+
+            saveTransfer(transfer)
+
         }
     }
 

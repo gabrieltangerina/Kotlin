@@ -24,7 +24,6 @@ class ReceiptTransferFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args: ReceiptTransferFragmentArgs by navArgs()
-    private val receiptTransferViewModel: ReceiptTransferViewModel by viewModels()
 
     private val tagPicasso = "tagPicasso"
 
@@ -40,7 +39,7 @@ class ReceiptTransferFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initToolbar(toolbar = binding.toolbar)
-        configData(args.)
+        // configData()
         initListeners()
     }
 
@@ -66,10 +65,10 @@ class ReceiptTransferFragment : Fragment() {
 
         binding.textUsername.text = user.name
 
-        binding.textAmountTransaction.text = getString(
-            R.string.text_balance_format_value,
-            GetMask.getFormatedValue(args.amount)
-        )
+//        binding.textAmountTransaction.text = getString(
+//            R.string.text_balance_format_value,
+//            GetMask.getFormatedValue(args.amount)
+//        )
     }
 
     private fun initListeners() {
