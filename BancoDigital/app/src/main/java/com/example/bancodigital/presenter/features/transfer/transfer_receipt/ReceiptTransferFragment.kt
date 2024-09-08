@@ -4,15 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bancodigital.R
+import com.example.bancodigital.data.model.Transfer
 import com.example.bancodigital.data.model.User
 import com.example.bancodigital.databinding.FragmentTransferReceiptBinding
+import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.GetMask
+import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
+import com.example.bancodigital.util.showBottomSheetValidateInputs
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +29,7 @@ class ReceiptTransferFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args: ReceiptTransferFragmentArgs by navArgs()
+    private val receiptTransferViewModel: ReceiptTransferViewModel by viewModels()
 
     private val tagPicasso = "tagPicasso"
 
@@ -38,16 +44,82 @@ class ReceiptTransferFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initToolbar(toolbar = binding.toolbar)
-        // configData()
+        initToolbar(toolbar = binding.toolbar, showIconNavigation = args.showIconNavigation)
         initListeners()
+        getTransfer()
     }
 
-    private fun configData(user: User) {
+    private fun getTransfer() {
+        receiptTransferViewModel.getTransfer(args.idTransfer)
+            .observe(viewLifecycleOwner) { stateView ->
+                when (stateView) {
+                    is StateView.Loading -> {
+                        binding.progressBar.isVisible = true
+                    }
 
-        if (user.image != "") {
+                    is StateView.Success -> {
+                        stateView.data?.let {
+                            configTransfer(it)
+
+                            val userId = if (it.idUserSent == FirebaseHelper.getUserId()) {
+                                it.idUserReceipt
+                            } else {
+                                it.idUserSent
+                            }
+
+                            getProfile(userId)
+                        }
+                    }
+
+                    is StateView.Error -> {
+                        binding.progressBar.isVisible = false
+                        showBottomSheetValidateInputs(message = stateView.message)
+                    }
+                }
+            }
+    }
+
+    private fun configTransfer(transfer: Transfer) {
+
+        binding.textCodeTransaction.text = transfer.id
+        binding.textDataTransaction.text = GetMask.getFormatedDate(
+            transfer.date,
+            GetMask.DAY_MONTH_YEAR_HOUR_MINUTE
+        )
+
+        binding.textAmountTransaction.text = getString(
+            R.string.text_balance_format_value,
+            GetMask.getFormatedValue(transfer.amount)
+        )
+    }
+
+    private fun getProfile(id: String) {
+        receiptTransferViewModel.getProfile(id).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+
+                is StateView.Success -> {
+                    binding.progressBar.isVisible = false
+                    stateView.data?.let {
+                        configProfile(it)
+                    }
+                }
+
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                    showBottomSheetValidateInputs(message = stateView.message)
+                }
+            }
+        }
+    }
+
+    private fun configProfile(profile: User) {
+
+        if (profile.image != "") {
             Picasso.get()
-                .load(user.image)
+                .load(profile.image)
                 .tag(tagPicasso)
                 .fit()
                 .centerCrop()
@@ -63,12 +135,7 @@ class ReceiptTransferFragment : Fragment() {
                 })
         }
 
-        binding.textUsername.text = user.name
-
-//        binding.textAmountTransaction.text = getString(
-//            R.string.text_balance_format_value,
-//            GetMask.getFormatedValue(args.amount)
-//        )
+        binding.textUsername.text = profile.name
     }
 
     private fun initListeners() {

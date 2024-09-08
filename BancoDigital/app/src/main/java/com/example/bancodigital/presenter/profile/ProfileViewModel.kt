@@ -7,6 +7,7 @@ import com.example.bancodigital.domain.profile.GetProfileUseCase
 import com.example.bancodigital.domain.profile.SaveImageProfileUseCase
 import com.example.bancodigital.domain.profile.SaveProfileUseCase
 import com.example.bancodigital.domain.profile.UpdateProfileUseCase
+import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -37,7 +38,7 @@ class ProfileViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val profile = getProfileUseCase.invoke()
+            val profile = getProfileUseCase.invoke(FirebaseHelper.getUserId())
 
             emit(StateView.Success(profile))
 

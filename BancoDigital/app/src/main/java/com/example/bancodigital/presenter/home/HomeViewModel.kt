@@ -6,6 +6,7 @@ import com.example.bancodigital.domain.profile.GetProfileUseCase
 import com.example.bancodigital.domain.transaction.GetTransactionsUseCase
 import com.example.bancodigital.domain.wallet.GetBalanceUseCase
 import com.example.bancodigital.domain.wallet.GetWalletUseCase
+import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.StateView
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -49,7 +50,7 @@ class HomeViewModel @Inject constructor(
         try {
             emit(StateView.Loading())
 
-            val profile = getProfileUseCase.invoke()
+            val profile = getProfileUseCase.invoke(FirebaseHelper.getUserId())
 
             emit(StateView.Success(profile))
 

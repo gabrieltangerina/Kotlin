@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bancodigital.R
 import com.example.bancodigital.data.model.Transfer
@@ -106,7 +106,13 @@ class ConfirmTransferFragment : Fragment() {
                 }
 
                 is StateView.Success -> {
-                    Toast.makeText(requireContext(), "OK!", Toast.LENGTH_SHORT).show()
+                    val action =
+                        ConfirmTransferFragmentDirections.actionConfirmTransferFragmentToReceiptTransferFragment(
+                            idTransfer = transfer.id,
+                            showIconNavigation = false
+                        )
+
+                    findNavController().navigate(action)
                 }
 
                 is StateView.Error -> {

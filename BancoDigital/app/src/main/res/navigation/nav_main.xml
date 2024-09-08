@@ -183,7 +183,7 @@
         <action
             android:id="@+id/action_confirmTransferFragment_to_receiptTransferFragment"
             app:destination="@id/receiptTransferFragment"
-            app:popUpTo="@id/confirmTransferFragment"
+            app:popUpTo="@id/transferUserFragment"
             app:popUpToInclusive="true"/>
     </fragment>
     <fragment
@@ -194,5 +194,8 @@
         <argument
             android:name="idTransfer"
             app:argType="string" />
+        <argument
+            android:name="showIconNavigation"
+            app:argType="boolean" />
     </fragment>
 </navigation>
