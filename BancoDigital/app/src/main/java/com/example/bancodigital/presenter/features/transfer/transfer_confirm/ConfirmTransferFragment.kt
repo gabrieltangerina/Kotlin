@@ -85,6 +85,27 @@ class ConfirmTransferFragment : Fragment() {
                 }
 
                 is StateView.Success -> {
+                    updateTransfer(transfer)
+                }
+
+                is StateView.Error -> {
+                    binding.btnConfirm.isEnabled = false
+                    binding.progressBar.isVisible = false
+                    showBottomSheetValidateInputs(message = stateView.message)
+                }
+            }
+        }
+    }
+
+    private fun updateTransfer(transfer: Transfer) {
+        confirmTransferViewModel.updateTransfer(transfer).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+                    binding.btnConfirm.isEnabled = false
+                    binding.progressBar.isVisible = true
+                }
+
+                is StateView.Success -> {
                     Toast.makeText(requireContext(), "OK!", Toast.LENGTH_SHORT).show()
                 }
 
