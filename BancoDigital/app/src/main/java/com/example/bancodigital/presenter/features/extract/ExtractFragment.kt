@@ -69,6 +69,10 @@ class ExtractFragment : Fragment() {
                 null -> {
 
                 }
+
+                TransactionOperation.TRANSFER -> {
+                    // FALTA FAZER ISSO
+                }
             }
         }
 

@@ -1,7 +1,7 @@
 package com.example.bancodigital.data.enum
 
 enum class TransactionOperation {
-    DEPOSIT, RECHARGE;
+    DEPOSIT, RECHARGE, TRANSFER;
 
     companion object {
         fun getOperation(operation: TransactionOperation): String {
@@ -12,6 +12,10 @@ enum class TransactionOperation {
 
                 RECHARGE -> {
                     "RECARGA DE CELULAR"
+                }
+
+                TRANSFER -> {
+                    "TRANSFERÊNCIA"
                 }
             }
         }

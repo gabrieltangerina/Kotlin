@@ -162,6 +162,10 @@ class HomeFragment : Fragment() {
                     findNavController().navigate(action)
                 }
 
+                TransactionOperation.TRANSFER -> {
+                    // FALTA FAZER ISSO
+                }
+
                 null -> {
 
                 }

@@ -10,8 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bancodigital.R
+import com.example.bancodigital.data.enum.TransactionOperation
+import com.example.bancodigital.data.enum.TransactionType
+import com.example.bancodigital.data.model.Deposit
+import com.example.bancodigital.data.model.Transaction
 import com.example.bancodigital.data.model.Transfer
 import com.example.bancodigital.databinding.FragmentTransferConfirmBinding
+import com.example.bancodigital.presenter.features.deposit.DepositFormFragmentDirections
 import com.example.bancodigital.util.FirebaseHelper
 import com.example.bancodigital.util.GetMask
 import com.example.bancodigital.util.StateView
@@ -106,6 +111,27 @@ class ConfirmTransferFragment : Fragment() {
                 }
 
                 is StateView.Success -> {
+                    saveTransferTransaction(transfer)
+                }
+
+                is StateView.Error -> {
+                    binding.btnConfirm.isEnabled = false
+                    binding.progressBar.isVisible = false
+                    showBottomSheetValidateInputs(message = stateView.message)
+                }
+            }
+        }
+    }
+
+    private fun saveTransferTransaction(transfer: Transfer) {
+
+        confirmTransferViewModel.saveTransferTransaction(transfer).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+
+                }
+
+                is StateView.Success -> {
                     val action =
                         ConfirmTransferFragmentDirections.actionConfirmTransferFragmentToReceiptTransferFragment(
                             idTransfer = transfer.id,
@@ -116,9 +142,7 @@ class ConfirmTransferFragment : Fragment() {
                 }
 
                 is StateView.Error -> {
-                    binding.btnConfirm.isEnabled = false
                     binding.progressBar.isVisible = false
-                    showBottomSheetValidateInputs(message = stateView.message)
                 }
             }
         }
