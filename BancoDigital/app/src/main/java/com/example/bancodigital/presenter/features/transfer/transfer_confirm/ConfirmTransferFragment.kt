@@ -81,6 +81,7 @@ class ConfirmTransferFragment : Fragment() {
         )
     }
 
+    // Salva a transferência
     private fun saveTransfer(transfer: Transfer) {
         confirmTransferViewModel.saveTransfer(transfer).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
@@ -102,6 +103,7 @@ class ConfirmTransferFragment : Fragment() {
         }
     }
 
+    // Atualiza a data da transferência
     private fun updateTransfer(transfer: Transfer) {
         confirmTransferViewModel.updateTransfer(transfer).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
@@ -123,9 +125,30 @@ class ConfirmTransferFragment : Fragment() {
         }
     }
 
+    // Salva a transação da transferência
     private fun saveTransferTransaction(transfer: Transfer) {
 
         confirmTransferViewModel.saveTransferTransaction(transfer).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
+                is StateView.Loading -> {
+
+                }
+
+                is StateView.Success -> {
+                    updateDateTransferTransaction(transfer)
+                }
+
+                is StateView.Error -> {
+                    binding.progressBar.isVisible = false
+                }
+            }
+        }
+    }
+
+    // Atualiza a data da transação da transferência
+    private fun updateDateTransferTransaction(transfer: Transfer) {
+
+        confirmTransferViewModel.updateDateTransferTransaction(transfer).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {
 

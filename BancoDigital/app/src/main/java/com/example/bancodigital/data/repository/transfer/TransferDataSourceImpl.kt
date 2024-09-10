@@ -140,26 +140,63 @@ class TransferDataSourceImpl @Inject constructor(
                 .child(transfer.idUserSent)
                 .child(transfer.id)
                 .setValue(transactionUserSent)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
+                .addOnCompleteListener { taskUpdateSent ->
+                    if (taskUpdateSent.isSuccessful) {
 
                         // Salvando a transação para o usuário que recebeu a transferencia
                         transactionReference
                             .child(transfer.idUserReceipt)
                             .child(transfer.id)
                             .setValue(transactionUserReceived)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
+                            .addOnCompleteListener { taskUpdateReceived ->
+                                if (taskUpdateReceived.isSuccessful) {
                                     continuation.resumeWith(Result.success(Unit))
                                 } else {
-                                    task.exception?.let {
+                                    taskUpdateReceived.exception?.let {
                                         continuation.resumeWith(Result.failure(it))
                                     }
                                 }
                             }
 
                     } else {
-                        task.exception?.let {
+                        taskUpdateSent.exception?.let {
+                            continuation.resumeWith(Result.failure(it))
+                        }
+                    }
+                }
+        }
+    }
+
+    override suspend fun updateDateTransferTransaction(transfer: Transfer) {
+        suspendCoroutine { continuation ->
+
+            // Salvando a transação para o usuário que enviou a transferencia
+            transactionReference
+                .child(transfer.idUserSent)
+                .child(transfer.id)
+                .child("date")
+                .setValue(ServerValue.TIMESTAMP)
+                .addOnCompleteListener { taskUpdateSent ->
+                    if (taskUpdateSent.isSuccessful) {
+
+                        // Salvando a transação para o usuário que recebeu a transferencia
+                        transactionReference
+                            .child(transfer.idUserReceipt)
+                            .child(transfer.id)
+                            .child("date")
+                            .setValue(ServerValue.TIMESTAMP)
+                            .addOnCompleteListener { taskUpdateReceived ->
+                                if (taskUpdateReceived.isSuccessful) {
+                                    continuation.resumeWith(Result.success(Unit))
+                                } else {
+                                    taskUpdateReceived.exception?.let {
+                                        continuation.resumeWith(Result.failure(it))
+                                    }
+                                }
+                            }
+
+                    } else {
+                        taskUpdateSent.exception?.let {
                             continuation.resumeWith(Result.failure(it))
                         }
                     }

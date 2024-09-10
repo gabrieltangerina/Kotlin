@@ -12,4 +12,6 @@ interface TransferDataSource {
 
     suspend fun saveTransferTransaction(transfer: Transfer)
 
+    suspend fun updateDateTransferTransaction(transfer: Transfer)
+
 }
