@@ -37,27 +37,6 @@ class WalletDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getWallet(): Wallet {
-        return suspendCoroutine { continuation ->
-            walletReference.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-
-                    val wallet =
-                        snapshot.child(FirebaseHelper.getUserId()).getValue(Wallet::class.java)
-
-                    wallet?.let {
-                        continuation.resumeWith(Result.success(it))
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    continuation.resumeWith(Result.failure(error.toException()))
-                }
-
-            })
-        }
-    }
-
     override suspend fun getBalance(): Float {
         return suspendCoroutine { continuation ->
             transactionsReference

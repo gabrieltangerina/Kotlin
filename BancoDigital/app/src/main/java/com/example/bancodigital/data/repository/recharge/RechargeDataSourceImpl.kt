@@ -58,7 +58,7 @@ class RechargeDataSourceImpl @Inject constructor(
                         val recharge = snapshot.getValue(Recharge::class.java)
 
                         recharge?.let {
-                            continuation.resumeWith(Result.success(recharge))
+                            continuation.resumeWith(Result.success(it))
                         }
 
                     }

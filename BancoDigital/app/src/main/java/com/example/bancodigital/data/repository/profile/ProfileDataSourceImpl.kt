@@ -117,9 +117,6 @@ class ProfileDataSourceImpl @Inject constructor(
         return suspendCoroutine { continuation ->
             val uploadTask = profileStorageReference.putFile(Uri.parse(imageProfile))
 
-            Log.i("INFOTESTE", "imageProfile: $imageProfile")
-            Log.i("INFOTESTE", "uploadTask: $uploadTask")
-
             uploadTask.addOnSuccessListener {
 
                 profileStorageReference.downloadUrl.addOnCompleteListener { task ->
