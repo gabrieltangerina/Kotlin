@@ -163,7 +163,12 @@ class HomeFragment : Fragment() {
                 }
 
                 TransactionOperation.TRANSFER -> {
-                    // FALTA FAZER ISSO
+                    val action = HomeFragmentDirections.actionHomeFragmentToReceiptTransferFragment(
+                        idTransfer = transaction.id,
+                        showIconNavigation = true
+                    )
+
+                    findNavController().navigate(action)
                 }
 
                 null -> {

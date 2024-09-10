@@ -127,6 +127,8 @@
     <string name="text_data_receipt_transfer_fragment">Data</string>
     <string name="text_balance_transfer_receipt_transfer_fragment">Valor da transferência</string>
     <string name="text_message_code_transaction_receipt_transfer_fragment">Código Transação</string>
+    <string name="text_message_received_receipt_transfer_fragment">Recebido de:</string>
+    <string name="text_message_send_receipt_transfer_fragment">Enviado para:</string>
 
 
 </resources>

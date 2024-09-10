@@ -81,6 +81,12 @@ class ReceiptTransferFragment : Fragment() {
 
     private fun configTransfer(transfer: Transfer) {
 
+        binding.textSendOrReceived.text = if (transfer.idUserSent == FirebaseHelper.getUserId()){
+            getString(R.string.text_message_send_receipt_transfer_fragment)
+        }else{
+            getString(R.string.text_message_received_receipt_transfer_fragment)
+        }
+
         binding.textCodeTransaction.text = transfer.id
         binding.textDataTransaction.text = GetMask.getFormatedDate(
             transfer.date,
