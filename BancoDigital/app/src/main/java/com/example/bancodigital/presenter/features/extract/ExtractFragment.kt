@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bancodigital.MainGraphDirections
 import com.example.bancodigital.data.enum.TransactionOperation
 import com.example.bancodigital.databinding.FragmentExtractBinding
 import com.example.bancodigital.presenter.home.HomeFragmentDirections
@@ -49,7 +50,7 @@ class ExtractFragment : Fragment() {
 
                 TransactionOperation.DEPOSIT -> {
                     val action =
-                        ExtractFragmentDirections.actionExtractFragmentToDepositReceiptFragment(
+                        MainGraphDirections.actionGlobalDepositReceiptFragment(
                             transaction.id,
                             showIconNavigation = true
                         )
@@ -59,7 +60,7 @@ class ExtractFragment : Fragment() {
 
                 TransactionOperation.RECHARGE -> {
                     val action =
-                        ExtractFragmentDirections.actionExtractFragmentToRechargeReceiptFragment(
+                        MainGraphDirections.actionGlobalRechargeReceiptFragment(
                             transaction.id,
                             showIconNavigation = true
                         )
@@ -68,7 +69,7 @@ class ExtractFragment : Fragment() {
                 }
 
                 TransactionOperation.TRANSFER -> {
-                    val action = ExtractFragmentDirections.actionExtractFragmentToReceiptTransferFragment(
+                    val action = MainGraphDirections.actionGlobalReceiptTransferFragment(
                         idTransfer = transaction.id,
                         showIconNavigation = true
                     )

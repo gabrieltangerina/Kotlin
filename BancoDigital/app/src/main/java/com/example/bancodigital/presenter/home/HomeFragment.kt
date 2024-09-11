@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.bancodigital.MainGraphDirections
 import com.example.bancodigital.R
 import com.example.bancodigital.data.enum.TransactionOperation
 import com.example.bancodigital.data.model.User
@@ -144,7 +146,7 @@ class HomeFragment : Fragment() {
             when (transaction.operation) {
                 TransactionOperation.DEPOSIT -> {
                     val action =
-                        HomeFragmentDirections.actionHomeFragmentToDepositReceiptFragment(
+                        MainGraphDirections.actionGlobalDepositReceiptFragment(
                             transaction.id,
                             showIconNavigation = true
                         )
@@ -154,7 +156,7 @@ class HomeFragment : Fragment() {
 
                 TransactionOperation.RECHARGE -> {
                     val action =
-                        HomeFragmentDirections.actionHomeFragmentToRechargeReceiptFragment(
+                        MainGraphDirections.actionGlobalRechargeReceiptFragment(
                             transaction.id,
                             showIconNavigation = true
                         )
@@ -163,7 +165,7 @@ class HomeFragment : Fragment() {
                 }
 
                 TransactionOperation.TRANSFER -> {
-                    val action = HomeFragmentDirections.actionHomeFragmentToReceiptTransferFragment(
+                    val action = MainGraphDirections.actionGlobalReceiptTransferFragment(
                         idTransfer = transaction.id,
                         showIconNavigation = true
                     )
@@ -201,7 +203,11 @@ class HomeFragment : Fragment() {
         binding.btnLogout.setOnClickListener {
             showBottomSheetSignOut {
                 FirebaseHelper.getAuth().signOut()
-                findNavController().navigate(R.id.action_homeFragment_to_authentication)
+
+                val navOptions: NavOptions =
+                    NavOptions.Builder().setPopUpTo(R.id.homeFragment, true).build()
+
+                findNavController().navigate(R.id.action_global_authentication, null, navOptions)
             }
         }
 

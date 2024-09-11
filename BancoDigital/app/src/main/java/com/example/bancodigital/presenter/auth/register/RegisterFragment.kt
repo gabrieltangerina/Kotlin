@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.R
 import com.example.bancodigital.data.model.User
@@ -132,7 +133,7 @@ class RegisterFragment : Fragment() {
             }
     }
 
-    // Save in the Firebase Database
+    // Save profile in the Firebase Database
     private fun saveProfile(user: User) {
         profileViewModel.saveProfile(user).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
@@ -169,7 +170,11 @@ class RegisterFragment : Fragment() {
 
                 is StateView.Success -> {
                     binding.progressBar.isVisible = false
-                    findNavController().navigate(R.id.action_global_homeFragment)
+
+                    val navOptions: NavOptions =
+                        NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build()
+
+                    findNavController().navigate(R.id.action_global_homeFragment, null, navOptions)
                 }
 
                 is StateView.Error -> {

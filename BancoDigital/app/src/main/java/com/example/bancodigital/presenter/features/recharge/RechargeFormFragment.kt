@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.bancodigital.MainGraphDirections
 import com.example.bancodigital.R
 import com.example.bancodigital.data.enum.TransactionOperation
 import com.example.bancodigital.data.enum.TransactionType
@@ -79,8 +80,8 @@ class RechargeFormFragment : Fragment() {
                 }
 
                 is StateView.Success -> {
-                    val action = RechargeFormFragmentDirections
-                        .actionRechargeFormFragmentToRechargeReceiptFragment(
+                    val action = MainGraphDirections
+                        .actionGlobalRechargeReceiptFragment(
                             recharge.id,
                             showIconNavigation = false
                         )
