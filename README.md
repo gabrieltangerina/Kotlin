@@ -27,3 +27,19 @@ do botão de voltar o foco no searchView é desabilitado e ele será fechado, e 
             })
     }
 ```
+
+<br>
+
+### Navegação Global: Encerrando a Fila de Telas ao Acessar Outra Tela
+Essa funcionalidade é muito útil em situações como, por exemplo, após um login, quando você não deseja que o usuário consiga voltar para a tela anterior. Isso pode ser alcançado utilizando navegações comuns ou navegações globais.
+
+As navegações globais auxiliam a reduzir a complexidade do gráfico de navegação, tornando-o mais organizado. Ao usar navegação global, é possível limpar a pilha de telas, garantindo que o usuário não possa retornar às telas anteriores. Para isso, o seguinte código pode ser utilizado:
+```kotlin
+  import androidx.navigation.NavOptions
+
+  val navOptions: NavOptions =      // Tela que você deseja fechar
+      NavOptions.Builder().setPopUpTo(R.id.loginFragment, true).build()
+
+                               // Navegação que deseja ir
+  findNavController().navigate(R.id.action_global_homeFragment, null, navOptions)
+```
