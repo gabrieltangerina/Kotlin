@@ -72,9 +72,13 @@ class TransferUserFragment : Fragment() {
                             ignoreCase = true
                         )
                     }
+
+                    emptyUserList(newList)
+
                     adapterTransferUser.submitList(newList)
                     true
                 } else {
+                    emptyUserList(profilesList)
                     adapterTransferUser.submitList(profilesList)
                     false
                 }
@@ -102,6 +106,10 @@ class TransferUserFragment : Fragment() {
 
             }
         })
+    }
+
+    private fun emptyUserList(list: List<User>){
+        binding.textMessageTransaction.isVisible = list.isEmpty()
     }
 
     private fun getProfiles() {

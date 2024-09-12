@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.bancodigital.MainGraphDirections
@@ -156,13 +157,15 @@ class ConfirmTransferFragment : Fragment() {
                 }
 
                 is StateView.Success -> {
-                    val action =
-                        MainGraphDirections.actionGlobalReceiptTransferFragment(
-                            idTransfer = transfer.id,
-                            showIconNavigation = false
-                        )
+                    val navOptions: NavOptions =
+                        NavOptions.Builder().setPopUpTo(R.id.transferUserFragment, true).build()
 
-                    findNavController().navigate(action)
+                    val bundle = Bundle().apply {
+                        putString("idTransfer", transfer.id)
+                        putBoolean("showIconNavigation", false)
+                    }
+
+                    findNavController().navigate(R.id.action_global_receiptTransferFragment, bundle, navOptions)
                 }
 
                 is StateView.Error -> {

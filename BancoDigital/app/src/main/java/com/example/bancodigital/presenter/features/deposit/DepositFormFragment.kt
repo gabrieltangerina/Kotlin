@@ -10,6 +10,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.bancodigital.MainGraphDirections
 import com.example.bancodigital.R
@@ -110,13 +111,15 @@ class DepositFormFragment : Fragment() {
                 }
 
                 is StateView.Success -> {
-                    val action = MainGraphDirections
-                        .actionGlobalDepositReceiptFragment(
-                            deposit.id,
-                            showIconNavigation = false
-                        )
+                    val navOptions: NavOptions =
+                        NavOptions.Builder().setPopUpTo(R.id.depositFormFragment, true).build()
 
-                    findNavController().navigate(action)
+                    val bundle = Bundle().apply {
+                        putString("idDeposit", deposit.id)
+                        putBoolean("showIconNavigation", false)
+                    }
+
+                    findNavController().navigate(R.id.action_global_depositReceiptFragment, bundle, navOptions)
                 }
 
                 is StateView.Error -> {

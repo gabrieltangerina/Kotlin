@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.bancodigital.MainGraphDirections
 import com.example.bancodigital.data.enum.TransactionOperation
 import com.example.bancodigital.databinding.FragmentExtractBinding
-import com.example.bancodigital.presenter.home.HomeFragmentDirections
 import com.example.bancodigital.presenter.home.adapter.TransactionsAdapter
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
@@ -100,6 +99,7 @@ class ExtractFragment : Fragment() {
 
                 is StateView.Success -> {
                     binding.progressBar.isVisible = false
+                    binding.textMessageTransaction.isVisible = stateView.data?.isEmpty() == true
                     adapterTransaction.submitList(stateView.data?.reversed())
                 }
 
