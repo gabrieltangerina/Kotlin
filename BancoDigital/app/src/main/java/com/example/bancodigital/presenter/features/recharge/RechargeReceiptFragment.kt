@@ -13,6 +13,7 @@ import com.example.bancodigital.R
 import com.example.bancodigital.data.model.Recharge
 import com.example.bancodigital.databinding.FragmentRechargeRecepitBinding
 import com.example.bancodigital.util.GetMask
+import com.example.bancodigital.util.PhoneMask
 import com.example.bancodigital.util.StateView
 import com.example.bancodigital.util.initToolbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,9 +69,10 @@ class RechargeReceiptFragment : Fragment() {
     private fun configData(recharge: Recharge) {
         binding.textCodeTransaction.text = recharge.id
 
-        binding.textDateTransaction.text = GetMask.getFormatedDate(recharge.date, GetMask.DAY_MONTH_YEAR_HOUR_MINUTE)
+        binding.textDateTransaction.text =
+            GetMask.getFormatedDate(recharge.date, GetMask.DAY_MONTH_YEAR_HOUR_MINUTE)
 
-        binding.textPhone.text = recharge.number
+        binding.textPhone.text = PhoneMask.mask(PhoneMask.MASK_PHONE, recharge.number)
 
         binding.textAmountTransaction.text = getString(
             R.string.text_balance_format_value,
