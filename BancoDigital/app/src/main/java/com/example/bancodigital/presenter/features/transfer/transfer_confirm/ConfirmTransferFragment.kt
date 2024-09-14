@@ -97,7 +97,7 @@ class ConfirmTransferFragment : Fragment() {
                 }
 
                 is StateView.Error -> {
-                    binding.btnConfirm.isEnabled = false
+                    binding.btnConfirm.isEnabled = true
                     binding.progressBar.isVisible = false
                     showBottomSheetValidateInputs(message = stateView.message)
                 }
@@ -110,8 +110,7 @@ class ConfirmTransferFragment : Fragment() {
         confirmTransferViewModel.updateTransfer(transfer).observe(viewLifecycleOwner) { stateView ->
             when (stateView) {
                 is StateView.Loading -> {
-                    binding.btnConfirm.isEnabled = false
-                    binding.progressBar.isVisible = true
+
                 }
 
                 is StateView.Success -> {
@@ -119,7 +118,7 @@ class ConfirmTransferFragment : Fragment() {
                 }
 
                 is StateView.Error -> {
-                    binding.btnConfirm.isEnabled = false
+                    binding.btnConfirm.isEnabled = true
                     binding.progressBar.isVisible = false
                     showBottomSheetValidateInputs(message = stateView.message)
                 }
@@ -141,7 +140,9 @@ class ConfirmTransferFragment : Fragment() {
                 }
 
                 is StateView.Error -> {
+                    binding.btnConfirm.isEnabled = true
                     binding.progressBar.isVisible = false
+                    showBottomSheetValidateInputs(message = stateView.message)
                 }
             }
         }
@@ -169,7 +170,9 @@ class ConfirmTransferFragment : Fragment() {
                 }
 
                 is StateView.Error -> {
+                    binding.btnConfirm.isEnabled = true
                     binding.progressBar.isVisible = false
+                    showBottomSheetValidateInputs(message = stateView.message)
                 }
             }
         }
