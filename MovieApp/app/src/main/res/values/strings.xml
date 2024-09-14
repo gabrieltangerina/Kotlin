@@ -132,6 +132,10 @@
     <string name="text_confirm_button_bottom_sheet_logout">Sim, sair</string>
     <string name="text_cancel_button_bottom_sheet_logout">Cancelar</string>
 
+    <!--   BottomSheetSelectImage -->
+    <string name="text_title_button_camera_bottom_sheet_select_image">Tirar foto</string>
+    <string name="text_title_button_gallery_bottom_sheet_select_image">Escolher foto</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

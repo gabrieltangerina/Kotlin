@@ -7,13 +7,19 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.example.movieapp.R
+import com.example.movieapp.databinding.BottomSheetDeleteMovieBinding
+import com.example.movieapp.databinding.BottomSheetSelectImageBinding
 import com.example.movieapp.databinding.FragmentEditProfileBinding
 import com.example.movieapp.domain.model.user.User
 import com.example.movieapp.util.FirebaseHelper
 import com.example.movieapp.util.StateView
+import com.example.movieapp.util.calculateFileSize
+import com.example.movieapp.util.calculateMovieTime
 import com.example.movieapp.util.initToolbar
 import com.example.movieapp.util.showSnackBar
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,6 +55,33 @@ class EditProfileFragment : Fragment() {
         binding.btnUpdate.setOnClickListener {
             validateData()
         }
+
+        binding.imageProfile.setOnClickListener {
+            openBottomSheetSelectImage()
+        }
+    }
+
+    private fun openBottomSheetSelectImage(){
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+
+        val bottomSheetBinding = BottomSheetSelectImageBinding.inflate(
+            layoutInflater, null, false
+        )
+
+        bottomSheetBinding.btnCamera.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            // openCamera()
+        }
+
+        bottomSheetBinding.btnGallery.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            // openGallery()
+        }
+
+        bottomSheetBinding.btnClose.setOnClickListener { bottomSheetDialog.dismiss() }
+
+        bottomSheetDialog.setContentView(bottomSheetBinding.root)
+        bottomSheetDialog.show()
     }
 
     private fun validateData(){
