@@ -3,6 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.movieapp">
 
+    <!--  Para Android <= 12  /-->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+    <!--  Para Android >= 13  -->
+    <uses-permission
+        android:name="android.permission.READ_MEDIA_IMAGES" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -27,7 +36,7 @@
         <activity
             android:name=".presenter.main.activity.MainActivity"
             android:exported="false"
-            android:theme="@style/Theme.MovieApp"/>
+            android:theme="@style/Theme.MovieApp" />
     </application>
 
 </manifest>

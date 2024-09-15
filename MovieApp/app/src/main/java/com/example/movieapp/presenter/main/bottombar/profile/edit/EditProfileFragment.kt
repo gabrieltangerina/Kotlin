@@ -1,22 +1,28 @@
 package com.example.movieapp.presenter.main.bottombar.profile.edit
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.bumptech.glide.Glide
 import com.example.movieapp.R
-import com.example.movieapp.databinding.BottomSheetDeleteMovieBinding
+import com.example.movieapp.databinding.BottomSheetPermissionDeniedBinding
 import com.example.movieapp.databinding.BottomSheetSelectImageBinding
 import com.example.movieapp.databinding.FragmentEditProfileBinding
 import com.example.movieapp.domain.model.user.User
 import com.example.movieapp.util.FirebaseHelper
 import com.example.movieapp.util.StateView
-import com.example.movieapp.util.calculateFileSize
-import com.example.movieapp.util.calculateMovieTime
 import com.example.movieapp.util.initToolbar
 import com.example.movieapp.util.showSnackBar
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -29,6 +35,9 @@ class EditProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: EditProfileViewModel by viewModels()
+
+
+    private val GALLERY_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,11 +56,11 @@ class EditProfileFragment : Fragment() {
         initListeners()
     }
 
-    private fun getEmailUser(){
+    private fun getEmailUser() {
         binding.editEmail.setText(FirebaseHelper.getAuth().currentUser?.email)
     }
 
-    private fun initListeners(){
+    private fun initListeners() {
         binding.btnUpdate.setOnClickListener {
             validateData()
         }
@@ -61,7 +70,7 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    private fun openBottomSheetSelectImage(){
+    private fun openBottomSheetSelectImage() {
         val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
 
         val bottomSheetBinding = BottomSheetSelectImageBinding.inflate(
@@ -75,7 +84,7 @@ class EditProfileFragment : Fragment() {
 
         bottomSheetBinding.btnGallery.setOnClickListener {
             bottomSheetDialog.dismiss()
-            // openGallery()
+            checkGalleryPermission()
         }
 
         bottomSheetBinding.btnClose.setOnClickListener { bottomSheetDialog.dismiss() }
@@ -84,26 +93,98 @@ class EditProfileFragment : Fragment() {
         bottomSheetDialog.show()
     }
 
-    private fun validateData(){
+    private fun openBottomSheetPermissionDenied() {
+        val bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialog)
+
+        val bottomSheetBinding = BottomSheetPermissionDeniedBinding.inflate(
+            layoutInflater, null, false
+        )
+
+        bottomSheetBinding.btnCancel.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetBinding.btnAccept.setOnClickListener {
+            bottomSheetDialog.dismiss()
+
+            val intent = Intent(
+                Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                Uri.fromParts("package", requireActivity().packageName, null)
+            )
+
+            startActivity(intent)
+        }
+
+        bottomSheetDialog.setContentView(bottomSheetBinding.root)
+        bottomSheetDialog.show()
+    }
+
+    private fun checkGalleryPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            // Android 12-
+            if (checkPermissionGranted(GALLERY_PERMISSION)) {
+                pickImageLauncher.launch("image/*")
+            } else {
+                galleryPermissionLauncher.launch(GALLERY_PERMISSION)
+            }
+        } else {
+            // Android 13+
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+    }
+
+    private fun checkPermissionGranted(permission: String) =
+        ContextCompat.checkSelfPermission(
+            requireContext(),
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+
+    private val galleryPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                pickImageLauncher.launch("image/*")
+            } else {
+                openBottomSheetPermissionDenied()
+            }
+        }
+
+    // Usado no Android <= 12
+    private val pickImageLauncher = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            binding.imageProfile.setImageURI(it)
+        }
+    }
+
+    // Usado no Android >= 13
+    private val pickMedia =
+        registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            uri?.let {
+                binding.imageProfile.setImageURI(it)
+            }
+        }
+
+    private fun validateData() {
         val name = binding.editName.text.toString().trim()
         val username = binding.editUser.text.toString().trim()
         val phone = binding.editPhone.text.toString().trim()
         val genre = binding.editGenre.text.toString().trim()
         val country = binding.editCountry.text.toString().trim()
 
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             showSnackBar(message = R.string.text_name_empty_edit_profile_fragment)
             return
-        }else if(username.isEmpty()){
+        } else if (username.isEmpty()) {
             showSnackBar(message = R.string.text_user_empty_edit_profile_fragment)
             return
-        }else if(phone.isEmpty()){
+        } else if (phone.isEmpty()) {
             showSnackBar(message = R.string.text_phone_empty_edit_profile_fragment)
             return
-        }else if(genre.isEmpty()){
+        } else if (genre.isEmpty()) {
             showSnackBar(message = R.string.text_genre_empty_edit_profile_fragment)
             return
-        }else if(country.isEmpty()){
+        } else if (country.isEmpty()) {
             showSnackBar(message = R.string.text_country_empty_edit_profile_fragment)
             return
         }
@@ -122,8 +203,8 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun update(user: User) {
-        viewModel.update(user).observe(viewLifecycleOwner){stateView ->
-            when(stateView){
+        viewModel.update(user).observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.layoutLoading.isVisible = true
                 }
@@ -142,8 +223,8 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun getUser() {
-        viewModel.getUser().observe(viewLifecycleOwner){stateView ->
-            when(stateView){
+        viewModel.getUser().observe(viewLifecycleOwner) { stateView ->
+            when (stateView) {
                 is StateView.Loading -> {
                     binding.layoutLoading.isVisible = true
                 }
@@ -164,7 +245,7 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    private fun configData(user: User){
+    private fun configData(user: User) {
         binding.editName.setText(user.name)
         binding.editUser.setText(user.username)
         binding.editEmail.setText(FirebaseHelper.getAuth().currentUser?.email)
