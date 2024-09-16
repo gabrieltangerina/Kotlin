@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -27,6 +29,10 @@ import com.example.movieapp.util.initToolbar
 import com.example.movieapp.util.showSnackBar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @AndroidEntryPoint
 class EditProfileFragment : Fragment() {
@@ -38,6 +44,10 @@ class EditProfileFragment : Fragment() {
 
 
     private val GALLERY_PERMISSION = Manifest.permission.READ_EXTERNAL_STORAGE
+    private val CAMERA_PERMISSION = Manifest.permission.CAMERA
+
+    private var currentPhotoPath: String? = null
+    private lateinit var photoUri: Uri
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,7 +89,7 @@ class EditProfileFragment : Fragment() {
 
         bottomSheetBinding.btnCamera.setOnClickListener {
             bottomSheetDialog.dismiss()
-            // openCamera()
+            checkCameraPermission()
         }
 
         bottomSheetBinding.btnGallery.setOnClickListener {
@@ -133,6 +143,64 @@ class EditProfileFragment : Fragment() {
         }
     }
 
+    private fun checkCameraPermission() {
+        if (checkPermissionGranted(CAMERA_PERMISSION)) {
+            openCamera()
+        } else {
+            cameraPermissionLauncher.launch(CAMERA_PERMISSION)
+        }
+    }
+
+    // Camera
+    private val cameraPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                openCamera()
+            } else {
+                openBottomSheetPermissionDenied()
+            }
+        }
+
+    // Camera
+    private fun openCamera() {
+        val photoFile = createImageFile()
+        photoFile?.let {
+            photoUri = FileProvider.getUriForFile(
+                requireContext(),
+                "${requireContext().packageName}.provider",
+                it
+            )
+            takePictureLauncher.launch(photoUri)
+        }
+    }
+
+    // Camera
+    private val takePictureLauncher = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { success: Boolean ->
+        if (success) {
+            binding.imageProfile.setImageURI(photoUri)
+        }
+    }
+
+    // Camera
+    private fun createImageFile(): File? {
+        val timeStamp: String =
+            SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.getDefault()).format(Date())
+
+        val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+        val imageFile = File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        )
+
+        currentPhotoPath = imageFile.absolutePath
+        return imageFile
+    }
+
+    // Camera - Gallery
     private fun checkPermissionGranted(permission: String) =
         ContextCompat.checkSelfPermission(
             requireContext(),
@@ -148,7 +216,7 @@ class EditProfileFragment : Fragment() {
             }
         }
 
-    // Usado no Android <= 12
+    // Used in Android <= 12
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -157,7 +225,7 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    // Usado no Android >= 13
+    // Used in Android >= 13
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             uri?.let {
