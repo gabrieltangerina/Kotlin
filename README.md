@@ -6,7 +6,7 @@ Este repositório contém minhas anotações e exemplos de código enquanto estu
 ## Conteúdos
 - [Paging3 - Scroll Infinito](https://github.com/gabrieltangerina/Kotlin/blob/e75915671b522814213663c3f9317dd0606edf07/README_PAGING.md)
 - [Adapter - Listagem de conteúdo](https://github.com/gabrieltangerina/Kotlin/blob/e75915671b522814213663c3f9317dd0606edf07/README_PAGING.md)
-- [Permissão - Uso de câmera e galeria do dispositivo](https://github.com/gabrieltangerina/Kotlin/blob/e75915671b522814213663c3f9317dd0606edf07/README_PERMISSION.md)
+- [Permissão - Uso de câmera e galeria do dispositivo](https://github.com/gabrieltangerina/Kotlin/blob/main/README_PERMISSION.md)
 
 ## Anotações 
 
