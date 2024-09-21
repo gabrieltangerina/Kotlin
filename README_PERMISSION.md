@@ -35,7 +35,7 @@ private fun openBottomSheetSelectImage() {
 }
 ```
 
-<img src=""/>
+<img height="500px" src="https://github.com/gabrieltangerina/Kotlin/blob/main/images_readme/permission_images/BottomSheet.png?raw=true"/>
 
 ### BottomSheet para pedir permissão ao usuário
 Existe outra BottomSheet que é a openBottomSheetPermissionDenied() que é chamada quando o usuário não aceita a permissão então ela é mostrada informando o usuário que é necessário aceitar a permissão para acessar aquela tela.
@@ -68,7 +68,7 @@ private fun openBottomSheetPermissionDenied() {
 }
 ```
 
-<img src=""/>
+<img height="500px" src="https://github.com/gabrieltangerina/Kotlin/blob/main/images_readme/permission_images/BottomSheetPermissionDenied.png?raw=true"/>
 
 ## Carregar imagem da galeria versão Android <= 12
 
