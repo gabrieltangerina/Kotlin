@@ -129,6 +129,7 @@ class EditProfileFragment : Fragment() {
         bottomSheetDialog.show()
     }
 
+    // Gallery
     private fun checkGalleryPermission() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             // Android 12-
@@ -143,6 +144,7 @@ class EditProfileFragment : Fragment() {
         }
     }
 
+    // Camera
     private fun checkCameraPermission() {
         if (checkPermissionGranted(CAMERA_PERMISSION)) {
             openCamera()
